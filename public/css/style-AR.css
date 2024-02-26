@@ -1,0 +1,15 @@
+.circle-back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: absolute; /* ou 'fixed' para posição fixa na tela */
+    bottom: 20px; /* Distância do fundo */
+    left: 20px; /* Distância da esquerda */
+    z-index: 1000; /* Assegura que fique no topo */
+}
