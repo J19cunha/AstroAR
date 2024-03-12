@@ -1,15 +1,84 @@
-.circle-back{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f9fa;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: absolute; /* ou 'fixed' para posição fixa na tela */
-    bottom: 20px; /* Distância do fundo */
-    left: 20px; /* Distância da esquerda */
-    z-index: 1000; /* Assegura que fique no topo */
+.circle-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: absolute; /* ou 'fixed' para posição fixa na tela */
+  bottom: 20px; /* Distância do fundo */
+  left: 20px; /* Distância da esquerda */
+  z-index: 1000; /* Assegura que fique no topo */
 }
+
+.moon-phases-panel {
+  position: absolute; /* Define o contêiner como relativo */
+  top: 20px;
+  right: 5px;
+  width: 200px; /* Largura da imagem */
+  height: auto; /* Altura automática para manter a proporção */
+  background-color: rgba(0, 0, 0);
+  border-radius: 8px;
+}
+
+#moon-phase-image-bright {
+  position: absolute; /* Posicionamento absoluto dentro do contêiner relativo */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ocupa toda a largura do contêiner */
+  height: auto; /* Altura automática para manter a proporção */
+  filter: brightness(100%);
+  border-radius: 5px;
+}
+
+#moon-phase-image-dark {
+  position: absolute; /* Posicionamento absoluto dentro do contêiner relativo */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ocupa toda a largura do contêiner */
+  height: auto; /* Altura automática para manter a proporção */
+  filter: brightness(30%);
+  clip-path: ellipse(50% 100% at 50% 50%);
+}
+
+
+.moon-phases-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+  }
+  
+  .start-animation, .stop-animation {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .start-animation {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+  }
+  
+  .start-animation:hover {
+    background-color: #45a049;
+  }
+  
+  .stop-animation {
+    background-color: #f44336; /* Vermelho */
+    color: white;
+  }
+  
+  .stop-animation:hover {
+    background-color: #d73833;
+  }
+
+  

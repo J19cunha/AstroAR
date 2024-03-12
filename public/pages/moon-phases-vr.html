@@ -23,7 +23,7 @@
 </head>
 
 <body style="margin: 0px; overflow: hidden">
-  <a-scene mindar-image="imageTargetSrc: ./targets.mind" color-space="sRGB"
+  <a-scene mindar-image="imageTargetSrc: ./markers/targets.mind" color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
@@ -40,20 +40,26 @@
 
     <!-- Terra -->
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-entity position="0 0 0" rotation="0 23.5 0">
-        <a-gltf-model src="#earth" scale="1 1 1" position="0 0 0" rotation="0 0 0"
-          rotate-continuously="speed: 30"></a-gltf-model>
-        <a-cylinder position="0 0 0" radius="0.01" height="4" color="#0056b3" rotation="0 0 23.5"></a-cylinder>
-        <a-ring position="0 0 0" rotation="-90 0 0" radius-inner="0.6" radius-outer="0.7" color="#0056b3"></a-ring>
+      <a-entity scale='0.8 0.8 0.8'>
+        <!-- earth -->
+        <a-entity position="0 0 0" rotation="0 23.5 0">
+          <a-gltf-model src="#earth" scale="1 1 1" position="0 0 0" rotation="0 0 0"
+            rotate-continuously="speed: 30"></a-gltf-model>
+          <!-- Eixo Z representado por um cilindro -->
+          <a-cylinder position="0 0 0" radius="0.01" height="4" color="#0056b3" rotation="0 0 23.5"></a-cylinder>
+          <a-ring position="0 0 0" rotation="-90 0 0" radius-inner="0.6" radius-outer="0.7" color="#0056b3"></a-ring>
+        </a-entity>
+        <!-- Lua -->
+        <a-entity position="0 0 0" rotation="0 0 -5">
+          <a-ring radius-inner="2.5" radius-outer="2.55" color="#0056b3" rotation="0 0 0"></a-ring>
+          <!-- Esta entidade faz a Lua orbitar em torno da Terra -->
+          <a-entity rotate-continuously="speed: 5">
+            <!-- A Lua mantém sua rotação em torno do seu próprio eixo -->
+            <a-gltf-model src="#moon" scale="0.272 0.272 0.272" position="-2.5 0 0"
+              rotate-continuously="speed: 5"></a-gltf-model>
+          </a-entity>
+        </a-entity>
       </a-entity>
-      <!-- Lua -->
-      <a-entity rotate-continuously="speed: 5" rotation="0 0 -5">
-        <a-ring rotate-continuously="speed: 0" radius-inner="2.5" radius-outer="2.55" color="#0056b3"
-          rotation="-90 0 0"></a-ring>
-        <a-gltf-model src="#moon" scale="0.272 0.272 0.272" position="-2.5 0 0" rotation="90 0 0"
-          rotate-continuously="speed: 5"></a-gltf-model>
-      </a-entity>
-    </a-entity>
     </a-entity>
   </a-scene>
   <div class="circle-back">
