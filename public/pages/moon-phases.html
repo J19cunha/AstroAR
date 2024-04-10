@@ -2,22 +2,63 @@
 <html>
 
 <head>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
+  <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+  <title> SpaceAR - Moon Phases</title>
+  <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
 </head>
-
-
-<!-- <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script> -->
-<!-- Image tracking imports -->
-<!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script> -->
 
 <link rel="stylesheet" href="../css/style-AR.css" />
 
-<body style="margin: 0px; overflow: hidden">
-  <script src="../js/app.js"></script>
 
+<body style="margin: 0px; overflow: hidden">
+
+
+  <div id="draggableModal" class="tab-container">
+    <!-- Conteúdo do Sobre aqui -->
+
+
+    <div class="header" id="header">
+      <div class="tabs">
+        <button class="tab-button" onclick="openTab(event, 'Tempo')">Tempo</button>
+        <button class="tab-button" onclick="openTab(event, 'Definicoes')">Definições</button>
+      </div>
+      <div id="Tempo" class="tab-content">
+        <div class="play-box">
+          <div class="button-box">
+            <button disabled id="start-animation" class="start-animation">
+              <i class="fa-solid fa-play" style="color: #ffffff;"></i>
+            </button>
+          </div>
+          <div class="time-box">
+            <div class="day-shift">
+              <button id="decrement-day">
+                <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
+              </button>
+              <span id="current-day" style="padding-left: 10px; padding-right: 10px; font-size: medium;"> Dia 0
+              </span>
+              <button id="increment-day">
+                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="Definicoes" class="tab-content"></div>
+    </div>
+
+    <p>Fases da Lua</p>
+    <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
+
+
+
+  </div>
+
+  <script src="../js/app.js">
+  </script>
+  <script src="./gestures.js"> </script>
 
   <a-scene embedded arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
     vr-mode-ui="enabled: false">
@@ -33,30 +74,33 @@
     <!-- <a-marker preset="hiro"> -->
     <!-- <a-nft type="nft" url="./pages/nft/fasesdalua" smooth="true" smoothCount="10" smoothTolerance=".01"
       smoothThreshold="5"> -->
-    <a-marker type="barcode" value="1">
-
-      <a-entity scale='0.5 0.5 0.5'>
+    <a-marker marker-handler markerhandler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
+      type="barcode" value="1">
+      <a-entity position="0 0 0" scale="0.5 0.5 0.5">
         <!-- earth -->
-        <a-entity position="0 0 0" rotation="0 23.5 0">
-          <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 140; active: false" position="0 0 0"
-            rotation="0 0 0"></a-gltf-model>
+        <a-entity position=" 0 0 0" rotation="0 23.5 0">
+          <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 168; active: false; body: earth"
+            position="0 0 0" rotation="0 0 0" id="earthModel" class="clickable"></a-gltf-model>
           <!-- Eixo Z representado por um cilindro -->
           <a-cylinder rotate-continuously="speed: 0" position=" 0 0 0" radius="0.01" height="4" color="#0056b3"
             rotation="0 0 23.5"></a-cylinder>
         </a-entity>
         <!-- moon  -->
-        <a-entity rotate-continuously="speed: 5" position="0 0 0" rotation="0 0 -5">
+        <a-entity rotate-continuously="speed: 6" id="moon-rotate" position="0 0 0" rotation="0 0 -5">
           <a-ring radius-inner="2.5" radius-outer="2.52" material="color: red;" rotation="-90 0 0"></a-ring>
-          <a-gltf-model id="moonModel" src="#moon" scale="0.272 0.272 0.272" position="-2.5 0 0" rotation="90 0 0"
-            rotate-continuously="speed: 5"></a-gltf-model>
+          <a-entity rotate-continuously="speed: 6" gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272"
+            position="-2.5 0 0" rotation="90 0 0" class="clickable" update-panel-position>
+          </a-entity>
         </a-entity>
       </a-entity>
-
     </a-marker>
-    <a-entity camera></a-entity>
+    <a-entity camera>
+    </a-entity>
 
   </a-scene>
-  <div class="circle-back">
+
+
+  <div class=" circle-back">
     <a href="../index.html">
       <img src="../assets/images/back.png" alt="back" style="width: 20px; height: 20px" />
     </a>
@@ -66,11 +110,80 @@
     <img id="moon-phase-image-bright" alt="Fase da Lua">
   </div>
 
-  <div id="moon-phases-buttons" class="moon-phases-buttons">
-    <button id="start-animation" class="start-animation">Start Animation</button>
-  </div>
 
+
+  <script>
+
+    // // Function to update the position of the panel
+    // function updatePanelPosition() {
+    //   var sceneEl = document.querySelector('a-scene');
+    //   var moonModel = document.querySelector('#moonModel');
+    //   var panel = document.querySelector('#moonPanel');
+
+    //   if (moonModel.object3D && sceneEl.camera) {
+    //     var position = moonModel.object3D.getWorldPosition(new THREE.Vector3());
+    //     var screenPosition = position.project(sceneEl.camera);
+
+    //     var widthHalf = window.innerWidth / 2;
+    //     var heightHalf = window.innerHeight / 2;
+
+    //     var panelX = (screenPosition.x * widthHalf) + widthHalf;
+    //     var panelY = -(screenPosition.y * heightHalf) + heightHalf;
+
+    //     panel.style.left = `${panelX}px`;
+    //     panel.style.top = `${panelY}px`;
+    //     panel.style.display = 'block';
+    //   }
+    // }
+
+    // // Call the function to position the panel, and make sure to call it whenever necessary
+    // // For demonstration, let's call it every frame (not recommended for production use)
+    // document.querySelector('a-scene').addEventListener('render-target-loaded', function () {
+    //   setInterval(updatePanelPosition, 100); // Update every 100ms
+    // });
+
+
+
+    AFRAME.registerComponent("markerhandler", {
+      init: function () {
+        const animatedMarker = document.querySelector("#animated-marker");
+        const aEntity = document.querySelector("#moonModel");
+        const earthEntity = document.querySelector("#earthModel");
+        const orbitEntity = document.querySelector("#moon-rotate");
+
+        // every click, we make our model grow in size :)
+        animatedMarker.addEventListener("click", function (ev, target) {
+          const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+          console.log("marker clicked!", ev, ev.detail, intersectedElement);
+
+          if (earthEntity && intersectedElement === earthEntity) {
+            console.log("Earth was clicked at!");
+
+            const rotation = earthEntity.getAttribute("rotation");
+            rotation.y = rotation.y + 20;
+            earthEntity.setAttribute("rotation", rotation);
+
+          }
+
+          if (aEntity && intersectedElement === aEntity) {
+            console.log("Model was clicked at!");
+
+            const rotation = aEntity.getAttribute("rotation");
+            rotation.y = rotation.y + 20;
+            aEntity.setAttribute("rotation", rotation);
+
+            const rotationOrbit = orbitEntity.getAttribute("rotation");
+            rotationOrbit.y = rotationOrbit.y + 20;
+            orbitEntity.setAttribute("rotation", rotationOrbit);
+
+
+          }
+        });
+      },
+    });
+  </script>
 
 </body>
+
 
 </html>

@@ -1,3 +1,11 @@
+button{
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: 0;
+  color: inherit; /* Opcional, faz o botão herdar a cor do texto do elemento pai */
+}
 .circle-back {
   display: flex;
   justify-content: center;
@@ -14,20 +22,19 @@
   z-index: 1000; /* Assegura que fique no topo */
 }
 
+
 .moon-phases-panel {
-  position: absolute; /* Define o contêiner como relativo */
-  top: 20px;
-  right: 5px;
-  width: 200px; /* Largura da imagem */
-  height: auto; /* Altura automática para manter a proporção */
+  position: fixed; /* Agora será posicionado em relação à janela do navegador */
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: auto;
   background-color: rgba(0, 0, 0);
   border-radius: 8px;
 }
 
 #moon-phase-image-bright {
-  position: absolute; /* Posicionamento absoluto dentro do contêiner relativo */
-  top: 0;
-  left: 0;
+
   width: 100%; /* Ocupa toda a largura do contêiner */
   height: auto; /* Altura automática para manter a proporção */
   filter: brightness(100%);
@@ -45,40 +52,197 @@
 }
 
 
-.moon-phases-buttons {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px; /* Espaçamento entre os botões */
-  }
-  
-  .start-animation, .stop-animation {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .start-animation {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-  }
-  
-  .start-animation:hover {
-    background-color: #45a049;
-  }
-  
-  .stop-animation {
-    background-color: #f44336; /* Vermelho */
-    color: white;
-  }
-  
-  .stop-animation:hover {
-    background-color: #d73833;
-  }
 
+/* menu */
+
+.clickable {
+  cursor: pointer;
+}
+
+
+
+
+.tabs {
+  display: flex;
+  justify-content: center; /* Centraliza as abas horizontalmente */
+  color: white;
+  background-color: #333333;
+  border-radius: 5px;
+  width: 100%; /* Usa toda a largura disponível */
+}
+
+.tab-button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  color: #ffffff;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 40px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.tab-button:hover {
+  background-color: #000000;
+  width: 100%;
+}
+/* Estilo quando a aba está ativa */
+.active-tab, .tab-button:hover {
+  background-color: #000000;
+  width: 100%;
+  color: #ffffff;
+}
+
+/* Box do Tempo*/
+
+.tab-content {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  display: none;
+  align-self: center;
+  width: 50%;
+  border-top: none;
+}
+
+.play-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #000;
+  border-radius: 10px;
+  width: 100%;
+  position: relative; /* Adicionado para servir como referência de posicionamento */
+}
+
+.button-box {
+  display: flex;
+  justify-content: center;
+  position: absolute; /* Modificado para posicionamento absoluto */
   
+  top: -25px; /* Metade fora, ajuste conforme necessário */
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translateX(-50%); /* Ajuste fino para centralização */
+  z-index: 10; /* Garante que fique acima de outros elementos se necessário */
+}
+
+.button-box::before {
+  content: ""; /* Necessário para que o pseudoelemento seja gerado */
+  position: absolute; /* Posicionamento absoluto em relação à "button-box" */
+  width: 62px; /* Largura original do botão + 12px */
+  height: 62px; /* Altura original do botão + 12px */
+  background-color: black; /* Cor de fundo preta */
+  border-radius: 50%; /* Torna o elemento um círculo */
+  top: 50%; /* Posicionamento centrado */
+  left: 50%; /* Posicionamento centrado */
+  transform: translate(-50%, -50%); /* Ajuste fino para centralização perfeita */
+  z-index: -1; /* Coloca atrás do botão */
+}
+
+
+
+.start-animation {
+  background-color: #9D4B6B; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 50%; /* Faz o botão ser um círculo */
+  width: 50px; /* Largura do botão */
+  height: 50px; /* Altura do botão */
+  font-size: 24px; /* Tamanho do ícone */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-animation:hover {
+  background-color: #9D4B6B; /* Verde mais escuro */
+}
+
+.time-box {
+  padding: 30px;
+  padding-top: 40px;
+  color: #fff; /* Texto branco para contraste */
+  text-align: center; /* Centraliza o texto */
+}
+
+.hour-shift {
+  display: flex;
+  flex-direction: row; /* Muda para disposição horizontal */
+  align-items: center; /* Centraliza os itens verticalmente */
+  justify-content: space-around; /* Espaçamento igual entre os itens */ 
+  border-radius: 10px;
+  width: 100%; /* Usa toda a largura disponível dentro do tab-content */
+}
+
+
+
+
+
+
+
+.tab-container {
+  display: flex; /* Ativa o flexbox */
+  flex-direction: column; /* Organiza os itens em coluna */
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 80%; /* Faz a caixa preencher 80% da largura da tela */
+  color: white; /* Cor do texto branco para contraste */
+  border-top: rgba(255, 255, 255, 0.2)  solid 1px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  height: 0px; /* Altura inicial para mostrar apenas a barra dinâmica e o texto */
+  transition: height 0.05s; /* Transição suave para quando a altura mudar */
+  
+
+}
+
+/* Quando o modal é "expandido" */
+.header.expanded {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  width: 100%;
+  height: 80%; /* Ajuste conforme necessário */
+  border-bottom: 2px solid #4C4F50; /* Add a bottom border with a thickness of 2px and black color */
+}
+
+
+
+
+
+
+.dynamic-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+height: 2px;
+
+  background-color: #D9D9D9;
+  border-radius: 5px;
+  margin-bottom: 0px;
+}
+
+
+
