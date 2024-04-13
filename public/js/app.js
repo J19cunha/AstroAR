@@ -75,7 +75,7 @@ const totalImages = 236;
 let imagesLoaded = 0;
 let currentImageIndex = 0;
 
-const images = [];
+let images = [];
 
 function preloadImages() {
   for (let i = 1; i <= totalImages; i++) {
@@ -105,9 +105,8 @@ function updateMoonImage() {
 
   // Certifique-se de que o elemento de imagem exista antes de tentar definir sua propriedade src
   const moonImageElement = document.getElementById("moon-phase-image-bright");
-  if (moonImageElement) {
-    moonImageElement.src = images[currentImageIndex].src;
-  }
+
+  moonImageElement.src = images[currentImageIndex].src;
 }
 
 function getMoonRotation() {

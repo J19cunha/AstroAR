@@ -7,7 +7,6 @@
   <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
   <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
-  <title> SpaceAR - Moon Phases</title>
 
 </head>
 
@@ -15,12 +14,8 @@
 
 
 <body style="margin: 0px; overflow: hidden">
-
-
   <div id="draggableModal" class="tab-container">
     <!-- Conteúdo do Sobre aqui -->
-
-
     <div class="header" id="header">
       <div class="tabs">
         <button class="tab-button" onclick="openTab(event, 'Tempo')">Tempo</button>
@@ -64,12 +59,14 @@
 
 
   <a-scene embedded arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
-    vr-mode-ui="enabled: false">
+    vr-mode-ui="enabled: false" loading-screen="enabled:false">
     <a-assets>
       <a-asset-item id="earth" src="../assets/models/earth-3/scene.gltf"></a-asset-item>
       <a-asset-item id="moon" src="../assets/models/moon-3/scene.gltf"></a-asset-item>
       <a-asset-item id="telescope" src="../assets/models/telescope/scene.gltf"></a-asset-item>
       <a-asset-item id="rocket" src="../assets/models/rocket/scene.gltf"></a-asset-item>
+      <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item>
+      <img id="my-texture" src="../assets/images/moon.png">
     </a-assets>
 
 
@@ -79,43 +76,48 @@
       smoothThreshold="5"> -->
     <a-marker marker-handler markerhandler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
       type="barcode" value="1">
-      <a-light type="point" color="white" position="-100 1 0" intensity="1.4"></a-light>
-      <a-light type="directional" color="#F0F8FF" position="-40 1 0" intensity="1.0" distance="100"></a-light>
+
+      <!-- <a-light type="point" color="white" position="-100 1 0" intensity="1.4"></a-light>
+      <a-light type="directional" color="#F0F8FF" position="-40 1 0" intensity="1.0" distance="100"></a-light> -->
       <a-entity position="0 0 0" scale="0.5 0.5 0.5">
         <!-- earth -->
-        <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 168; active: false">
-          <a-entity position=" 0 0 0" rotation="0 0 23.5">
-            <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 168; active: false; body: earth"
-              position="0 0 0" rotation="0 0 0" id="earthModel" class="clickable" rotation="0 0 23.5">
-            </a-gltf-model>
-            <a-cylinder rotate-continuously="speed: 0" position=" 0 0 0" radius="0.01" height="4"
-              color="#00000"></a-cylinder>
-          </a-entity>
-          <a-gltf-model src="#telescope" scale="0.1 0.1 0.1" position="-1.2 0 0" rotation="0 180 0">
+        <a-entity position=" 0 0 0" rotation="0 0 23.5">
+          <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 84; active: false; body: earth"
+            position="0 0 0" id="earthModel" class="clickable" rotation="0 -170 0">
           </a-gltf-model>
-          <a-plane position="-1.7 1 0" rotation="0 180 0" scale="1 1 1"
-            material="shader:html;target: #profile; side: double;"></a-plane>
-          <!-- Eixo Z representado por um cilindro -->
-
+          <a-cylinder position=" 0 0 0" radius="0.01" height="4" color="#00000"></a-cylinder>
         </a-entity>
-        <!-- moon  -->
-        <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0" rotation="0 0 -5">
-          <a-ring radius-inner="2.5" radius-outer="2.52" material="color: red;" rotation="-90 0 0"></a-ring>
-          <a-entity rotate-continuously="speed: 6; active: false" gltf-model="#moon" id="moonModel"
-            scale="0.272 0.272 0.272" position="-2.5 0 0" rotation="90 0 0" class="clickable" update-panel-position>
+        <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 84; active: false">
+          <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-1 0.3 0" rotation="-90 0 90">
+          </a-gltf-model>
+          <!-- <a-plane position="-1.6 1.8 0" material="shader:html; target: #profile; transparent: false; alphaTest: 0.5"
+            look-at="#camera"></a-plane> -->
+          <a-entity geometry="primitive: plane" position="-1.6 1.8 0"
+            material="src: #my-texture; transparent: true; opacity: 1" look-at="#camera"></a-entity>
+
+          <!-- moon  -->
+
+          <a-entity rotate-continuously="speed: 3; active: false" id="moon-rotate" position="0 0 0" rotation="0 0 0">
+            <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+            <a-entity rotate-continuously="speed: 3; active: false" gltf-model="#moon" id="moonModel"
+              scale="0.272 0.272 0.272" position="-2.5 0 0" rotation="90 0 0" class="clickable" update-panel-position>
+            </a-entity>
+            <a-gltf-model src="#rocket" scale="0.05 0.05 0.05" position="-2.7 0.5 -0.3" rotation="0 0 90">
+            </a-gltf-model>
           </a-entity>
         </a-entity>
-      </a-entity>
     </a-marker>
-    <a-entity camera>
+    <a-entity id="camera" camera>
     </a-entity>
-
   </a-scene>
 
-  <div id="profile"
-    style=" z-index: -2; width: 300px; height: 300px; background-color: black; position: absolute; top: 00px; left: 0;">
-    <img src="../assets/images/back.png" alt="back" style="width: 20px; height: 20px" />
+  <div id="profile" class="profile-panel">
+    <img id="moon-phase-image-bright" alt="Fase da Lua">
   </div>
+
+  <!-- <div id="moon-phases-panel" class="moon-phases-panel">
+    <img id="moon-phase-image-bright" alt="Fase da Lua">
+  </div> -->
 
   <div class="circle-back">
     <a href="../index.html">
@@ -123,55 +125,54 @@
     </a>
   </div>
 
-  <div id="moon-phases-panel" class="moon-phases-panel">
-    <img id="moon-phase-image-bright" alt="Fase da Lua">
-  </div>
-
-
-
   <script>
 
+    AFRAME.registerComponent('look-at', {
+      schema: { type: 'selector' },
+
+      tick: function () {
+        this.el.object3D.lookAt(this.data.object3D.position)
+      }
+    })
 
 
+    AFRAME.registerComponent("markerhandler", {
+      init: function () {
+        const animatedMarker = document.querySelector("#animated-marker");
+        const aEntity = document.querySelector("#moonModel");
+        const earthEntity = document.querySelector("#earthModel");
+        const orbitEntity = document.querySelector("#moon-rotate");
+
+        // every click, we make our model grow in size :)
+        animatedMarker.addEventListener("click", function (ev, target) {
+          const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+          console.log("marker clicked!", ev, ev.detail, intersectedElement);
+
+          // if (earthEntity && intersectedElement === earthEntity) {
+          //   console.log("Earth was clicked at!");
+
+          //   const rotation = earthEntity.getAttribute("rotation");
+          //   rotation.y = rotation.y + 20;
+          //   earthEntity.setAttribute("rotation", rotation);
+
+          // }
+
+          if (aEntity && intersectedElement === aEntity) {
+            console.log("Model was clicked at!");
+
+            const rotation = aEntity.getAttribute("rotation");
+            rotation.y = rotation.y + 20;
+            aEntity.setAttribute("rotation", rotation);
+
+            const rotationOrbit = orbitEntity.getAttribute("rotation");
+            rotationOrbit.y = rotationOrbit.y + 20;
+            orbitEntity.setAttribute("rotation", rotationOrbit);
 
 
-    // AFRAME.registerComponent("markerhandler", {
-    //   init: function () {
-    //     const animatedMarker = document.querySelector("#animated-marker");
-    //     const aEntity = document.querySelector("#moonModel");
-    //     const earthEntity = document.querySelector("#earthModel");
-    //     const orbitEntity = document.querySelector("#moon-rotate");
-
-    //     // every click, we make our model grow in size :)
-    //     animatedMarker.addEventListener("click", function (ev, target) {
-    //       const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
-    //       console.log("marker clicked!", ev, ev.detail, intersectedElement);
-
-    //       if (earthEntity && intersectedElement === earthEntity) {
-    //         console.log("Earth was clicked at!");
-
-    //         const rotation = earthEntity.getAttribute("rotation");
-    //         rotation.y = rotation.y + 20;
-    //         earthEntity.setAttribute("rotation", rotation);
-
-    //       }
-
-    //       if (aEntity && intersectedElement === aEntity) {
-    //         console.log("Model was clicked at!");
-
-    //         const rotation = aEntity.getAttribute("rotation");
-    //         rotation.y = rotation.y + 20;
-    //         aEntity.setAttribute("rotation", rotation);
-
-    //         const rotationOrbit = orbitEntity.getAttribute("rotation");
-    //         rotationOrbit.y = rotationOrbit.y + 20;
-    //         orbitEntity.setAttribute("rotation", rotationOrbit);
-
-
-    //       }
-    //     });
-    //   },
-    // });
+          }
+        });
+      },
+    });
   </script>
 
 </body>
