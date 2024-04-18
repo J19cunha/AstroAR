@@ -1,59 +1,174 @@
-AFRAME.registerSystem("hit-test-system", {
-  schema: {
-    reticle: { type: "selector" },
-    target: { type: "selector" },
-  },
+// Defina isAnimating no topo do seu script para garantir que ele tenha um escopo global dentro deste arquivo
+var isAnimating = false;
+
+AFRAME.registerComponent("marker-handler", {
   init: function () {
-    this.reticle = this.data.reticle;
-    this.target = this.data.target;
+    const startButton = document.getElementById("start-animation"); // Obtenha o botão pelo ID
+    var icon = startButton.querySelector("i"); // Seleciona o ícone dentro do botão
 
-    this.el.addEventListener("enter-vr", () => {
-      this.reticle.setAttribute("visible", "false");
-      this.target.setAttribute("visible", "false");
+    this.el.addEventListener("markerFound", () => {
+      startButton.disabled = false; // Reativa o botão
+    });
 
-      this.session = this.el.sceneEl.renderer.xr.getSession();
-      this.el.sceneEl.renderer.xr.addEventListener(
-        "sessionstart",
-        async (ev) => {
-          this.viewerSpace = await this.session.requestReferenceSpace("viewer");
-          this.refSpace = this.el.sceneEl.renderer.xr.getReferenceSpace();
-          this.xrHitTestSource = await this.session.requestHitTestSource({
-            space: this.viewerSpace,
-          });
-        }
-      );
-
-      this.session.addEventListener("select", (e) => {
-        //console.log(e);
-        if (!this.reticle.getAttribute("visible")) return;
-        this.target.setAttribute("visible", "true");
-        this.target.setAttribute(
-          "position",
-          this.reticle.getAttribute("position")
-        );
+    this.el.addEventListener("markerLost", () => {
+      var animatedEntities = document.querySelectorAll("[rotate-continuously]");
+      var earthEntity = document.querySelectorAll("[orbit-around-sun]");
+      animatedEntities.forEach(function (entity) {
+        entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
       });
+      earthEntity.forEach(function (entity) {
+        entity.setAttribute("orbit-around-sun", { active: false }); // Alterna o estado da animação
+      });
+
+      startButton.disabled = true; // Desativa o botão
+      icon.className = "fa-solid fa-play";
+      isAnimating = false; // Atualize o estado aqui
     });
   },
+});
 
-  tick: function () {
-    this.reticle.setAttribute("visible", "false");
-    const frame = this.el.sceneEl.frame;
-    if (!frame) return;
+AFRAME.registerComponent("orbit-around-sun", {
+  schema: {
+    radius: { type: "number", default: 2 },
+    duration: { type: "number", default: 10000 }, // Duração de uma órbita completa em milissegundos
+    active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
+  },
+  init: function () {
+    this.angle = 0; // Ângulo inicial da órbita
+  },
+  tick: function (time, timeDelta) {
+    if (this.data.active === false) {
+      return; // Se a animação não estiver ativa, não faz nada
+    } else {
+      // Atualiza o ângulo com base no tempo decorrido
+      this.angle -= (360 / this.data.duration) * timeDelta;
+      this.angle %= 360;
 
-    const viewerPose = this.el.sceneEl.renderer.xr.getCameraPose();
-    if (this.xrHitTestSource && viewerPose) {
-      const hitTestResults = frame.getHitTestResults(this.xrHitTestSource);
-      if (hitTestResults.length > 0) {
-        const hitTestPose = hitTestResults[0].getPose(this.refSpace);
-        ["x", "y", "z"].forEach((axis) => {
-          this.reticle.object3D.position[axis] =
-            hitTestPose.transform.position[axis];
-        });
-        this.reticle.object3D.quaternion.copy(
-          hitTestPose.transform.orientation
-        );
-        this.reticle.setAttribute("visible", "true");
-      }
+      // Calcula a nova posição na órbita
+      var radians = THREE.MathUtils.degToRad(this.angle);
+      var x = Math.cos(radians) * this.data.radius;
+      var z = Math.sin(radians) * this.data.radius;
+      this.el.setAttribute("position", { x: x, y: 0, z: z });
     }
   },
+});
+
+AFRAME.registerComponent("rotate-continuously", {
+  schema: {
+    speed: { type: "number", default: 36 },
+    active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
+  },
+  init: function () {
+    this.accumulatedRotation = 0; // Rastreia o total de rotação acumulada
+  },
+  tick: function (time, timeDelta) {
+    if (this.data.active === false) {
+      return; // Se a animação não estiver ativa, não faz nada
+    } else {
+      // updateMoonBrightness();
+      var rotationIncrement = this.data.speed * (timeDelta / 1000);
+      this.el.object3D.rotation.y +=
+        THREE.MathUtils.degToRad(rotationIncrement);
+
+      // Atualiza a rotação acumulada
+      this.accumulatedRotation += rotationIncrement;
+      // Verifica se a rotação acumulada excedeu 360 graus (uma volta completa)
+    }
+  },
+});
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tabbuttons;
+
+  // Esconde todos os elementos com class="tab-content"
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove a classe "active" de todos os elementos com class="tab-button"
+  tabbuttons = document.getElementsByClassName("tab-button");
+  for (i = 0; i < tabbuttons.length; i++) {
+    tabbuttons[i].className = tabbuttons[i].className.replace(
+      " active-tab",
+      ""
+    );
+  }
+
+  // Mostra a aba atual e adiciona a classe "active" ao botão que abriu a aba
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active-tab";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("Tempo").style.display = "block";
+  document.getElementsByClassName("tab-button")[0].className += " active-tab";
+
+  // Este é o novo botão de alternância
+  var toggleButton = document.getElementById("start-animation");
+
+  var icon = toggleButton.querySelector("i"); // Seleciona o ícone dentro do botão
+
+  toggleButton.addEventListener("click", function () {
+    var animatedEntities = document.querySelectorAll("[rotate-continuously]");
+    var earthEntity = document.querySelectorAll("[orbit-around-sun]");
+    isAnimating = !isAnimating; // Inverte o estado da animação
+
+    animatedEntities.forEach(function (entity) {
+      entity.setAttribute("rotate-continuously", { active: isAnimating }); // Alterna o estado da animação
+    });
+
+    earthEntity.forEach(function (entity) {
+      entity.setAttribute("orbit-around-sun", { active: isAnimating }); // Alterna o estado da animação
+    });
+
+    // Altera a classe do ícone conforme o estado da animação
+    if (isAnimating) {
+      icon.className = "fa-solid fa-pause";
+      icon.style.color = "#ffffff";
+    } else {
+      icon.className = "fa-solid fa-play";
+      icon.style.color = "#ffffff";
+    }
+  });
+
+  var dynamicBar = document.getElementById("draggableModal");
+  var header = document.getElementById("header");
+
+  var initialY;
+  var dragging = false;
+
+  // Função genérica para iniciar o arrasto
+  function startDrag(e) {
+    initialY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
+    dragging = true;
+  }
+
+  // Função genérica para o movimento de arrasto
+  function onDrag(e) {
+    if (!dragging) return;
+    var currentY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
+    var deltaY = currentY - initialY;
+
+    if (deltaY > 0) {
+      header.classList.add("expanded");
+    } else {
+      header.classList.remove("expanded");
+    }
+  }
+
+  // Função para terminar o arrasto
+  function endDrag() {
+    dragging = false;
+  }
+
+  // Eventos de mouse
+  dynamicBar.addEventListener("mousedown", startDrag);
+  window.addEventListener("mousemove", onDrag);
+  window.addEventListener("mouseup", endDrag);
+
+  // Eventos de toque
+  dynamicBar.addEventListener("touchstart", startDrag);
+  window.addEventListener("touchmove", onDrag);
+  window.addEventListener("touchend", endDrag);
 });

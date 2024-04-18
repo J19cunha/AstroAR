@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"> </script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
+</head>
+
+<link rel="stylesheet" href="../css/style-AR.css" />
+
+
+<body style="margin: 0px; overflow: hidden;">
+    <div id="draggableModal" class="tab-container">
+        <!-- Conteúdo do Sobre aqui -->
+        <div class="header" id="header">
+            <div class="tabs">
+                <button class="tab-button" onclick="openTab(event, 'Tempo')">Tempo</button>
+                <button class="tab-button" onclick="openTab(event, 'Definicoes')">Definições</button>
+            </div>
+            <div id="Tempo" class="tab-content">
+                <div class="play-box">
+                    <div class="button-box">
+                        <button disabled id="start-animation" class="start-animation">
+                            <i class="fa-solid fa-play" style="color: #ffffff;"></i>
+                        </button>
+                    </div>
+                    <div class="time-box">
+                        <div class="day-shift">
+                            <button id="decrement-day">
+                                <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
+                            </button>
+                            <span id="current-day" style="padding-left: 10px; padding-right: 10px; font-size: medium;">
+                                Mês 0
+                            </span>
+                            <button id="increment-day">
+                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Definicoes" class="tab-content"></div>
+        </div>
+
+        <p>Estações do ano</p>
+        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
+
+
+
+    </div>
+
+    <script src="../js/basic.js">
+    </script>
+
+    <a-scene embedded arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
+        vr-mode-ui="enabled: false" loading-screen="enabled:false">
+        <a-assets>
+            <a-asset-item id="sun" src="../assets/models/ps1_style_low_poly_sun/scene.gltf"></a-asset-item>
+            <a-asset-item id="earth" src="../assets/models/earth-3/scene.gltf"></a-asset-item>
+            <a-asset-item id="arrow-sun" src="../assets/models/direction_arrow/scene.gltf"></a-asset-item>
+            <img id="my-image" src="./assets/arrow.png">
+        </a-assets>
+        <!-- <a-marker preset="hiro"> -->
+        <!-- <a-nft type="nft" url="./pages/nft/fasesdalua" smooth="true" smoothCount="10" smoothTolerance=".01"
+      smoothThreshold="5"> -->
+        <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
+            type="barcode" value="1">
+            <a-entity scale="0.5 0.5 0.5">
+                <a-gltf-model src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0">
+                </a-gltf-model>
+                <!-- <a-entity id="planeMoon" geometry="primitive: plane; width: 1.6; height: 0.9;" position="-1 -0.5 0"
+                    material="color: black; " look-at="#camera"
+                    text="value: Direção do sol; color: white; width: 2; align: center;">
+                </a-entity> -->
+                <a-entity rotate-continuously="speed: 36">
+                    <!-- Define a seta -->
+                    <a-image scale="1.4 0.2 1" position="-1 1 0" src="#my-image"></a-image>
+                    <a-image scale="1.4 0.2 1" position="-1 0.8  0" src="#my-image"></a-image>
+                    <a-image scale="1.4 0.2 1" position="-1 1 0" src="#my-image"></a-image>
+                    <a-image scale="1.4 0.2 1" position="-1 1 0" src="#my-image"></a-image>
+                </a-entity>
+                <!-- Entidade que simula a órbita -->
+                <a-entity id="orbit" orbit-around-sun="radius: -2; duration: 10000" position="-2 0 0">
+                    <!-- Modelo da Terra mantendo a mesma orientação -->
+                    <a-gltf-model src="#earth" scale="0.5 0.5 0.5" rotation="0 0 23.5"></a-gltf-model>
+                    <a-cylinder id="aixs" radius="0.01" height="4" color="#000000" rotation="0 0 23.5"></a-cylinder>
+                </a-entity>
+                <!-- Anel que representa a órbita -->
+                <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
+            </a-entity>
+        </a-marker>
+        <a-entity id="camera" camera>
+        </a-entity>
+    </a-scene>
+
+    <div class="circle-back">
+        <a href="./index.html">
+            <img src="../assets/images/back.png" alt="back" style="width: 20px; height: 20px" />
+        </a>
+    </div>
+
+</body>
+
+</html>

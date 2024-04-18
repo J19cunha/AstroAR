@@ -38,7 +38,8 @@ AFRAME.registerComponent("rotate-continuously", {
     } else {
       // updateMoonBrightness();
       var rotationIncrement = this.data.speed * (timeDelta / 1000);
-      this.el.object3D.rotation.y += THREE.Math.degToRad(rotationIncrement);
+      this.el.object3D.rotation.y +=
+        THREE.MathUtils.degToRad(rotationIncrement);
 
       // Atualiza a rotação acumulada
       this.accumulatedRotation += rotationIncrement;
@@ -87,7 +88,7 @@ function preloadImages() {
         console.log("Todas as imagens foram carregadas");
       }
     };
-    img.src = `../assets/images/moonphases/moon.${i} Small.jpeg`;
+    img.src = `./assets/images/moonphases/moon.${i} Small Small.png`;
     images.push(img);
   }
 }
@@ -104,14 +105,20 @@ function updateMoonImage() {
   const currentImageIndex = Math.floor(normalizedRotation * totalImages);
 
   // Certifique-se de que o elemento de imagem exista antes de tentar definir sua propriedade src
-  const moonImageElement = document.getElementById("moon-phase-image-bright");
+  // const moonImageElement = document.getElementById("moon-phase-image-bright");
+  const moonImageEntity = document.getElementById("my-texture");
+  const planeMoon = document.getElementById("planeMoon");
 
-  moonImageElement.src = images[currentImageIndex].src;
+  // Atualiza a imagem da lua com base no índice atual
+  // moonImageElement.src = images[currentImageIndex].src;
+
+  // Atualiza diretamente a textura do material da entidade A-Frame
+  planeMoon.setAttribute("material", "src", images[currentImageIndex].src);
 }
 
 function getMoonRotation() {
   const moonModel = document.getElementById("moonModel");
-  const rotation = moonModel.object3D.rotation.y; // Apenas como exemplo, ajuste conforme necessário
+  const rotation = moonModel.object3D.rotation.y;
   return rotation;
 }
 function openTab(evt, tabName) {
@@ -155,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementsByClassName("tab-button")[0].className += " active-tab";
 
   preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
-
   animateMoonPhase(); // Inicie a animação da fase da lua
 
   // Este é o novo botão de alternância
@@ -245,9 +251,9 @@ function updateEarthAndMoonRotation(day) {
   const moonPase = document.getElementById("moon-rotate");
 
   if (earth && moon) {
-    earth.object3D.rotation.y = THREE.Math.degToRad(earthRotation);
-    moon.object3D.rotation.y = THREE.Math.degToRad(moonRotation);
-    moonPase.object3D.rotation.y = THREE.Math.degToRad(moonRotation);
+    earth.object3D.rotation.y = THREE.MathUtils.degToRad(earthRotation);
+    moon.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
+    moonPase.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
   }
 }
 
