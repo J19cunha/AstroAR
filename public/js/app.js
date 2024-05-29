@@ -1,23 +1,30 @@
 // Defina isAnimating no topo do seu script para garantir que ele tenha um escopo global dentro deste arquivo
 var isAnimating = false;
+var markerLostTimeout;
 
 AFRAME.registerComponent("marker-handler", {
   init: function () {
     const startButton = document.getElementById("start-animation"); // Obtenha o botão pelo ID
     var icon = startButton.querySelector("i"); // Seleciona o ícone dentro do botão
+    const markerLostDelay = 1000;
 
     this.el.addEventListener("markerFound", () => {
+      clearTimeout(markerLostTimeout); // Cancela o temporizador se o marcador for encontrado novamente
       startButton.disabled = false; // Reativa o botão
     });
 
     this.el.addEventListener("markerLost", () => {
-      var animatedEntities = document.querySelectorAll("[rotate-continuously]");
-      animatedEntities.forEach(function (entity) {
-        entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
-      });
-      startButton.disabled = true; // Desativa o botão
-      icon.className = "fa-solid fa-play";
-      isAnimating = false; // Atualize o estado aqui
+      markerLostTimeout = setTimeout(() => {
+        var animatedEntities = document.querySelectorAll(
+          "[rotate-continuously]"
+        );
+        animatedEntities.forEach(function (entity) {
+          entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
+        });
+        startButton.disabled = true; // Desativa o botão
+        icon.className = "fa-solid fa-play";
+        isAnimating = false; // Atualize o estado aqui
+      }, markerLostDelay);
     });
   },
 });
@@ -40,36 +47,19 @@ AFRAME.registerComponent("rotate-continuously", {
       var rotationIncrement = this.data.speed * (timeDelta / 1000);
       this.el.object3D.rotation.y +=
         THREE.MathUtils.degToRad(rotationIncrement);
-
-      // Atualiza a rotação acumulada
-      this.accumulatedRotation += rotationIncrement;
-      // Verifica se a rotação acumulada excedeu 360 graus (uma volta completa)
-
-      if (this.data.body === "earth") {
-        if (this.accumulatedRotation >= 360) {
-          // Reduz a rotação acumulada
-          this.accumulatedRotation -= 360;
-          console.log("Uma volta completa da Terra");
-          updateDayCounter(); // Atualiza o contador de dias
-        }
-      }
     }
   },
 });
 
-// Exemplo hipotético de como você poderia estar rastreando as rotações da Terra
 let currentDay = 0;
-
-function updateDayCounter() {
-  const dayCounterElement = document.getElementById("current-day");
-  currentDay++; // Incrementa a cada volta completa da Terra
-  if (currentDay > 28) {
-    currentDay = 0;
-  } else if (currentDay < 0) {
-    currentDay = 28;
-  }
-  dayCounterElement.innerText = `Dia ${currentDay}`;
-}
+const fasesDaLua = [
+  "Lua Nova",
+  "Lua Crescente",
+  "Quarto Crescente",
+  "Lua Cheia",
+  "Quarto Minguante",
+  "Lua Minguante",
+];
 
 // Supondo que temos 236 imagens para as fases da lua
 const totalImages = 236;
@@ -104,16 +94,36 @@ function updateMoonImage() {
   const normalizedRotation = (rotation % (2 * Math.PI)) / (2 * Math.PI); // Normaliza para [0, 1]
   const currentImageIndex = Math.floor(normalizedRotation * totalImages);
 
-  // Certifique-se de que o elemento de imagem exista antes de tentar definir sua propriedade src
-  // const moonImageElement = document.getElementById("moon-phase-image-bright");
-  const moonImageEntity = document.getElementById("my-texture");
-  const planeMoon = document.getElementById("planeMoon");
+  const moonImageElement = document.getElementById("moon-phase-image-bright");
+  const moonPhaseTextElement = document.getElementById("moonphases-text");
 
-  // Atualiza a imagem da lua com base no índice atual
-  // moonImageElement.src = images[currentImageIndex].src;
+  if (moonImageElement) {
+    moonImageElement.src = images[currentImageIndex].src;
+  }
 
-  // Atualiza diretamente a textura do material da entidade A-Frame
-  planeMoon.setAttribute("material", "src", images[currentImageIndex].src);
+  if (moonPhaseTextElement) {
+    const phaseIndex = getMoonPhaseIndex(normalizedRotation);
+    moonPhaseTextElement.textContent = fasesDaLua[phaseIndex];
+  }
+}
+function getMoonPhaseIndex(normalizedRotation) {
+  if (normalizedRotation === 0) {
+    return 0; // Lua Nova
+  } else if (normalizedRotation > 0 && normalizedRotation < 0.25) {
+    return 1; // Lua Crescente
+  } else if (normalizedRotation === 0.25) {
+    return 2; // Quarto Crescente
+  } else if (normalizedRotation > 0.25 && normalizedRotation < 0.5) {
+    return 2; // Lua Cheia
+  } else if (normalizedRotation === 0.5) {
+    return 3; // Lua Cheia
+  } else if (normalizedRotation > 0.5 && normalizedRotation < 0.75) {
+    return 4; // Quarto Minguante
+  } else if (normalizedRotation === 0.75) {
+    return 5; // Lua Minguante
+  } else {
+    return 5; // Lua Minguante
+  }
 }
 
 function getMoonRotation() {
@@ -121,6 +131,7 @@ function getMoonRotation() {
   const rotation = moonModel.object3D.rotation.y;
   return rotation;
 }
+
 function openTab(evt, tabName) {
   var i, tabcontent, tabbuttons;
 
@@ -157,7 +168,71 @@ function togglePlayPause() {
   }
 }
 
+let accumulatedRotation = 0; // Armazena a rotação total acumulada
+const twoPi = 2 * Math.PI; // Constante para 2π, uma volta completa
+let manualUpdate = false;
+
+function updateDay(day) {
+  manualUpdate = true; // Definindo manualUpdate como true durante a atualização manual do dia
+  currentDay += day;
+  if (currentDay > 28) {
+    currentDay = 0;
+  } else if (currentDay < 0) {
+    currentDay = 28 + (currentDay % 28);
+  }
+  updateEarthAndMoonRotation(currentDay);
+  document.getElementById("current-day").innerText = `Dia ${currentDay}`;
+}
+
+function updateEarthAndMoonRotation(increment) {
+  const earthRotation = increment * 360;
+  const moonRotation = increment * (360 / 28);
+
+  const earth = document.getElementById("earthModel");
+  const moon = document.getElementById("moonModel");
+  const moonPase = document.getElementById("moon-rotate");
+
+  if (earth && moon) {
+    earth.object3D.rotation.y = THREE.MathUtils.degToRad(earthRotation);
+    moon.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
+    moonPase.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
+
+    accumulatedRotation = earth.object3D.rotation.y;
+  }
+}
+
+document.getElementById("increment-day").addEventListener("click", function () {
+  updateDay(1);
+});
+document.getElementById("decrement-day").addEventListener("click", function () {
+  updateDay(-1);
+});
+
+function updateDayBasedOnEarthRotation() {
+  const earthModel = document.getElementById("earthModel").object3D;
+  const currentRotationY = earthModel.rotation.y;
+
+  let rotationDelta = currentRotationY - accumulatedRotation;
+
+  if (rotationDelta >= twoPi) {
+    rotationDelta -= twoPi;
+    if (!manualUpdate) {
+      currentDay++;
+      if (currentDay > 28) {
+        currentDay = 0;
+      }
+      document.getElementById("current-day").innerText = `Dia ${currentDay}`;
+    } else {
+      manualUpdate = false; // Reset manualUpdate after handling it
+    }
+    accumulatedRotation += twoPi;
+  }
+  requestAnimationFrame(updateDayBasedOnEarthRotation);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  requestAnimationFrame(updateDayBasedOnEarthRotation);
+
   document.getElementById("Tempo").style.display = "block";
   document.getElementsByClassName("tab-button")[0].className += " active-tab";
 
@@ -226,41 +301,4 @@ document.addEventListener("DOMContentLoaded", function () {
   dynamicBar.addEventListener("touchstart", startDrag);
   window.addEventListener("touchmove", onDrag);
   window.addEventListener("touchend", endDrag);
-});
-
-function updateDay(increment) {
-  currentDay += increment;
-  if (currentDay > 28) {
-    currentDay = 0;
-  } else if (currentDay < 0) {
-    currentDay = 28;
-  }
-
-  document.getElementById("current-day").innerText = `Dia ${currentDay}`;
-
-  // Atualiza a rotação da Terra e da Lua
-  updateEarthAndMoonRotation(currentDay);
-}
-
-function updateEarthAndMoonRotation(day) {
-  const earthRotation = day * 360; // Simplificação para demonstração
-  const moonRotation = day * (360 / 28); // Simplificação para demonstração
-
-  const earth = document.getElementById("earthModel");
-  const moon = document.getElementById("moonModel");
-  const moonPase = document.getElementById("moon-rotate");
-
-  if (earth && moon) {
-    earth.object3D.rotation.y = THREE.MathUtils.degToRad(earthRotation);
-    moon.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
-    moonPase.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
-  }
-}
-
-document.getElementById("increment-day").addEventListener("click", function () {
-  updateDay(1);
-});
-
-document.getElementById("decrement-day").addEventListener("click", function () {
-  updateDay(-1);
 });

@@ -1,4 +1,14 @@
+p{
+  font-family: 'Montserrat';
+}
+span{
+  font-family: 'Montserrat';
+}
+i{
+  font-family: 'Montserrat';
+}
 button{
+  font-family: 'Montserrat';
   background-color: transparent;
   border: none;
   padding: 0;
@@ -10,7 +20,7 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com 60% de opacidade */
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -23,10 +33,71 @@ button{
 }
 
 
-.moon-phases-panel {
-  position: fixed; /* Agora será posicionado em relação à janela do navegador */
-  bottom: 20px;
+.day-shift{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-around;
+  border-radius: 10px;
+  width: 100%;
+
+}
+
+
+/* painel das fases da Lua */
+.div-com-fundo {
+  position: fixed; 
+  display: flex;
+  flex-direction: column; /* Organizar os itens em coluna */
+  align-items: center; /* Alinhar itens horizontalmente ao centro */
+  justify-content: center; /* Alinhar itens verticalmente ao centro */
+  z-index: 1000;
   right: 20px;
+  bottom: 20px; /* Definir a altura da div */
+  width: 150px; /* Largura adequada para o conteúdo */
+  height: auto; /* Altura automática para ajustar ao conteúdo */
+  padding: 10px; /* Adicionar algum padding */
+  background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */
+  border-radius: 5px;
+  background-size: cover; /* Cobrir toda a div */
+  background-position: center; /* Centralizar o fundo */
+}
+
+.moonphases {
+  align-self: flex-start; /* Alinhar à esquerda */
+  width: 100%; /* Ocupa toda a largura do contêiner pai */
+}
+
+.image-container {
+  position: relative; /* Contêiner relativo para posicionamento absoluto das imagens internas */
+  display: flex; /* Usar flexbox para centralização */
+  justify-content: center; /* Centralizar horizontalmente */
+  width: 100%;
+}
+
+#binoculos {
+  width: 100%; /* Ocupa 70% da largura do contêiner */
+  height: auto; 
+}
+
+#moon-phase-image-bright {
+  position: absolute; /* Posição absoluta em relação ao contêiner */
+  top: 50%; /* Centralizar verticalmente */
+  left: 50%; /* Centralizar horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste de centralização */
+  width: 40%; 
+  height: auto; 
+}
+
+
+
+.moon-phases-panel {
+  position: fixed; 
+  display: flex;
+  z-index: 1000;
+  right: 20px;
+  bottom: 20px;
   width: 200px;
   height: auto;
   background-color: rgba(0, 0, 0);
@@ -44,14 +115,8 @@ button{
   border-radius: 8px;
 }
 
-#moon-phase-image-bright {
 
-  width: 100%; /* Ocupa toda a largura do contêiner */
-  height: auto; /* Altura automática para manter a proporção */
-  filter: brightness(100%);
-  border-radius: 5px;
-  position: absolute;
-}
+
 #moon-phase{
 
   width: 100%; /* Ocupa toda a largura do contêiner */
@@ -100,6 +165,7 @@ button{
   float: left;
   border: none;
   color: #ffffff;
+  font-size: medium;
   border-radius: 5px;
   outline: none;
   cursor: pointer;
@@ -186,7 +252,8 @@ button{
 }
 
 .time-box {
-  padding: 30px;
+  padding: 20px;
+  padding-bottom: 10px;
   padding-top: 40px;
   color: #fff; /* Texto branco para contraste */
   text-align: center; /* Centraliza o texto */

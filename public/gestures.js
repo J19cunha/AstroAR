@@ -1,55 +1,5 @@
 /* global AFRAME, THREE */
 
-AFRAME.registerComponent("gesture-rotation-handler", {
-  init: function () {
-    // Variáveis para manter o estado do arraste
-    this.isDragging = false;
-    this.previousX = 0;
-
-    // Vincular métodos para manter o contexto correto quando chamados
-    this.startDrag = this.startDrag.bind(this);
-    this.endDrag = this.endDrag.bind(this);
-    this.doDrag = this.doDrag.bind(this);
-
-    // Adicionar event listeners
-    this.el.addEventListener("mousedown", this.startDrag);
-    window.addEventListener("mouseup", this.endDrag);
-    window.addEventListener("mousemove", this.doDrag);
-  },
-
-  startDrag: function (event) {
-    // Inicia o arraste
-    this.isDragging = true;
-    this.previousX = event.clientX;
-  },
-
-  doDrag: function (event) {
-    if (!this.isDragging) return;
-
-    // Calcular o quanto foi movido no eixo X desde o último evento
-    var deltaX = event.clientX - this.previousX;
-    this.previousX = event.clientX;
-
-    // Converter o deltaX em mudança de rotação em radianos
-    var rotationDelta = deltaX * (Math.PI / 180);
-
-    // Atualizar a rotação do objeto
-    this.el.object3D.rotation.y += rotationDelta;
-  },
-
-  endDrag: function () {
-    // Termina o arraste
-    this.isDragging = false;
-  },
-
-  remove: function () {
-    // Remover event listeners se o componente for removido
-    this.el.removeEventListener("mousedown", this.startDrag);
-    window.removeEventListener("mouseup", this.endDrag);
-    window.removeEventListener("mousemove", this.doDrag);
-  },
-});
-
 AFRAME.registerComponent("gesture-handler", {
   schema: {
     enabled: { default: true },
@@ -84,8 +34,9 @@ AFRAME.registerComponent("gesture-handler", {
 
   handleRotation: function (event) {
     if (this.isVisible) {
+     // Apenas incrementos positivos são considerados, deslocamentos negativos são ignorados
       this.el.object3D.rotation.y +=
-        event.detail.positionChange.x * this.data.rotationFactor;
+        Math.max(0, event.detail.positionChange.x) * this.data.rotationFactor;
     }
   },
 });
@@ -243,10 +194,8 @@ AFRAME.registerComponent("gesture-detector", {
             )
           );
         }, 0) / touchList.length;
-
       touchState.spread = spread * screenScale;
     }
-
     return touchState;
   },
 

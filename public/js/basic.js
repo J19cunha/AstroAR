@@ -35,6 +35,7 @@ AFRAME.registerComponent("orbit-around-sun", {
   },
   init: function () {
     this.angle = 0; // Ângulo inicial da órbita
+    this.lastMonthUpdateAngle = 0; // Guarda o último ângulo em que um mês foi incrementado
   },
   tick: function (time, timeDelta) {
     if (this.data.active === false) {
@@ -43,6 +44,15 @@ AFRAME.registerComponent("orbit-around-sun", {
       // Atualiza o ângulo com base no tempo decorrido
       this.angle -= (360 / this.data.duration) * timeDelta;
       this.angle %= 360;
+
+      // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
+      if (
+        Math.floor(this.angle / 30) !==
+        Math.floor(this.lastMonthUpdateAngle / 30)
+      ) {
+        updateMonthCounter(); // Chama a função para incrementar o mês
+        this.lastMonthUpdateAngle = this.angle; // Atualiza o último ângulo de atualização do mês
+      }
 
       // Calcula a nova posição na órbita
       var radians = THREE.MathUtils.degToRad(this.angle);
@@ -74,6 +84,109 @@ AFRAME.registerComponent("rotate-continuously", {
       this.accumulatedRotation += rotationIncrement;
       // Verifica se a rotação acumulada excedeu 360 graus (uma volta completa)
     }
+  },
+});
+
+let currentMonthIndex = -1; // Index of month in the months array
+let currentSeasonIndex = 0; // Index of season in the seasons array
+const months = [
+  "Dezembro",
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+];
+const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
+
+function updateDateInfo() {
+  // Atualiza diretamente a estação baseando-se no mês
+  if (currentMonthIndex >= 0 && currentMonthIndex < 3) {
+    // Dezembro, Janeiro, Fevereiro
+    currentSeasonIndex = 0; // Inverno
+  } else if (currentMonthIndex >= 3 && currentMonthIndex < 6) {
+    // Março, Abril, Maio
+    currentSeasonIndex = 1; // Primavera
+  } else if (currentMonthIndex >= 6 && currentMonthIndex < 9) {
+    // Junho, Julho, Agosto
+    currentSeasonIndex = 2; // Verão
+  } else if (currentMonthIndex >= 9 && currentMonthIndex < 12) {
+    // Setembro, Outubro, Novembro
+    currentSeasonIndex = 3; // Outono
+  }
+
+  const monthCounterElement = document.getElementById("current-month");
+  const seasonCounterElement = document.getElementById("current-season");
+
+  monthCounterElement.innerText = months[currentMonthIndex];
+  seasonCounterElement.innerText = seasons[currentSeasonIndex];
+}
+
+function updateMonthCounter() {
+  currentMonthIndex = (currentMonthIndex + 1) % months.length;
+  updateDateInfo(); // Atualiza informações de mês e estação
+}
+
+function updateMonth(increment) {
+  currentMonthIndex =
+    (currentMonthIndex + increment + months.length) % months.length;
+  updateDateInfo(); // Atualiza informações de mês e estação
+  updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
+}
+
+function updateEarthPosition(month) {
+  const earthEntity = document.querySelector("[orbit-around-sun]");
+  const angle = (360 / months.length) * month;
+  const radians = -THREE.MathUtils.degToRad(angle);
+  const radius = earthEntity.getAttribute("orbit-around-sun").radius;
+  const x = Math.cos(radians) * radius;
+  const z = Math.sin(radians) * radius;
+
+  earthEntity.setAttribute("position", { x: x, y: 0, z: z });
+  document
+    .getElementById("sun-direction")
+    .setAttribute("rotation", { x: 0, y: angle, z: 0 });
+}
+
+document
+  .getElementById("increment-month")
+  .addEventListener("click", function () {
+    updateMonth(1);
+  });
+
+document
+  .getElementById("decrement-month")
+  .addEventListener("click", function () {
+    updateMonth(-1);
+  });
+
+AFRAME.registerComponent("click-listener", {
+  schema: {
+    month: { type: "number", default: 0 },
+  },
+  init: function () {
+    // Armazena uma referência ao componente dentro de uma variável para acesso correto dentro da função de callback do evento
+    const component = this;
+
+    // Detetar o click na área entre a terra e a componente
+
+    
+
+    this.el.addEventListener("click", () => {
+      // Atualiza o índice do mês atual para o mês associado ao componente clicado.
+      currentMonthIndex = component.data.month;
+      console.log("Mês atualizado para", months[currentMonthIndex]);
+      // Chama updateDateInfo para atualizar a informação do mês e da estação na interface.
+      updateDateInfo();
+      // Aqui usamos 'component' em vez de 'this' para acessar a propriedade 'data' que contém o mês definido no schema
+      updateEarthPosition(component.data.month);
+    });
   },
 });
 
