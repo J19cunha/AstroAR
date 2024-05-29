@@ -55,7 +55,7 @@ button{
   z-index: 1000;
   right: 20px;
   bottom: 20px; /* Definir a altura da div */
-  width: 150px; /* Largura adequada para o conteúdo */
+  width: 200px; /* Largura adequada para o conteúdo */
   height: auto; /* Altura automática para ajustar ao conteúdo */
   padding: 10px; /* Adicionar algum padding */
   background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */

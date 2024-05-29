@@ -7,14 +7,13 @@
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
     <script src="./config.js"></script>
-
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <script>
         localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
     </script>
 </head>
 
 <link rel="stylesheet" href="../css/style-AR.css" />
-
 
 <body style="margin: 0px; overflow: hidden;">
     <div id="draggableModal" class="tab-container">
@@ -79,65 +78,63 @@
             <a-asset-item id="sun" src="../assets/models/ps1_style_low_poly_sun/scene.gltf"></a-asset-item>
             <a-asset-item id="earth" src="../assets/models/earth-3/scene.gltf"></a-asset-item>
             <a-asset-item id="arrow-sun" src="../assets/models/direction_arrow/scene.gltf"></a-asset-item>
-            <img id="my-image" src="./assets/arrow.png">
+            <img id="my-image" src="./assets/Arrow2.png">
             <!-- <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item> -->
         </a-assets>
 
-        <!-- <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
-            type="barcode" value="1"> -->
-    
-
-            <!-- <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity> -->
-
-            <a-entity scale="1.5 1.5 1.5">
-                <a-entity scale="0.5 0.5 0.5">
-                    <a-entity id="sun" position="0 0 0">
-                        <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0"
-                            rotation="0 0 0" class="clickable">
-                        </a-gltf-model>
-
-                        <!-- <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
-                            target="#directionaltarget"></a-light> -->
-                    </a-entity>
+        <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
+            type="barcode" value="1">
+            <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
 
 
-                    <a-entity id="sun-direction" rotate-continuously="speed: 1">
-                        <a-image scale="1.6 0.1 1" position="1 0.8 0" src="#my-image"></a-image>
-                        <a-image scale="1.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
-                        <a-image scale="1.2 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
-                        <a-image scale="1 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
-                        <a-image scale="0.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
-                        <a-image scale="0.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
-                        <a-image scale="1.1 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
-                        <a-image scale="1.4 0.1 1" position="1 -0.6 0" src="#my-image"></a-image>
-                    </a-entity>
+            <a-entity scale="0.5 0.5 0.5">
+                <a-entity id="sun" position="0 0 0">
+                    <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
+                        class="clickable">
+                    </a-gltf-model>
 
-                    <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5"
-                        orbit-around-sun="radius: 2; duration: 360000">
-                        <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
-                            rotate-continuously="speed: 84; active: false; body: earth" class="clickable"
-                            rotation="0 -170 0" gesture-handler shadow="receive: true">
-                        </a-gltf-model>
-                        <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
-                    </a-entity>
-
-                    <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
-
-                    <a-entity id="line1" class="interactive-line" line="start: 1.5 0 0; end: 2.5 0 0; color: black"
-                        click-listener="month: 0"></a-entity>
-                    <a-entity id="line2" class="interactive-line2" line="start: 0 0 -1.5; end: 0 0 -2.5; color: black"
-                        event-set__click="material.color: red">
-                    </a-entity>
-                    <a-entity id=" line3" class="interactive-line" line="start: -1.5 0 0; end: -2.5 0 0; color: black"
-                        click-listener="month: 6"></a-entity>
-                    <a-entity id="line4" class="interactive-line" line="start: 0 0 1.5; end: 0 0 2.5; color: black"
-                        click-listener="month: 9"></a-entity>
-                        
+                    <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
+                        target="#directionaltarget"></a-light>
                 </a-entity>
+
+
+                <a-entity id="sun-direction" rotate-continuously="speed: 1">
+                    <a-image scale="1.6 0.1 1" position="1 0.8 0" src="#my-image"></a-image>
+                    <a-image scale="1.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
+                    <a-image scale="1.2 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
+                    <a-image scale="1 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
+                    <a-image scale="0.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
+                    <a-image scale="0.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
+                    <a-image scale="1.1 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
+                    <a-image scale="1.4 0.1 1" position="1 -0.6 0" src="#my-image"></a-image>
+                </a-entity>
+
+                <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5"
+                    orbit-around-sun="radius: 2; duration: 360000">
+                    <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
+                        rotate-continuously="speed: 84; active: false; body: earth" class="clickable"
+                        rotation="0 -170 0" gesture-handler shadow="receive: true">
+                    </a-gltf-model>
+                    <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
+                </a-entity>
+
+                <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
+
+                <a-entity id="line1" class="interactive-line" line="start: 1.5 0 0; end: 2.5 0 0; color: black"
+                    click-listener="month: 0"></a-entity>
+                <a-entity id="line2" class="interactive-line2" line="start: 0 0 -1.5; end: 0 0 -2.5; color: black"
+                    event-set__click="material.color: red">
+                </a-entity>
+                <a-entity id=" line3" class="interactive-line" line="start: -1.5 0 0; end: -2.5 0 0; color: black"
+                    click-listener="month: 6"></a-entity>
+                <a-entity id="line4" class="interactive-line" line="start: 0 0 1.5; end: 0 0 2.5; color: black"
+                    click-listener="month: 9"></a-entity>
+
+
 
         </a-marker>
         <a-entity id="camera" camera>
-            <a-cursor></a-cursor>
+
         </a-entity>
 
     </a-scene>
