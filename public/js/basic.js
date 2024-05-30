@@ -122,10 +122,10 @@ function updateDateInfo() {
   }
 
   const monthCounterElement = document.getElementById("current-month");
-  const seasonCounterElement = document.getElementById("current-season");
+  // const seasonCounterElement = document.getElementById("current-season");
 
   monthCounterElement.innerText = months[currentMonthIndex];
-  seasonCounterElement.innerText = seasons[currentSeasonIndex];
+  // seasonCounterElement.innerText = seasons[currentSeasonIndex];
 }
 
 function updateMonthCounter() {
@@ -175,8 +175,6 @@ AFRAME.registerComponent("click-listener", {
     const component = this;
 
     // Detetar o click na área entre a terra e a componente
-
-    
 
     this.el.addEventListener("click", () => {
       // Atualiza o índice do mês atual para o mês associado ao componente clicado.

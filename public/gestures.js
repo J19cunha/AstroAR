@@ -4,6 +4,7 @@ AFRAME.registerComponent("gesture-handler", {
   schema: {
     enabled: { default: true },
     rotationFactor: { default: 5 },
+    earthSeasons: { default: false },
   },
 
   init: function () {
@@ -33,10 +34,14 @@ AFRAME.registerComponent("gesture-handler", {
   },
 
   handleRotation: function (event) {
-    if (this.isVisible) {
-     // Apenas incrementos positivos são considerados, deslocamentos negativos são ignorados
+    if (this.isVisible && earthSeasons === false) {
+      // Apenas incrementos positivos são considerados, deslocamentos negativos são ignorados
       this.el.object3D.rotation.y +=
         Math.max(0, event.detail.positionChange.x) * this.data.rotationFactor;
+    }
+  },
+  handleOrbit: function (event) {
+    if (this.isVisible && earthSeasons === true) {
     }
   },
 });

@@ -28,19 +28,20 @@
                 <div class="play-box">
                     <div class="button-box">
                         <button disabled id="start-animation" class="start-animation">
-                            <i class="fa-solid fa-play" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-play" style="color: #ffffff; "></i>
                         </button>
                     </div>
                     <div class="time-box">
                         <div class="day-shift">
                             <button id="decrement-day">
-                                <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
+                                <i class="fa-solid fa-chevron-right fa-flip-horizontal"
+                                    style="color: #9d4b6b; font-size: 20px;"></i>
                             </button>
                             <span id="current-day" style="padding-left: 10px; padding-right: 10px; font-size: medium;">
                                 Dia 0
                             </span>
                             <button id="increment-day">
-                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
+                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b; font-size: 20px;"></i>
                             </button>
                         </div>
                     </div>
@@ -82,11 +83,9 @@
 
             <!-- Luz geral sem projeção de sombras -->
             <a-entity
-                light="type: directional; color: #FFF; intensity: 2.5; castShadow: true; shadowCameraVisible: false"
+                light="type: directional; color: #FFF; intensity: 3.5; castShadow: true; shadowCameraVisible: false"
                 position="-40 1 0"></a-entity>
-            <a-entity light="type: ambient; color: #CCC; intensity: 0.5"></a-entity>
-
-
+            <a-entity light="type: ambient; color: #CCC; intensity: 0.4"></a-entity>
             <!-- Luz específica para a Terra e a Lua -->
             <a-entity position=" 0 0 0" rotation="0 0 23.5">
                 <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 84; active: false; body: earth"
