@@ -96,7 +96,7 @@
             </a-entity>
 
 
-            <a-entity id="sun-direction" rotate-continuously="speed: 1">
+            <a-entity id="sun-direction" rotate-continuously="speed: 36" rotate-continuously-gesture>
                 <a-image scale="1.6 0.1 1" position="1 0.8 0" src="#my-image"></a-image>
                 <a-image scale="1.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
                 <a-image scale="1.2 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
@@ -107,37 +107,35 @@
                 <a-image scale="1.4 0.1 1" position="1 -0.6 0" src="#my-image"></a-image>
             </a-entity>
 
-            <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5" orbit-around-sun="radius: 2; duration: 360000">
-                <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
+            <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5" orbit-around-sun="radius: 2; duration: 10000"
+                orbit-around-sun-gesture>
+                <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
                     rotate-continuously="speed: 84; active: false; body: earth" class="clickable" rotation="0 -170 0"
-                    gesture-handler shadow="receive: true">
+                    shadow="receive: true">
+                </a-gltf-model> -->
+                <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
+                    rotation="0 -170 0" shadow="receive: true">
                 </a-gltf-model>
                 <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
             </a-entity>
 
             <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
-
-            <a-entity id="line1" class="interactive-line" line="start: 1.5 0 0; end: 2.5 0 0; color: black"
-                click-listener="month: 0"></a-entity>
-            <a-entity id="line2" class="interactive-line2" line="start: 0 0 -1.5; end: 0 0 -2.5; color: black"
-                event-set__click="material.color: red">
-            </a-entity>
-            <a-entity id=" line3" class="interactive-line" line="start: -1.5 0 0; end: -2.5 0 0; color: black"
-                click-listener="month: 6"></a-entity>
-            <a-entity id="line4" class="interactive-line" line="start: 0 0 1.5; end: 0 0 2.5; color: black"
-                click-listener="month: 9"></a-entity>
-
-
-
         </a-marker>
         <a-entity id="camera" camera>
-
+            <a-cursor></a-cursor>
         </a-entity>
 
     </a-scene>
+
+
+    <div class="div-sunDirection">
+        <img id="arrows-sundirection" src="./assets/arrows-sundirection.png">
+        <img id="earth-image" src="./assets/earth-sun.png">
+    </div>
+
     <div class="circle-back">
         <a href="./index.html">
-            <img src="./assets/images/back.png" alt="back" style="width: 20px; height: 20px" />
+            <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
         </a>
     </div>
     <script>
@@ -178,7 +176,13 @@
         // });
 
 
+        AFRAME.registerComponent('look-at', {
+            schema: { type: 'selector' },
 
+            tick: function () {
+                this.el.object3D.lookAt(this.data.object3D.position)
+            }
+        })
     </script>
 
 </body>

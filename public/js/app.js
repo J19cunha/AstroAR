@@ -95,7 +95,7 @@ function updateMoonImage() {
   const currentImageIndex = Math.floor(normalizedRotation * totalImages);
 
   const moonImageElement = document.getElementById("moon-phase-image-bright");
-  const moonPhaseTextElement = document.getElementById("moonphases-text");
+  const moonPhaseTextElement = document.getElementById("moonphases-space");
 
   if (moonImageElement) {
     moonImageElement.src = images[currentImageIndex].src;
@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("Tempo").style.display = "block";
   document.getElementsByClassName("tab-button")[0].className += " active-tab";
+
+  document
+    .querySelector(".moonphases-button")
+    .addEventListener("click", function () {
+      document.querySelector(".div-com-fundo").classList.toggle("reduced");
+    });
 
   preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
   animateMoonPhase(); // Inicie a animação da fase da lua

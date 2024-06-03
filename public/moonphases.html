@@ -101,7 +101,7 @@
                     </a-gltf-model>
 
                     <!-- <a-entity id="planeMoon" geometry="primitive: plane; width: 1.6; height: 0.9;" position="-1.6 1.8 0"
-                        material="src: #my-texture; transparent: true;" look-at="#camera"
+                        material="src: #my-texture; transparent: true;"     ="#camera"
                         shadow="cast: false; receive: false;"></a-entity> -->
                 </a-entity>
                 <a-cylinder position=" 0 0 0" radius="0.01" height="4" color="#00000"></a-cylinder>
@@ -127,6 +127,7 @@
         </a-marker>
 
         <a-entity id="camera" camera>
+            <a-cursor></a-cursor>
         </a-entity>
     </a-scene>
 
@@ -138,24 +139,28 @@
         <img id="moon-phase-image-bright" alt="Fase da Lua">
     </div> -->
 
+
     <div class="div-com-fundo">
         <div class="moonphases">
             <div class="moonphases-text">
-                <p
-                    style="font-size:12px; font-weight:500 ; color:#ffffff; margin-block-start: 0px; margin-block-end: 6px;">
+                <p class="moonphases-title">
                     Fases da Lua
                 </p>
-                <span id="moonphases-text"
-                    style="font-size: 14px; font-weight:500; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">
+                <span id="moonphases-space" class="moonphases-space"
+                    style="font-size: 14px; font-weight:700; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">
                     Lua Nova
                 </span>
+
             </div>
+            <button class="moonphases-button">
+                <img class="moonphases-icon" src="./assets/arrow-line.png">
+            </button>
+
         </div>
         <div class="image-container">
             <img id="binoculos" src="./assets/binoculos.png">
             <img id="moon-phase-image-bright" alt="Fase da Lua">
         </div>
-
     </div>
 
     <div class="circle-back">
@@ -190,6 +195,10 @@
                 this.el.object3D.lookAt(this.data.object3D.position)
             }
         })
+
+
+
+
 
 
 

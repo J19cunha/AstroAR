@@ -3,8 +3,7 @@
 AFRAME.registerComponent("gesture-handler", {
   schema: {
     enabled: { default: true },
-    rotationFactor: { default: 5 },
-    earthSeasons: { default: false },
+    rotationFactor: { default: 4 },
   },
 
   init: function () {
@@ -34,15 +33,76 @@ AFRAME.registerComponent("gesture-handler", {
   },
 
   handleRotation: function (event) {
-    if (this.isVisible && earthSeasons === false) {
+    const sensitivity = 0.4; // Sensibilidade do movimento do dedo
+    if (this.isVisible) {
       // Apenas incrementos positivos são considerados, deslocamentos negativos são ignorados
       this.el.object3D.rotation.y +=
-        Math.max(0, event.detail.positionChange.x) * this.data.rotationFactor;
+        Math.max(0, event.detail.positionChange.x) *
+        this.data.rotationFactor *
+        sensitivity;
     }
   },
-  handleOrbit: function (event) {
-    if (this.isVisible && earthSeasons === true) {
-    }
+});
+
+AFRAME.registerComponent("orbit-around-sun-gesture", {
+  schema: {
+    radius: { type: "number", default: 2 },
+    duration: { type: "number", default: 10000 }, // Duração de uma órbita completa em milissegundos
+    speed: { type: "number", default: 60 },
+  },
+  init: function () {
+    angle = 0; // Ângulo inicial da órbita
+    this.lastMonthUpdateAngle = 0; // Guarda o último ângulo em que um mês foi incrementado
+
+    // Adiciona o gesto de toque para iniciar a órbita
+    this.el.sceneEl.addEventListener(
+      "onefingermove",
+      this.handleTouch.bind(this)
+    );
+  },
+  handleTouch: function (event) {
+    // Calcula a rotação com base no movimento do toque
+    const dx = event.detail.positionChange.x;
+    const sensitivity = 1; // Sensibilidade do movimento do dedo
+
+    // Calcula a mudança de ângulo com base no movimento do dedo
+    const deltaAngle = dx * sensitivity;
+
+    // Atualiza o ângulo de rotação
+    angle += deltaAngle * this.data.speed;
+
+    // Atualiza a posição na órbita com base no novo ângulo
+    var radians = -THREE.MathUtils.degToRad(angle);
+    var x = Math.cos(radians) * this.data.radius;
+    var z = Math.sin(radians) * this.data.radius;
+    this.el.setAttribute("position", { x: x, y: 0, z: z });
+  },
+});
+
+AFRAME.registerComponent("rotate-continuously-gesture", {
+  schema: {
+    speed: { type: "number", default: 60 },
+  },
+  init: function () {
+    this.accumulatedRotation = 0; // Rastreia o total de rotação acumulada
+
+    // Adiciona o gesto de toque para iniciar a rotação
+    this.el.sceneEl.addEventListener(
+      "onefingermove",
+      this.handleTouch.bind(this)
+    );
+  },
+  handleTouch: function (event) {
+    // Calcula a rotação com base no movimento do toque
+    const dx = event.detail.positionChange.x;
+    const sensitivity = 1; // Sensibilidade do movimento do dedo
+
+    // Calcula a mudança de rotação com base no movimento do dedo
+    const rotationIncrement = dx * sensitivity;
+
+    this.el.object3D.rotation.y += THREE.MathUtils.degToRad(
+      rotationIncrement * this.data.speed
+    );
   },
 });
 

@@ -62,11 +62,87 @@ button{
   border-radius: 5px;
   background-size: cover; /* Cobrir toda a div */
   background-position: center; /* Centralizar o fundo */
+  transition: width 0.3s ease; /* Transição suave para mudança de largura */
 }
 
-.moonphases {
-  align-self: flex-start; /* Alinhar à esquerda */
+
+.div-sunDirection{
+  position: fixed; 
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */
+  border-radius: 5px;
+  flex-direction: row;
+  right: 20px;
+  align-items: center;
+  bottom: 20px; /* Definir a altura da div */
+  z-index: 1000;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  justify-content: center; /* Alinhar itens verticalmente ao centro */
+}
+
+#arrows-sundirection{
+  width: 20%;
+  margin-right: -30px;
+}
+#earth-image{
+  width: 30%;
+}
+
+.div-com-fundo.reduced {
+  width: 40px; /* Largura reduzida */
+  padding: 5px; /* Menos padding */
+  height: auto; /* Mantém a altura automática */
+}
+
+.div-com-fundo.reduced .moonphases-text{
+  padding: 11px;
+  align-self: center;
+  
+}
+
+.div-com-fundo.reduced .moonphases-title {
+  font-size: 16px;
+}
+
+.div-com-fundo.reduced .moonphases-title {
+  writing-mode: vertical-rl; /* Define o texto para vertical da direita para a esquerda */
+  text-orientation: mixed; /* Permite que o texto seja mostrado corretamente em navegadores compatíveis */
+}
+
+.div-com-fundo.reduced .moonphases-space,
+.div-com-fundo.reduced .image-container {
+  display: none; /* Esconder conteúdo não necessário */
+}
+
+.div-com-fundo.reduced .moonphases {
   width: 100%; /* Ocupa toda a largura do contêiner pai */
+  writing-mode: vertical-rl; /* Texto vertical da direita para a esquerda */
+  transform: rotate(180deg); /* Rotacionar texto para ler normalmente */
+}
+
+
+.moonphases {
+  display: flex; /* Usar flexbox para alinhar o texto e o ícone */
+  justify-content: space-between; /* Espaçar elementos ao máximo */
+  align-items: flex-start; /* Alinhar itens verticalmente ao centro */
+  width: 100%; /* Ocupa toda a largura do contêiner pai */
+  margin-bottom: 10px;
+}
+
+.moonphases-title {
+  font-size: 12px;
+  font-weight: 500;
+  color:#ffffff;
+  margin-block-start: 0px; 
+  margin-block-end: 4px;
+}
+
+.moonphases-icon {
+  cursor:pointer;
+  margin-left: 10px; /* Espaço entre o texto e o ícone */
+  width: 25px;
 }
 
 .image-container {
@@ -89,6 +165,7 @@ button{
   width: 40%; 
   height: auto; 
 }
+
 
 
 

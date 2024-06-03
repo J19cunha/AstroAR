@@ -1,5 +1,7 @@
 // Defina isAnimating no topo do seu script para garantir que ele tenha um escopo global dentro deste arquivo
 var isAnimating = false;
+//call script config.js to get the let angle
+let angle = 0;
 
 AFRAME.registerComponent("marker-handler", {
   init: function () {
@@ -34,28 +36,27 @@ AFRAME.registerComponent("orbit-around-sun", {
     active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
   },
   init: function () {
-    this.angle = 0; // Ângulo inicial da órbita
     this.lastMonthUpdateAngle = 0; // Guarda o último ângulo em que um mês foi incrementado
   },
   tick: function (time, timeDelta) {
     if (this.data.active === false) {
+      console.log("Orbita desativada");
       return; // Se a animação não estiver ativa, não faz nada
     } else {
       // Atualiza o ângulo com base no tempo decorrido
-      this.angle -= (360 / this.data.duration) * timeDelta;
-      this.angle %= 360;
+      angle += (360 / this.data.duration) * timeDelta;
+      angle %= 360;
 
       // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
       if (
-        Math.floor(this.angle / 30) !==
-        Math.floor(this.lastMonthUpdateAngle / 30)
+        Math.floor(angle / 30) !== Math.floor(this.lastMonthUpdateAngle / 30)
       ) {
         updateMonthCounter(); // Chama a função para incrementar o mês
-        this.lastMonthUpdateAngle = this.angle; // Atualiza o último ângulo de atualização do mês
+        this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
       }
 
       // Calcula a nova posição na órbita
-      var radians = THREE.MathUtils.degToRad(this.angle);
+      var radians = -THREE.MathUtils.degToRad(angle);
       var x = Math.cos(radians) * this.data.radius;
       var z = Math.sin(radians) * this.data.radius;
       this.el.setAttribute("position", { x: x, y: 0, z: z });
@@ -105,6 +106,18 @@ const months = [
 ];
 const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
 
+function updateMonthCounter() {
+  currentMonthIndex = (currentMonthIndex + 1) % months.length;
+  updateDateInfo(); // Atualiza informações de mês e estação
+}
+
+function updateMonth(increment) {
+  currentMonthIndex =
+    (currentMonthIndex + increment + months.length) % months.length;
+  updateDateInfo(); // Atualiza informações de mês e estação
+  updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
+}
+
 function updateDateInfo() {
   // Atualiza diretamente a estação baseando-se no mês
   if (currentMonthIndex >= 0 && currentMonthIndex < 3) {
@@ -128,21 +141,9 @@ function updateDateInfo() {
   // seasonCounterElement.innerText = seasons[currentSeasonIndex];
 }
 
-function updateMonthCounter() {
-  currentMonthIndex = (currentMonthIndex + 1) % months.length;
-  updateDateInfo(); // Atualiza informações de mês e estação
-}
-
-function updateMonth(increment) {
-  currentMonthIndex =
-    (currentMonthIndex + increment + months.length) % months.length;
-  updateDateInfo(); // Atualiza informações de mês e estação
-  updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
-}
-
 function updateEarthPosition(month) {
   const earthEntity = document.querySelector("[orbit-around-sun]");
-  const angle = (360 / months.length) * month;
+  angle = (360 / months.length) * month;
   const radians = -THREE.MathUtils.degToRad(angle);
   const radius = earthEntity.getAttribute("orbit-around-sun").radius;
   const x = Math.cos(radians) * radius;
