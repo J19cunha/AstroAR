@@ -36,9 +36,6 @@ AFRAME.registerComponent("rotate-continuously", {
     // Acrescentamos um identificador para diferenciar entre Terra e Lua
     body: { type: "string", default: "" }, // 'earth' para Terra, 'moon' para Lua
   },
-  init: function () {
-    this.accumulatedRotation = 0; // Rastreia o total de rotação acumulada
-  },
   tick: function (time, timeDelta) {
     if (this.data.active === false) {
       return; // Se a animação não estiver ativa, não faz nada
@@ -91,7 +88,10 @@ function animateMoonPhase() {
 function updateMoonImage() {
   const rotation = getMoonRotation();
 
-  const normalizedRotation = (rotation % (2 * Math.PI)) / (2 * Math.PI); // Normaliza para [0, 1]
+  // Normalizar a rotação para um intervalo de [0, 1], lidando com valores negativos
+  const normalizedRotation =
+    (((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) /
+    (2 * Math.PI);
   const currentImageIndex = Math.floor(normalizedRotation * totalImages);
 
   const moonImageElement = document.getElementById("moon-phase-image-bright");
@@ -196,7 +196,6 @@ function updateEarthAndMoonRotation(increment) {
     earth.object3D.rotation.y = THREE.MathUtils.degToRad(earthRotation);
     moon.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
     moonPase.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
-
     accumulatedRotation = earth.object3D.rotation.y;
   }
 }
@@ -214,18 +213,26 @@ function updateDayBasedOnEarthRotation() {
 
   let rotationDelta = currentRotationY - accumulatedRotation;
 
-  if (rotationDelta >= twoPi) {
-    rotationDelta -= twoPi;
+  if (rotationDelta >= twoPi || rotationDelta <= -twoPi) {
+    rotationDelta %= twoPi; // Ajuste para o delta dentro do intervalo de -2π a 2π
+
     if (!manualUpdate) {
-      currentDay++;
-      if (currentDay > 28) {
+      if (rotationDelta > 0) {
+        currentDay++;
+      } else {
+        currentDay--;
+      }
+
+      if (currentDay > 27) {
         currentDay = 0;
+      } else if (currentDay < 0) {
+        currentDay = 27;
       }
       document.getElementById("current-day").innerText = `Dia ${currentDay}`;
     } else {
       manualUpdate = false; // Reset manualUpdate after handling it
     }
-    accumulatedRotation += twoPi;
+    accumulatedRotation = currentRotationY;
   }
   requestAnimationFrame(updateDayBasedOnEarthRotation);
 }

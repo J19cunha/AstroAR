@@ -35,11 +35,9 @@ AFRAME.registerComponent("gesture-handler", {
   handleRotation: function (event) {
     const sensitivity = 0.4; // Sensibilidade do movimento do dedo
     if (this.isVisible) {
-      // Apenas incrementos positivos são considerados, deslocamentos negativos são ignorados
+      // Incrementos positivos e negativos são considerados
       this.el.object3D.rotation.y +=
-        Math.max(0, event.detail.positionChange.x) *
-        this.data.rotationFactor *
-        sensitivity;
+        event.detail.positionChange.x * this.data.rotationFactor * sensitivity;
     }
   },
 });
