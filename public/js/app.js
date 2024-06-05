@@ -31,7 +31,7 @@ AFRAME.registerComponent("marker-handler", {
 
 AFRAME.registerComponent("rotate-continuously", {
   schema: {
-    speed: { type: "number", default: 36 },
+    speed: { type: "number", default: 36 }, // Velocidade de rotação em graus por segundo (360 graus em 10 segundos)
     active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
     // Acrescentamos um identificador para diferenciar entre Terra e Lua
     body: { type: "string", default: "" }, // 'earth' para Terra, 'moon' para Lua
@@ -50,12 +50,14 @@ AFRAME.registerComponent("rotate-continuously", {
 
 let currentDay = 0;
 const fasesDaLua = [
-  "Lua Nova",
-  "Lua Crescente",
-  "Quarto Crescente",
-  "Lua Cheia",
-  "Quarto Minguante",
-  "Lua Minguante",
+  "Lua Nova", // Dia 0
+  "Lua Crescente...",
+  "Quarto Crescente", // Dia 7
+  "Lua Crescente...",
+  "Lua Cheia", // Dia 14
+  "Lua Minguante...",
+  "Quarto Minguante", // Dia 21
+  "Lua Minguante...",
 ];
 
 // Supondo que temos 236 imagens para as fases da lua
@@ -102,32 +104,76 @@ function updateMoonImage() {
   }
 
   if (moonPhaseTextElement) {
-    const phaseIndex = getMoonPhaseIndex(normalizedRotation);
+    const phaseIndex = getMoonPhaseIndex(currentDay);
     moonPhaseTextElement.textContent = fasesDaLua[phaseIndex];
   }
 }
-function getMoonPhaseIndex(normalizedRotation) {
-  if (normalizedRotation === 0) {
+// function getMoonPhaseIndex(normalizedRotation) {
+//   const threshold = 0.01; // Small threshold to account for floating-point precision errors
+
+//   if (Math.abs(normalizedRotation - 0) < threshold) {
+//     document.getElementById("moonphases-title").hidden = false;
+//     return 0; // Lua Nova
+//   } else if (normalizedRotation > 0 && normalizedRotation < 0.25 - threshold) {
+//     document.getElementById("moonphases-title").hidden = true;
+//     return 1; // Lua Crescente
+//   } else if (Math.abs(normalizedRotation - 0.25) < threshold) {
+//     document.getElementById("moonphases-title").hidden = false;
+//     return 2; // Quarto Crescente
+//   } else if (
+//     normalizedRotation > 0.25 + threshold &&
+//     normalizedRotation < 0.5 - threshold
+//   ) {
+//     document.getElementById("moonphases-title").hidden = true;
+//     return 3; // Lua Cheia
+//   } else if (Math.abs(normalizedRotation - 0.5) < threshold) {
+//     document.getElementById("moonphases-title").hidden = false;
+//     return 4; // Lua Cheia
+//   } else if (
+//     normalizedRotation > 0.5 + threshold &&
+//     normalizedRotation < 0.75 - threshold
+//   ) {
+//     document.getElementById("moonphases-title").hidden = true;
+//     return 5; // Lua Minguante
+//   } else if (Math.abs(normalizedRotation - 0.75) < threshold) {
+//     document.getElementById("moonphases-title").hidden = false;
+//     return 6; // Quarto Minguante
+//   } else {
+//     document.getElementById("moonphases-title").hidden = true;
+//     return 7; // Lua Minguante
+//   }
+// }
+
+function getMoonPhaseIndex(currentDay) {
+  if (currentDay === 0) {
+    document.getElementById("moonphases-title").hidden = false;
     return 0; // Lua Nova
-  } else if (normalizedRotation > 0 && normalizedRotation < 0.25) {
+  } else if (currentDay > 0 && currentDay < 7) {
+    document.getElementById("moonphases-title").hidden = true;
     return 1; // Lua Crescente
-  } else if (normalizedRotation === 0.25) {
+  } else if (currentDay === 7) {
+    document.getElementById("moonphases-title").hidden = false;
     return 2; // Quarto Crescente
-  } else if (normalizedRotation > 0.25 && normalizedRotation < 0.5) {
-    return 2; // Lua Cheia
-  } else if (normalizedRotation === 0.5) {
-    return 3; // Lua Cheia
-  } else if (normalizedRotation > 0.5 && normalizedRotation < 0.75) {
-    return 4; // Quarto Minguante
-  } else if (normalizedRotation === 0.75) {
+  } else if (currentDay > 7 && currentDay < 14) {
+    document.getElementById("moonphases-title").hidden = true;
+    return 3; // Lua crescente
+  } else if (currentDay === 14) {
+    document.getElementById("moonphases-title").hidden = false;
+    return 4; // Lua Cheia
+  } else if (currentDay > 14 && currentDay < 21) {
+    document.getElementById("moonphases-title").hidden = true;
     return 5; // Lua Minguante
+  } else if (currentDay === 21) {
+    document.getElementById("moonphases-title").hidden = false;
+    return 6; // Quarto Minguante
   } else {
-    return 5; // Lua Minguante
+    document.getElementById("moonphases-title").hidden = true;
+    return 7; // Lua Minguante
   }
 }
 
 function getMoonRotation() {
-  const moonModel = document.getElementById("moonModel");
+  const moonModel = document.getElementById("moon-rotate");
   const rotation = moonModel.object3D.rotation.y;
   return rotation;
 }
@@ -175,10 +221,10 @@ let manualUpdate = false;
 function updateDay(day) {
   manualUpdate = true; // Definindo manualUpdate como true durante a atualização manual do dia
   currentDay += day;
-  if (currentDay > 28) {
+  if (currentDay > 27) {
     currentDay = 0;
   } else if (currentDay < 0) {
-    currentDay = 28 + (currentDay % 28);
+    currentDay = 27;
   }
   updateEarthAndMoonRotation(currentDay);
   document.getElementById("current-day").innerText = `Dia ${currentDay}`;
@@ -189,7 +235,7 @@ function updateEarthAndMoonRotation(increment) {
   const moonRotation = increment * (360 / 28);
 
   const earth = document.getElementById("earthModel");
-  const moon = document.getElementById("moonModel");
+  const moon = document.getElementById("moon-rotate");
   const moonPase = document.getElementById("moon-rotate");
 
   if (earth && moon) {
@@ -250,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
-  animateMoonPhase(); // Inicie a animação da fase da lua
+  requestAnimationFrame(animateMoonPhase);
 
   // Este é o novo botão de alternância
   var toggleButton = document.getElementById("start-animation");
