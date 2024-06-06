@@ -178,29 +178,6 @@ function getMoonRotation() {
   return rotation;
 }
 
-function openTab(evt, tabName) {
-  var i, tabcontent, tabbuttons;
-
-  // Esconde todos os elementos com class="tab-content"
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Remove a classe "active" de todos os elementos com class="tab-button"
-  tabbuttons = document.getElementsByClassName("tab-button");
-  for (i = 0; i < tabbuttons.length; i++) {
-    tabbuttons[i].className = tabbuttons[i].className.replace(
-      " active-tab",
-      ""
-    );
-  }
-
-  // Mostra a aba atual e adiciona a classe "active" ao botão que abriu a aba
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active-tab";
-}
-
 function togglePlayPause() {
   var btn = document.getElementById("play-pause-button");
   if (btn.textContent === "▶️") {
@@ -287,7 +264,6 @@ document.addEventListener("DOMContentLoaded", function () {
   requestAnimationFrame(updateDayBasedOnEarthRotation);
 
   document.getElementById("Tempo").style.display = "block";
-  document.getElementsByClassName("tab-button")[0].className += " active-tab";
 
   document
     .querySelector(".moonphases-button")
@@ -339,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
     var deltaY = currentY - initialY;
 
-    if (deltaY > 0) {
+    if (deltaY < 0) {
       header.classList.add("expanded");
     } else {
       header.classList.remove("expanded");

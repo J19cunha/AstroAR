@@ -17,13 +17,13 @@
 
 
 <body style="margin: 0px; overflow: hidden;">
+
     <div id="draggableModal" class="tab-container">
+        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
         <!-- Conteúdo do Sobre aqui -->
+        <p style="font-size: 20px;">Fases da Lua</p>
         <div class="header" id="header">
-            <div class="tabs">
-                <button class="tab-button" onclick="openTab(event, 'Tempo')">Tempo</button>
-                <button class="tab-button" onclick="openTab(event, 'Definicoes')">Definições</button>
-            </div>
+
             <div id="Tempo" class="tab-content">
                 <div class="play-box">
                     <div class="button-box">
@@ -33,27 +33,21 @@
                     </div>
                     <div class="time-box">
                         <div class="day-shift">
-                            <button id="decrement-day">
+                            <button id="decrement-day" class="round-button">
                                 <i class="fa-solid fa-chevron-right fa-flip-horizontal"
                                     style="color: #9d4b6b; font-size: 20px;"></i>
                             </button>
-                            <span id="current-day" style="padding-left: 10px; padding-right: 10px; font-size: medium;">
-                                Dia 0
+                            <span id="current-day" style="padding-left: 13px; padding-right: 13px;">
+                                <p style="font-size: 16px;"> Dia 0</p>
                             </span>
-                            <button id="increment-day">
+                            <button id="increment-day" class="round-button">
                                 <i class="fa-solid fa-chevron-right" style="color: #9d4b6b; font-size: 20px;"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="Definicoes" class="tab-content"></div>
         </div>
-
-        <p style="font-size: medium;">Fases da Lua</p>
-        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
-
-
 
     </div>
 
@@ -142,7 +136,7 @@
         <div class="moonphases">
             <div class="moonphases-text">
                 <p id="moonphases-title" class="moonphases-title">
-                    Fases da Lua
+                    Fase da Lua
                 </p>
                 <span id="moonphases-space" class="moonphases-space"
                     style="font-size: 14px; font-weight:700; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">

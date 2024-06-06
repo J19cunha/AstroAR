@@ -27,7 +27,7 @@ button{
   cursor: pointer;
   transition: all 0.3s;
   position: absolute; /* ou 'fixed' para posição fixa na tela */
-  bottom: 20px; /* Distância do fundo */
+  top: 20px; /* Distância do fundo */
   left: 20px; /* Distância da esquerda */
   z-index: 1000; /* Assegura que fique no topo */
 }
@@ -37,11 +37,28 @@ button{
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
   justify-content: space-around;
   border-radius: 10px;
   width: 100%;
+}
 
+.round-button {
+  background-color: rgba(255, 255, 255, 0.13); /* Cor do fundo dos botões */
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 5px; /* Espaço entre os botões e o texto */
+}
+
+.round-button i {
+  font-size: 20px;
+  color: #9d4b6b;
 }
 
 
@@ -54,7 +71,7 @@ button{
   justify-content: center; /* Alinhar itens verticalmente ao centro */
   z-index: 1000;
   right: 20px;
-  bottom: 20px; /* Definir a altura da div */
+  top: 20px; /* Definir a altura da div */
   width: 200px; /* Largura adequada para o conteúdo */
   height: auto; /* Altura automática para ajustar ao conteúdo */
   padding: 10px; /* Adicionar algum padding */
@@ -226,42 +243,6 @@ button{
 }
 
 
-
-
-.tabs {
-  display: flex;
-  justify-content: center; /* Centraliza as abas horizontalmente */
-  color: white;
-  background-color: #333333;
-  border-radius: 5px;
-  width: 100%; /* Usa toda a largura disponível */
-}
-
-.tab-button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  color: #ffffff;
-  font-size: medium;
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-  padding: 8px 40px;
-  transition: 0.3s;
-  width: 100%;
-}
-
-.tab-button:hover {
-  background-color: #000000;
-  width: 100%;
-}
-/* Estilo quando a aba está ativa */
-.active-tab, .tab-button:hover {
-  background-color: #000000;
-  width: 100%;
-  color: #ffffff;
-}
-
 /* Box do Tempo*/
 
 .tab-content {
@@ -269,7 +250,6 @@ button{
   margin-bottom: 15px;
   display: none;
   align-self: center;
-  width: 50%;
   border-top: none;
 }
 
@@ -331,7 +311,7 @@ button{
 .time-box {
   padding: 20px;
   padding-bottom: 10px;
-  padding-top: 40px;
+  padding-top: 25px;
   color: #fff; /* Texto branco para contraste */
   text-align: center; /* Centraliza o texto */
 }
@@ -345,17 +325,11 @@ button{
   width: 100%; /* Usa toda a largura disponível dentro do tab-content */
 }
 
-
-
-
-
-
-
 .tab-container {
   display: flex; /* Ativa o flexbox */
   flex-direction: column; /* Organiza os itens em coluna */
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -391,7 +365,7 @@ button{
   overflow: visible;
   width: 100%;
   height: 80%; /* Ajuste conforme necessário */
-  border-bottom: 2px solid #4C4F50; /* Add a bottom border with a thickness of 2px and black color */
+  border-top: 2px solid rgba(255, 255, 255, 0.3); /* Add a bottom border with a thickness of 2px and black color */
 }
 
 
@@ -405,8 +379,7 @@ button{
   align-items: center;
   justify-content: center;
   width: 40px;
-height: 2px;
-
+  height: 2px;
   background-color: #D9D9D9;
   border-radius: 5px;
   margin-bottom: 0px;
