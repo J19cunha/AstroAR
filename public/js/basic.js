@@ -37,10 +37,10 @@ AFRAME.registerComponent("orbit-around-sun", {
   },
   init: function () {
     this.lastMonthUpdateAngle = 0; // Guarda o último ângulo em que um mês foi incrementado
+    updateEarthInclination(); // Inicie a inclinação da Terra
   },
   tick: function (time, timeDelta) {
     if (this.data.active === false) {
-      console.log("Orbita desativada");
       return; // Se a animação não estiver ativa, não faz nada
     } else {
       // Atualiza o ângulo com base no tempo decorrido
@@ -49,7 +49,7 @@ AFRAME.registerComponent("orbit-around-sun", {
 
       // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
       if (
-        Math.floor(angle / 30) !== Math.floor(this.lastMonthUpdateAngle / 30)
+        Math.floor(angle / 29) !== Math.floor(this.lastMonthUpdateAngle / 29)
       ) {
         updateMonthCounter(); // Chama a função para incrementar o mês
         this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
@@ -60,6 +60,7 @@ AFRAME.registerComponent("orbit-around-sun", {
       var x = Math.cos(radians) * this.data.radius;
       var z = Math.sin(radians) * this.data.radius;
       this.el.setAttribute("position", { x: x, y: 0, z: z });
+      updateEarthInclination(); // Atualize a inclinação da Terra
     }
   },
 });
@@ -88,7 +89,7 @@ AFRAME.registerComponent("rotate-continuously", {
   },
 });
 
-let currentMonthIndex = -1; // Index of month in the months array
+let currentMonthIndex = 0; // Index of month in the months array
 let currentSeasonIndex = 0; // Index of season in the seasons array
 const months = [
   "Dezembro",
@@ -106,16 +107,19 @@ const months = [
 ];
 const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
 
+function updateEarthInclination() {
+  const earthImage = document.getElementById("earth-image");
+
+  // Calcula a inclinação com base no ângulo atual da Terra na órbita
+  const maxInclination = 23.5;
+  const inclination =
+    maxInclination * Math.cos(THREE.MathUtils.degToRad(angle));
+  earthImage.style.transform = `rotate(${inclination}deg)`;
+}
+
 function updateMonthCounter() {
   currentMonthIndex = (currentMonthIndex + 1) % months.length;
   updateDateInfo(); // Atualiza informações de mês e estação
-}
-
-function updateMonth(increment) {
-  currentMonthIndex =
-    (currentMonthIndex + increment + months.length) % months.length;
-  updateDateInfo(); // Atualiza informações de mês e estação
-  updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
 }
 
 function updateDateInfo() {
@@ -135,10 +139,10 @@ function updateDateInfo() {
   }
 
   const monthCounterElement = document.getElementById("current-month");
-  // const seasonCounterElement = document.getElementById("current-season");
+  const seasonCounterElement = document.getElementById("space");
 
   monthCounterElement.innerText = months[currentMonthIndex];
-  // seasonCounterElement.innerText = seasons[currentSeasonIndex];
+  seasonCounterElement.textContent = seasons[currentSeasonIndex];
 }
 
 function updateEarthPosition(month) {
@@ -153,6 +157,13 @@ function updateEarthPosition(month) {
   document
     .getElementById("sun-direction")
     .setAttribute("rotation", { x: 0, y: angle, z: 0 });
+}
+
+function updateMonth(increment) {
+  currentMonthIndex =
+    (currentMonthIndex + increment + months.length) % months.length;
+  updateDateInfo(); // Atualiza informações de mês e estação
+  updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
 }
 
 document
@@ -189,35 +200,17 @@ AFRAME.registerComponent("click-listener", {
   },
 });
 
-function openTab(evt, tabName) {
-  var i, tabcontent, tabbuttons;
-
-  // Esconde todos os elementos com class="tab-content"
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Remove a classe "active" de todos os elementos com class="tab-button"
-  tabbuttons = document.getElementsByClassName("tab-button");
-  for (i = 0; i < tabbuttons.length; i++) {
-    tabbuttons[i].className = tabbuttons[i].className.replace(
-      " active-tab",
-      ""
-    );
-  }
-
-  // Mostra a aba atual e adiciona a classe "active" ao botão que abriu a aba
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active-tab";
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("Tempo").style.display = "block";
-  document.getElementsByClassName("tab-button")[0].className += " active-tab";
 
   // Este é o novo botão de alternância
   var toggleButton = document.getElementById("start-animation");
+
+  document
+    .querySelector(".seasons-button")
+    .addEventListener("click", function () {
+      document.querySelector(".div-sunDirection").classList.toggle("reduced");
+    });
 
   var icon = toggleButton.querySelector("i"); // Seleciona o ícone dentro do botão
 
@@ -262,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var currentY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
     var deltaY = currentY - initialY;
 
-    if (deltaY > 0) {
+    if (deltaY < 0) {
       header.classList.add("expanded");
     } else {
       header.classList.remove("expanded");

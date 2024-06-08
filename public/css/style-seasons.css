@@ -1,0 +1,309 @@
+p{
+    font-family: 'Montserrat';
+  }
+  span{
+    font-family: 'Montserrat';
+  }
+  i{
+    font-family: 'Montserrat';
+  }
+  button{
+    font-family: 'Montserrat';
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin: 0;
+    color: inherit; /* Opcional, faz o botão herdar a cor do texto do elemento pai */
+  }
+
+.tab-container {
+    display: flex; /* Ativa o flexbox */
+    flex-direction: column; /* Organiza os itens em coluna */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 80%; /* Faz a caixa preencher 80% da largura da tela */
+    color: white; /* Cor do texto branco para contraste */
+    border-top: rgba(255, 255, 255, 0.2)  solid 1px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: grab;
+  }
+
+.dynamic-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 2px;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+    margin-bottom: 0px;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    height: 0px; /* Altura inicial para mostrar apenas a barra dinâmica e o texto */
+    transition: height 0.05s; /* Transição suave para quando a altura mudar */
+  }
+
+  /* Quando o modal é "expandido" */
+.header.expanded {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    width: 100%;
+    height: 80%; /* Ajuste conforme necessário */
+    border-top: 2px solid rgba(255, 255, 255, 0.3); /* Add a bottom border with a thickness of 2px and black color */
+  }
+  
+  
+  
+
+  .tab-content {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    display: none;
+    align-self: center;
+    border-top: none;
+  }
+  
+  .play-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #000;
+    border-radius: 10px;
+    width: 100%;
+    position: relative; /* Adicionado para servir como referência de posicionamento */
+  }
+  
+  .button-box {
+    display: flex;
+    justify-content: center;
+    position: absolute; /* Modificado para posicionamento absoluto */
+    
+    top: -25px; /* Metade fora, ajuste conforme necessário */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajuste fino para centralização */
+    z-index: 10; /* Garante que fique acima de outros elementos se necessário */
+  }
+  
+  .button-box::before {
+    content: ""; /* Necessário para que o pseudoelemento seja gerado */
+    position: absolute; /* Posicionamento absoluto em relação à "button-box" */
+    width: 62px; /* Largura original do botão + 12px */
+    height: 62px; /* Altura original do botão + 12px */
+    background-color: black; /* Cor de fundo preta */
+    border-radius: 50%; /* Torna o elemento um círculo */
+    top: 50%; /* Posicionamento centrado */
+    left: 50%; /* Posicionamento centrado */
+    transform: translate(-50%, -50%); /* Ajuste fino para centralização perfeita */
+    z-index: -1; /* Coloca atrás do botão */
+  }
+
+  
+  .start-animation {
+    background-color: #9D4B6B; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Faz o botão ser um círculo */
+    width: 50px; /* Largura do botão */
+    height: 50px; /* Altura do botão */
+    font-size: 24px; /* Tamanho do ícone */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .start-animation:hover {
+    background-color: #9D4B6B; /* Verde mais escuro */
+  }
+  
+  .time-box {
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 25px;
+    color: #fff; /* Texto branco para contraste */
+    text-align: center; /* Centraliza o texto */
+  }
+
+  .day-shift{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    width: 100%;
+  }
+  
+  .round-button {
+    background-color: rgba(255, 255, 255, 0.13); /* Cor do fundo dos botões */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 5px; /* Espaço entre os botões e o texto */
+  }
+
+  .round-button i {
+    font-size: 20px;
+    color: #9d4b6b;
+  }
+
+
+
+
+
+  .div-sunDirection {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */
+    right: 20px;
+    align-items: center;
+    top: 20px; /* Definir a altura da div */
+    z-index: 1000;
+    padding:10px;
+    border-radius: 5px;
+    justify-content: center; /* Alinhar itens verticalmente ao centro */
+    transition: width 0.3s ease; /* Transição suave para mudança de largura */
+  }
+
+  .seasons {
+    display: flex; /* Usar flexbox para alinhar o texto e o ícone */
+    justify-content: space-between; /* Espaçar elementos ao máximo */
+    align-items: flex-start; /* Alinhar itens verticalmente ao centro */
+    width: 100%; /* Ocupa toda a largura do contêiner pai */
+  }
+
+  .seasons-panel {
+    display: flex; /* Usar flexbox para alinhar o texto e o ícone */
+    justify-content: space-between; /* Espaçar elementos ao máximo */
+    align-items: center; /* Alinhar itens verticalmente ao centro */
+    width: 100%; /* Ocupa toda a largura do contêiner pai */
+  }
+
+
+#earth-display {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content:end;
+  }
+
+  #arrows-sundirection {
+    width: 80px;
+    margin-right: -25px;
+  }
+  
+  
+  #earth-image {
+    width: 110px;
+    /* animation: rotate 10s linear infinite; */
+  }
+  
+  #shadow-earth {
+    width: 55px;
+    position: absolute;
+  }
+  .clickable{
+    cursor: pointer;
+  }
+  
+  /* @keyframes rotate {
+    0% {
+      transform: rotate(23.5deg);
+    }
+    50% {
+      transform: rotate(-23.5deg);
+    }
+    100% {
+      transform: rotate(23.5deg);
+    }
+  } */
+  
+
+
+.div-sunDirection.reduced {
+    width: 40px; /* Largura reduzida */
+    padding: 5px; /* Menos padding */
+    height: auto; /* Mantém a altura automática */
+  }
+  
+  .div-sunDirection.reduced .text{
+    padding: 11px;
+    align-self: center;
+    
+  }
+  
+  .div-sunDirection.reduced .title {
+    font-size: 16px;
+  }
+  
+  .div-sunDirection.reduced .title {
+    writing-mode: vertical-rl; /* Define o texto para vertical da direita para a esquerda */
+    text-orientation: mixed; /* Permite que o texto seja mostrado corretamente em navegadores compatíveis */
+  }
+  
+  .div-sunDirection.reduced .space,
+  .div-sunDirection.reduced .seasons-panel {
+    display: none; /* Esconder conteúdo não necessário */
+  }
+  
+  .div-sunDirection.reduced .seasons {
+    width: 100%; /* Ocupa toda a largura do contêiner pai */
+    writing-mode: vertical-rl; /* Texto vertical da direita para a esquerda */
+    transform: rotate(180deg); /* Rotacionar texto para ler normalmente */
+  }
+  
+  
+  .title {
+    font-size: 12px;
+    font-weight: 500;
+    color:#ffffff;
+    margin-block-start: 0px; 
+    margin-block-end: 4px;
+  }
+  
+
+  .icon {
+    cursor:pointer;
+    margin-left: 10px; /* Espaço entre o texto e o ícone */
+    width: 25px;
+  }
+
+
+
+  .circle-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com 60% de opacidade */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: absolute; /* ou 'fixed' para posição fixa na tela */
+    top: 20px; /* Distância do fundo */
+    left: 20px; /* Distância da esquerda */
+    z-index: 1000; /* Assegura que fique no topo */
+  }

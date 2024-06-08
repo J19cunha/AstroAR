@@ -6,23 +6,21 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"> </script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
-    <script src="./config.js"></script>
+    <!-- <script src="./config.js"></script> -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <script>
+    <!-- <script>
         localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
-    </script>
+    </script> -->
 </head>
 
-<link rel="stylesheet" href="./css/style-AR.css" />
+<link rel="stylesheet" href="./css/style-seasons.css" />
 
 <body style="margin: 0px; overflow: hidden;">
+
     <div id="draggableModal" class="tab-container">
-        <!-- Conteúdo do Sobre aqui -->
+        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
+        <p style="font-size: 20px;">Estações do ano</p>
         <div class="header" id="header">
-            <div class="tabs">
-                <button class="tab-button" onclick="openTab(event, 'Tempo')">Tempo</button>
-                <button class="tab-button" onclick="openTab(event, 'Definicoes')">Definições</button>
-            </div>
             <div id="Tempo" class="tab-content">
                 <div class="play-box">
                     <div class="button-box">
@@ -31,20 +29,8 @@
                         </button>
                     </div>
                     <div class="time-box">
-                        <!-- <div class="day-shift">
-                            <button id="decrement-season">
-                                <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
-                            </button>
-                            <span id="current-season"
-                                style="padding-left: 10px; padding-right: 10px; font-size: medium;">
-                                Inverno
-                            </span>
-                            <button id="increment-season">
-                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
-                            </button>
-                        </div> -->
                         <div class="day-shift">
-                            <button id="decrement-month">
+                            <button id="decrement-month" class="round-button">
                                 <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
                             </button>
 
@@ -52,17 +38,14 @@
                                 style="padding-left: 10px; padding-right: 10px; font-size: medium;">
                                 Dezembro
                             </span>
-                            <button id="increment-month">
+                            <button id="increment-month" class="round-button">
                                 <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="Definicoes" class="tab-content"></div>
         </div>
-        <p>Estações do ano</p>
-        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
     </div>
 
     <script src="./js/basic.js">
@@ -72,8 +55,12 @@
     <!-- <a-scene embedded arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
         vr-mode-ui="enabled: false" loading-screen="enabled:false" gesture-detector> -->
 
-    <a-scene id="scene" embedded arjs='sourceType:webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; '
-        vr-mode-ui="enabled: false;" loading-screen="enabled:false" gesture-detector click-detector>
+    <!-- <a-scene id="scene" embedded arjs='sourceType:webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; '
+        vr-mode-ui="enabled: false;" loading-screen="enabled:false" gesture-detector click-detector> -->
+
+    <a-scene class="clickable" embedded id="scene" gesture-detector
+        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false"
+        xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
             <a-asset-item id="sun" src="./assets/models/ps1_style_low_poly_sun/scene.gltf"></a-asset-item>
             <a-asset-item id="earth" src="./assets/models/earth-3/scene.gltf"></a-asset-item>
@@ -82,20 +69,19 @@
             <!-- <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item> -->
         </a-assets>
 
-        <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
-            preset="area">
-            <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
+        <!-- <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
+                preset="area"> -->
 
+        <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
+            type="barcode" value="0">
+            <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
             <a-entity id="sun" position="0 0 0">
                 <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
                     class="clickable">
                 </a-gltf-model>
-
                 <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
                     target="#directionaltarget"></a-light>
             </a-entity>
-
-
             <a-entity id="sun-direction" rotate-continuously="speed: 36" rotate-continuously-gesture>
                 <a-image scale="1.6 0.1 1" position="1 0.8 0" src="#my-image"></a-image>
                 <a-image scale="1.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
@@ -106,7 +92,6 @@
                 <a-image scale="1.1 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
                 <a-image scale="1.4 0.1 1" position="1 -0.6 0" src="#my-image"></a-image>
             </a-entity>
-
             <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5" orbit-around-sun="radius: 2; duration: 10000"
                 orbit-around-sun-gesture>
                 <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
@@ -122,16 +107,35 @@
             <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
         </a-marker>
         <a-entity id="camera" camera>
-            <a-cursor></a-cursor>
-        </a-entity>
 
+        </a-entity>
     </a-scene>
 
-
     <div class="div-sunDirection">
-        <img id="arrows-sundirection" src="./assets/arrows-sundirection.png">
-        <img id="earth-image" src="./assets/earth-sun.png">
+        <div class="seasons">
+            <div class="text">
+                <p id="title" class="title">
+                    Estação do ano
+                </p>
+                <span id="space" class="space"
+                    style="font-size: 14px; font-weight:700; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">
+                    Inverno
+                </span>
+            </div>
+            <button class="seasons-button">
+                <img class="icon" src="./assets/arrow-line.png">
+            </button>
+        </div>
+        <div class="seasons-panel">
+            <img id="arrows-sundirection" src="./assets/seasons-display/Group 8629.png">
+            <div id="earth-display">
+                <img id="earth-image" src="./assets/seasons-display/Group 8653.png">
+                <img id="shadow-earth" src="./assets/seasons-display/Ellipse 112.png">
+            </div>
+        </div>
     </div>
+
+
 
     <div class="circle-back">
         <a href="./index.html">

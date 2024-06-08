@@ -57,6 +57,7 @@ AFRAME.registerComponent("orbit-around-sun-gesture", {
       "onefingermove",
       this.handleTouch.bind(this)
     );
+    updateEarthInclination(); // Inicie a inclinação da Terra
   },
   handleTouch: function (event) {
     // Calcula a rotação com base no movimento do toque
@@ -69,11 +70,18 @@ AFRAME.registerComponent("orbit-around-sun-gesture", {
     // Atualiza o ângulo de rotação
     angle += deltaAngle * this.data.speed;
 
+    // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
+    if (Math.floor(angle / 29) !== Math.floor(this.lastMonthUpdateAngle / 29)) {
+      updateMonthCounter(); // Chama a função para incrementar o mês
+      this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
+    }
+
     // Atualiza a posição na órbita com base no novo ângulo
     var radians = -THREE.MathUtils.degToRad(angle);
     var x = Math.cos(radians) * this.data.radius;
     var z = Math.sin(radians) * this.data.radius;
     this.el.setAttribute("position", { x: x, y: 0, z: z });
+    updateEarthInclination(); // Atualize a inclinação da Terra
   },
 });
 

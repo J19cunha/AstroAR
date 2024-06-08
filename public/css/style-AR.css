@@ -16,6 +16,11 @@ button{
   margin: 0;
   color: inherit; /* Opcional, faz o botão herdar a cor do texto do elemento pai */
 }
+.clickable{
+  cursor: pointer;
+}
+
+
 .circle-back {
   display: flex;
   justify-content: center;
@@ -30,16 +35,6 @@ button{
   top: 20px; /* Distância do fundo */
   left: 20px; /* Distância da esquerda */
   z-index: 1000; /* Assegura que fique no topo */
-}
-
-
-.day-shift{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 10px;
-  width: 100%;
 }
 
 .round-button {
@@ -61,7 +56,6 @@ button{
   color: #9d4b6b;
 }
 
-
 /* painel das fases da Lua */
 .div-com-fundo {
   position: fixed; 
@@ -80,37 +74,6 @@ button{
   background-size: cover; /* Cobrir toda a div */
   background-position: center; /* Centralizar o fundo */
   transition: width 0.3s ease; /* Transição suave para mudança de largura */
-}
-
-
-.div-sunDirection{
-  position: fixed; 
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */
-  border-radius: 5px;
-  flex-direction: row;
-  right: 20px;
-  align-items: center;
-  bottom: 20px; /* Definir a altura da div */
-  z-index: 1000;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-radius: 10px;
-  justify-content: center; /* Alinhar itens verticalmente ao centro */
-}
-
-#arrows-sundirection{
-  width: 20%;
-  margin-right: -30px;
-}
-#earth-image{
-  width: 30%;
-}
-
-.div-com-fundo.reduced {
-  width: 40px; /* Largura reduzida */
-  padding: 5px; /* Menos padding */
-  height: auto; /* Mantém a altura automática */
 }
 
 .div-com-fundo.reduced .moonphases-text{
@@ -138,7 +101,6 @@ button{
   writing-mode: vertical-rl; /* Texto vertical da direita para a esquerda */
   transform: rotate(180deg); /* Rotacionar texto para ler normalmente */
 }
-
 
 .moonphases {
   display: flex; /* Usar flexbox para alinhar o texto e o ícone */
@@ -183,10 +145,7 @@ button{
   height: auto; 
 }
 
-
-
-
-.moon-phases-panel {
+/* .moon-phases-panel {
   position: fixed; 
   display: flex;
   z-index: 1000;
@@ -196,54 +155,53 @@ button{
   height: auto;
   background-color: rgba(0, 0, 0);
   border-radius: 8px;
-}
-
-.profile-panel{
-  position: fixed;
-  z-index: 2;
-  width: 300px;
-  height: 200px;
-  background-color: rgba(0, 0, 0);
-  top: 00px;
-  left: 0;
-  border-radius: 8px;
-}
-
-
-
-#moon-phase{
-
-  width: 100%; /* Ocupa toda a largura do contêiner */
-  height: auto; /* Altura automática para manter a proporção */
-  filter: brightness(100%);
-  border-radius: 5px;
-  position: absolute;
-}
-
-
-
-
-
-#moon-phase-image-dark {
-  position: absolute; /* Posicionamento absoluto dentro do contêiner relativo */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ocupa toda a largura do contêiner */
-  height: auto; /* Altura automática para manter a proporção */
-  filter: brightness(30%);
-  clip-path: ellipse(50% 100% at 50% 50%);
-}
-
-
-
-/* menu */
-
-.clickable {
-  cursor: pointer;
-}
+} */
 
 
 /* Box do Tempo*/
+
+
+
+.tab-container {
+  display: flex; /* Ativa o flexbox */
+  flex-direction: column; /* Organiza os itens em coluna */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 80%; /* Faz a caixa preencher 80% da largura da tela */
+  color: white; /* Cor do texto branco para contraste */
+  border-top: rgba(255, 255, 255, 0.2)  solid 1px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  height: 0px; /* Altura inicial para mostrar apenas a barra dinâmica e o texto */
+  transition: height 0.05s; /* Transição suave para quando a altura mudar */
+}
+
+/* Quando o modal é "expandido" */
+.header.expanded {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  width: 100%;
+  height: 80%; /* Ajuste conforme necessário */
+  border-top: 2px solid rgba(255, 255, 255, 0.3); /* Add a bottom border with a thickness of 2px and black color */
+}
 
 .tab-content {
   margin-top: 40px;
@@ -316,59 +274,14 @@ button{
   text-align: center; /* Centraliza o texto */
 }
 
-.hour-shift {
+.day-shift{
   display: flex;
-  flex-direction: row; /* Muda para disposição horizontal */
-  align-items: center; /* Centraliza os itens verticalmente */
-  justify-content: space-around; /* Espaçamento igual entre os itens */ 
-  border-radius: 10px;
-  width: 100%; /* Usa toda a largura disponível dentro do tab-content */
-}
-
-.tab-container {
-  display: flex; /* Ativa o flexbox */
-  flex-direction: column; /* Organiza os itens em coluna */
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  width: 80%; /* Faz a caixa preencher 80% da largura da tela */
-  color: white; /* Cor do texto branco para contraste */
-  border-top: rgba(255, 255, 255, 0.2)  solid 1px;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: grab;
-
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  justify-content: space-around;
+  border-radius: 10px;
   width: 100%;
-  height: 0px; /* Altura inicial para mostrar apenas a barra dinâmica e o texto */
-  transition: height 0.05s; /* Transição suave para quando a altura mudar */
-  
-
 }
-
-/* Quando o modal é "expandido" */
-.header.expanded {
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-  width: 100%;
-  height: 80%; /* Ajuste conforme necessário */
-  border-top: 2px solid rgba(255, 255, 255, 0.3); /* Add a bottom border with a thickness of 2px and black color */
-}
-
-
 
 
 
