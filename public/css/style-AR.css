@@ -61,7 +61,6 @@ button{
   position: fixed; 
   display: flex;
   flex-direction: column; /* Organizar os itens em coluna */
-  align-items: center; /* Alinhar itens horizontalmente ao centro */
   justify-content: center; /* Alinhar itens verticalmente ao centro */
   z-index: 1000;
   right: 20px;

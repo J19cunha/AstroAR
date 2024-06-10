@@ -62,10 +62,10 @@
         arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false"
         xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
-            <a-asset-item id="sun" src="./assets/models/ps1_style_low_poly_sun/scene.gltf"></a-asset-item>
+            <a-asset-item id="sun" src="./assets/models/sun-3/scene.gltf"></a-asset-item>
             <a-asset-item id="earth" src="./assets/models/earth-3/scene.gltf"></a-asset-item>
-            <a-asset-item id="arrow-sun" src="./assets/models/direction_arrow/scene.gltf"></a-asset-item>
             <img id="my-image" src="./assets/Arrow2.png">
+            <a-asset-item id="mascote" src="./assets/models/joana_diss.glb"></a-asset-item>
             <!-- <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item> -->
         </a-assets>
 
@@ -73,7 +73,7 @@
                 preset="area"> -->
 
         <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
-            type="barcode" value="0">
+            type="barcode" value="1">
             <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
             <a-entity id="sun" position="0 0 0">
                 <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
@@ -107,7 +107,6 @@
             <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
         </a-marker>
         <a-entity id="camera" camera>
-
         </a-entity>
     </a-scene>
 

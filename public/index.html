@@ -9,6 +9,12 @@
       background: url('./assets/images/fundo-do-espaco.jpg') no-repeat center center fixed;
       background-size: cover;
       overflow: hidden;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #container {
@@ -16,11 +22,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      height: 100vh;
+      width: 100%;
     }
 
     #header {
       text-align: center;
-      padding-top: 5%;
       padding-bottom: 8%;
       width: 80%;
     }
@@ -44,6 +51,7 @@
       flex-direction: column;
       justify-content: center;
       width: 100%;
+      align-items: center;
     }
 
     .card {
@@ -89,11 +97,9 @@
       #card-container {
         flex-direction: row;
         flex-wrap: wrap;
-
       }
 
       .card {
-
         height: 300px;
         width: 65%;
         max-width: none;
@@ -110,14 +116,12 @@
 
 <body>
   <div id="container">
-
     <div id="header">
       <div id="title">Bem vindo ao AstroAR!</div>
       <div id="subtitle">Clica na experiência que deseja. O dever chama-te!</div>
     </div>
 
     <div id="card-container">
-
       <a class="card" href="./moonphases.html">
         <div class="card-content">
           <p id="title-card">WebAR - </p>
@@ -131,7 +135,6 @@
           <p id="subtitle-card">As estações do ano</p>
         </div>
       </a>
-
     </div>
   </div>
 </body>

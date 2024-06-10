@@ -219,6 +219,13 @@ p{
     width: 110px;
     /* animation: rotate 10s linear infinite; */
   }
+
+  #earth-mascote{
+    width: 50px;
+    position: absolute;
+    top: -10px;
+    left: 45%;
+  }
   
   #shadow-earth {
     width: 55px;
