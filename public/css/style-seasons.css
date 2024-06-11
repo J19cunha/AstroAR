@@ -231,6 +231,13 @@ p{
     width: 55px;
     position: absolute;
   }
+
+  #person{
+    position: absolute;
+    right: 41px;
+    top: 7px;
+    width: 30px;
+  }
   .clickable{
     cursor: pointer;
   }
