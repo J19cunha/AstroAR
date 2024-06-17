@@ -11,168 +11,161 @@ p{
     font-family: 'Montserrat';
     background-color: transparent;
     border: none;
-    padding: 0;
     cursor: pointer;
-    margin: 0;
     color: inherit; /* Opcional, faz o botão herdar a cor do texto do elemento pai */
   }
+  .clickable{
+    cursor: pointer;
+  }
 
-.tab-container {
+
+
+
+  html, body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Evita barras de rolagem */
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat';
+    overflow-x: hidden; /* Evita a rolagem horizontal */
+  }
+  
+  .tab-container {
     display: flex; /* Ativa o flexbox */
-    flex-direction: column; /* Organiza os itens em coluna */
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 15px;
     width: 80%; /* Faz a caixa preencher 80% da largura da tela */
     color: white; /* Cor do texto branco para contraste */
-    border-top: rgba(255, 255, 255, 0.2)  solid 1px;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+   
     cursor: grab;
+  
   }
-
-.dynamic-bar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 2px;
-    background-color: #D9D9D9;
-    border-radius: 5px;
-    margin-bottom: 0px;
-  }
-
+  
   .header {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    width: 100%;
-    height: 0px; /* Altura inicial para mostrar apenas a barra dinâmica e o texto */
-    transition: height 0.05s; /* Transição suave para quando a altura mudar */
-  }
-
-  /* Quando o modal é "expandido" */
-.header.expanded {
     display: flex;
     flex-direction: column;
     overflow: visible;
     width: 100%;
     height: 80%; /* Ajuste conforme necessário */
-    border-top: 2px solid rgba(255, 255, 255, 0.3); /* Add a bottom border with a thickness of 2px and black color */
   }
   
   
-  
-
-  .tab-content {
-    margin-top: 40px;
-    margin-bottom: 15px;
-    display: none;
-    align-self: center;
-    border-top: none;
-  }
   
   .play-box {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #000;
-    border-radius: 10px;
-    width: 100%;
-    position: relative; /* Adicionado para servir como referência de posicionamento */
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    transition: opacity 0.2s;
   }
   
   .button-box {
     display: flex;
-    justify-content: center;
-    position: absolute; /* Modificado para posicionamento absoluto */
-    
-    top: -25px; /* Metade fora, ajuste conforme necessário */
-    left: 50%; /* Centraliza horizontalmente */
-    transform: translateX(-50%); /* Ajuste fino para centralização */
-    z-index: 10; /* Garante que fique acima de outros elementos se necessário */
+    align-items: center;
+    margin-bottom: 13px;
   }
   
-  .button-box::before {
-    content: ""; /* Necessário para que o pseudoelemento seja gerado */
-    position: absolute; /* Posicionamento absoluto em relação à "button-box" */
-    width: 62px; /* Largura original do botão + 12px */
-    height: 62px; /* Altura original do botão + 12px */
-    background-color: black; /* Cor de fundo preta */
-    border-radius: 50%; /* Torna o elemento um círculo */
-    top: 50%; /* Posicionamento centrado */
-    left: 50%; /* Posicionamento centrado */
-    transform: translate(-50%, -50%); /* Ajuste fino para centralização perfeita */
-    z-index: -1; /* Coloca atrás do botão */
-  }
-
+  
+  
+  
   
   .start-animation {
-    background-color: #9D4B6B; /* Verde */
     color: white;
-    border: none;
-    border-radius: 50%; /* Faz o botão ser um círculo */
-    width: 50px; /* Largura do botão */
-    height: 50px; /* Altura do botão */
-    font-size: 24px; /* Tamanho do ícone */
+    font-size: 15px; /* Tamanho do ícone */
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0px;
   }
   
-  .start-animation:hover {
-    background-color: #9D4B6B; /* Verde mais escuro */
-  }
+
   
   .time-box {
-    padding: 20px;
-    padding-bottom: 10px;
-    padding-top: 25px;
     color: #fff; /* Texto branco para contraste */
     text-align: center; /* Centraliza o texto */
+    margin-bottom: 15px;
   }
-
+  
   .day-shift{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     border-radius: 10px;
     width: 100%;
   }
   
-  .round-button {
-    background-color: rgba(255, 255, 255, 0.13); /* Cor do fundo dos botões */
-    border: none;
+  
+  .timeline {
+    flex-grow: 1;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    position: relative;
+    align-content: center;
+  }
+  
+  .week1{
+    margin: 0px 0px 0px 20px;
+  }
+  
+  .week2{
+    margin: 0px 20px 0px 14px;
+  }
+  .week3{
+    margin: 0px 20px 0px -6px;
+  }
+  .week4{
+    margin: 0px 20px 0px -6px;
+  }
+  
+  
+  .timeline-marker {
+    position: absolute;
+    left: -14px;
+  }
+  
+  .circle{
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 5px; /* Espaço entre os botões e o texto */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%);
   }
-
-  .round-button i {
-    font-size: 20px;
-    color: #9d4b6b;
+  
+  .selected .circle{
+    background-color: #9D4B6B;
+    border: 2px solid #9D4B6B;
   }
-
-
-
-
+  
+  .older-event .circle{
+    border-color: #9D4B6B;
+    
+  }
+  
+  
+  .week-text{
+    font-size: 12px;
+    color: white;
+    margin: 0px;
+  }
+  
+  .filling-line{
+    background-color: #9D4B6B;
+    height: 2px;
+    width: 0%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition: width 0.3s ease-in-out; 
+  }
+  
+  
+ /*painel dos raios solares*/
 
   .div-sunDirection {
     position: fixed;
@@ -211,7 +204,7 @@ p{
 
   #arrows-sundirection {
     width: 80px;
-    margin-right: -25px;
+    margin-right: -34px;
   }
   
   
@@ -306,6 +299,8 @@ p{
 
 
 
+ 
+
   .circle-back {
     display: flex;
     justify-content: center;
@@ -319,5 +314,26 @@ p{
     position: absolute; /* ou 'fixed' para posição fixa na tela */
     top: 20px; /* Distância do fundo */
     left: 20px; /* Distância da esquerda */
-    z-index: 1000; /* Assegura que fique no topo */
   }
+
+
+
+.round-button {
+  border-color: rgba(255, 255, 255, 0.5);
+  border-width: 1px;
+  border-radius: 50%;
+  border-style: solid; /* Adiciona esta linha para definir o estilo da borda */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0px;
+}
+
+
+.round-button i {
+  font-size: 10px;
+  color: white;
+}

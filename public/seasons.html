@@ -18,35 +18,73 @@
 <body style="margin: 0px; overflow: hidden;">
 
     <div id="draggableModal" class="tab-container">
-        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
-        <p style="font-size: 20px;">Estações do ano</p>
         <div class="header" id="header">
             <div id="Tempo" class="tab-content">
                 <div class="play-box">
                     <div class="button-box">
                         <button disabled id="start-animation" class="start-animation">
-                            <i class="fa-solid fa-play" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-play" style="color: #ffffff; "></i>
                         </button>
+                        <span id="current-month" class="current-month"
+                            style="font-size: 14px; margin-left: 10px; margin-right: 3px;  font-weight: 700;">
+                            Dezembro
+                        </span>
+                        <span id="december-note" style="font-size: 14px; visibility: hidden;"> - Dia
+                            mais curto do
+                            ano</span>
+
                     </div>
                     <div class="time-box">
                         <div class="day-shift">
                             <button id="decrement-month" class="round-button">
-                                <i class="fa-solid fa-chevron-right fa-flip-horizontal" style="color: #9d4b6b;"></i>
+                                <i class="fa-solid fa-chevron-right fa-flip-horizontal"></i>
                             </button>
 
-                            <span id="current-month"
-                                style="padding-left: 10px; padding-right: 10px; font-size: medium;">
-                                Dezembro
-                            </span>
+                            <div class="timeline week1">
+                                <div class="timeline-marker selected">
+                                    <div class="circle"></div>
+                                    <p class="week-text">21/22 Dez</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+
+                            <div class="timeline week2">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">20/21 Mar</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+                            <div class="timeline week3">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">20/21 Jun</p>
+                                </div>
+
+                                <span class="filling-line"></span>
+                            </div>
+                            <div class="timeline week4">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">22/23 Set</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+
+
+
                             <button id="increment-month" class="round-button">
-                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b;"></i>
+                                <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+
 
     <script src="./js/basic.js">
     </script>
@@ -63,7 +101,7 @@
         xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
             <a-asset-item id="sun" src="./assets/models/sun-3/scene.gltf"></a-asset-item>
-            <a-asset-item id="earth" src="./assets/models/earth-3/scene.gltf"></a-asset-item>
+            <a-asset-item id="earth" src="./assets/models/earth-seasons/scene.gltf"></a-asset-item>
             <img id="my-image" src="./assets/Arrow2.png">
             <a-asset-item id="mascote" src="./assets/models/joana_diss.glb"></a-asset-item>
             <!-- <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item> -->
@@ -82,32 +120,31 @@
                 <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
                     target="#directionaltarget"></a-light>
             </a-entity>
-            <a-entity id="sun-direction" rotate-continuously="speed: 36" rotate-continuously-gesture>
-                <a-image scale="1.6 0.1 1" position="1 0.8 0" src="#my-image"></a-image>
-                <a-image scale="1.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
-                <a-image scale="1.2 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
-                <a-image scale="1 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
-                <a-image scale="0.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
-                <a-image scale="0.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
-                <a-image scale="1.1 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
-                <a-image scale="1.4 0.1 1" position="1 -0.6 0" src="#my-image"></a-image>
+            <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
+
+                <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
+                <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
+                <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
+                <a-image scale="1.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
+                <a-image scale="1.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
+                <a-image scale="2.2 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
             </a-entity>
-            <a-entity id="entity" position="2 0 0" rotation="0 0 -23.5" orbit-around-sun="radius: 2; duration: 10000"
-                orbit-around-sun-gesture>
+            <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
+                orbit-around-sun="radius: 2.5; duration: 20000" orbit-around-sun-gesture>
                 <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
                     rotate-continuously="speed: 84; active: false; body: earth" class="clickable" rotation="0 -170 0"
                     shadow="receive: true">
                 </a-gltf-model> -->
                 <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
-                    rotation="0 -170 0" shadow="receive: true">
+                    rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
                 </a-gltf-model>
                 <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
-                <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.5 0 0" rotation="90 180 -90"
+                <!-- <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.5 0 0" rotation="90 180 -90"
                     shadow="cast: false; receive: false;" id="mascote2">
-                </a-gltf-model>
+                </a-gltf-model> -->
             </a-entity>
 
-            <a-ring radius-inner="2" radius-outer="2.01" material="color: white;" rotation="-90 0 0"></a-ring>
+            <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
         </a-marker>
         <a-entity id="camera" camera>
         </a-entity>
@@ -120,12 +157,12 @@
                     Estação do ano
                 </p>
                 <span id="space" class="space"
-                    style="font-size: 14px; font-weight:700; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">
+                    style="font-size: 16px; font-weight:800; color: #ffffff;margin-block-start: 0px; margin-block-end: 6px;">
                     Inverno
                 </span>
             </div>
             <button class="seasons-button">
-                <img class="icon" src="./assets/arrow-line.png"> 
+                <img class="icon" src="./assets/arrow-line.png">
             </button>
         </div>
         <div class="seasons-panel">
@@ -136,7 +173,6 @@
             </div>
         </div>
     </div>
-    x
 
 
 
@@ -174,13 +210,6 @@
             }
         });
 
-        // AFRAME.registerComponent('click-listener1', {
-        //     init: function () {
-        //         this.el.addEventListener('click', function () {
-        //             alert('I was clicked at: ');
-        //         });
-        //     }
-        // });
 
 
         AFRAME.registerComponent('look-at', {

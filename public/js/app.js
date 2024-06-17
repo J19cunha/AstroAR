@@ -108,41 +108,6 @@ function updateMoonImage() {
     moonPhaseTextElement.textContent = fasesDaLua[phaseIndex];
   }
 }
-// function getMoonPhaseIndex(normalizedRotation) {
-//   const threshold = 0.01; // Small threshold to account for floating-point precision errors
-
-//   if (Math.abs(normalizedRotation - 0) < threshold) {
-//     document.getElementById("moonphases-title").hidden = false;
-//     return 0; // Lua Nova
-//   } else if (normalizedRotation > 0 && normalizedRotation < 0.25 - threshold) {
-//     document.getElementById("moonphases-title").hidden = true;
-//     return 1; // Lua Crescente
-//   } else if (Math.abs(normalizedRotation - 0.25) < threshold) {
-//     document.getElementById("moonphases-title").hidden = false;
-//     return 2; // Quarto Crescente
-//   } else if (
-//     normalizedRotation > 0.25 + threshold &&
-//     normalizedRotation < 0.5 - threshold
-//   ) {
-//     document.getElementById("moonphases-title").hidden = true;
-//     return 3; // Lua Cheia
-//   } else if (Math.abs(normalizedRotation - 0.5) < threshold) {
-//     document.getElementById("moonphases-title").hidden = false;
-//     return 4; // Lua Cheia
-//   } else if (
-//     normalizedRotation > 0.5 + threshold &&
-//     normalizedRotation < 0.75 - threshold
-//   ) {
-//     document.getElementById("moonphases-title").hidden = true;
-//     return 5; // Lua Minguante
-//   } else if (Math.abs(normalizedRotation - 0.75) < threshold) {
-//     document.getElementById("moonphases-title").hidden = false;
-//     return 6; // Quarto Minguante
-//   } else {
-//     document.getElementById("moonphases-title").hidden = true;
-//     return 7; // Lua Minguante
-//   }
-// }
 
 function getMoonPhaseIndex(currentDay) {
   if (currentDay === 0) {
@@ -178,19 +143,6 @@ function getMoonRotation() {
   return rotation;
 }
 
-function togglePlayPause() {
-  var btn = document.getElementById("play-pause-button");
-  if (btn.textContent === "▶️") {
-    // Se o botão mostrar o ícone de play
-    btn.textContent = "⏸"; // Muda para o ícone de pause
-    // Inicie a animação ou mídia aqui
-  } else {
-    // Se o botão mostrar o ícone de pause
-    btn.textContent = "▶️"; // Muda para o ícone de play
-    // Pausa a animação ou mídia aqui
-  }
-}
-
 let accumulatedRotation = 0; // Armazena a rotação total acumulada
 const twoPi = 2 * Math.PI; // Constante para 2π, uma volta completa
 let manualUpdate = false;
@@ -204,7 +156,7 @@ function updateDay(day) {
     currentDay = 27;
   }
   updateEarthAndMoonRotation(currentDay);
-  document.getElementById("current-day").innerText = `Dia ${currentDay}`;
+  document.getElementById("current-day").innerText = `${currentDay} / 27 dias`;
 }
 
 function updateEarthAndMoonRotation(increment) {
@@ -231,37 +183,81 @@ document.getElementById("decrement-day").addEventListener("click", function () {
 });
 
 function updateDayBasedOnEarthRotation() {
-  const earthModel = document.getElementById("earthModel").object3D;
-  const currentRotationY = earthModel.rotation.y;
-
-  let rotationDelta = currentRotationY - accumulatedRotation;
-
-  if (rotationDelta >= twoPi || rotationDelta <= -twoPi) {
-    rotationDelta %= twoPi; // Ajuste para o delta dentro do intervalo de -2π a 2π
-
-    if (!manualUpdate) {
-      if (rotationDelta > 0) {
-        currentDay++;
-      } else {
-        currentDay--;
-      }
-
-      if (currentDay > 27) {
-        currentDay = 0;
-      } else if (currentDay < 0) {
-        currentDay = 27;
-      }
-      document.getElementById("current-day").innerText = `Dia ${currentDay}`;
-    } else {
-      manualUpdate = false; // Reset manualUpdate after handling it
-    }
-    accumulatedRotation = currentRotationY;
-  }
   requestAnimationFrame(updateDayBasedOnEarthRotation);
+  updateDayBasedOnMoonRotation();
+}
+
+function updateDayBasedOnMoonRotation() {
+  const moonRotation = getMoonRotation(); // Obtém a rotação da Lua
+  const totalRotation = 2 * Math.PI; // Rotação completa (uma órbita completa da lua)
+
+  // Normaliza a rotação para um valor entre 0 e 1
+  let normalizedRotation =
+    ((moonRotation % totalRotation) + totalRotation) % totalRotation; //  Normaliza a rotação para um valor entre 0 e totalRotation para garantir que esteja dentro do intervalo correto.
+  let day = Math.floor((normalizedRotation / totalRotation) * 28); // Calcula o dia atual com base na rotação normalizada da lua. Como a órbita da lua é dividida em 28 partes, multiplicamos normalizedRotation por 28 para obter o dia correspondente.
+
+  // Atualiza currentDay apenas se o dia mudou
+  if (day !== currentDay) {
+    currentDay = day; // Atualiza a variável currentDay com o novo valor do dia.
+    document.getElementById(
+      "current-day"
+    ).innerText = `${currentDay} / 27 dias`;
+  }
+  updateProgressBar(); // Atualiza a barra de progresso com base no dia atual
+}
+
+function updateProgressBar() {
+  const timelines = document.querySelectorAll(".timeline");
+
+  for (let i = 0; i < timelines.length; i++) {
+    const timeline = timelines[i];
+    const progressBar = timeline.querySelector(".filling-line");
+    const timelineMarker = timeline.querySelector(".timeline-marker");
+
+    // Defina o intervalo de dias para cada semana
+    const startDay = i * 7; // 0, 7, 14, 21
+    const endDay = (i + 1) * 7; // 7, 14, 21, 28
+
+    // Calcula o progresso dentro do intervalo da semana
+    let progress = 0;
+    if (currentDay >= startDay && currentDay <= endDay) {
+      progress = ((currentDay - startDay) / 7) * 100;
+    } else if (currentDay > endDay) {
+      progress = 100;
+    }
+
+    // Ajusta a largura da filling-line com base no progresso calculado
+    progressBar.style.width = `${progress}%`;
+
+    // Atualiza as classes dos marcadores de timeline
+    if (currentDay >= startDay && currentDay < endDay) {
+      timelineMarker.classList.add("selected");
+      timelineMarker.classList.remove("older-event");
+    } else if (currentDay >= endDay) {
+      timelineMarker.classList.add("older-event");
+      timelineMarker.classList.remove("selected");
+    } else {
+      timelineMarker.classList.remove("selected");
+      timelineMarker.classList.remove("older-event");
+    }
+  }
+
+  // Adiciona a classe .older-event ao marcador anterior
+  const previousTimelineIndex = Math.floor((currentDay - 1) / 7);
+  const previousTimeline = timelines[previousTimelineIndex];
+  if (previousTimeline) {
+    const previousTimelineMarker =
+      previousTimeline.querySelector(".timeline-marker");
+    previousTimelineMarker.classList.add("older-event");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   requestAnimationFrame(updateDayBasedOnEarthRotation);
+  preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
+  requestAnimationFrame(animateMoonPhase);
+
+  updateProgressBar(); // Atualiza a barra de progresso inicialmente
 
   document.getElementById("Tempo").style.display = "block";
 
@@ -270,9 +266,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function () {
       document.querySelector(".div-com-fundo").classList.toggle("reduced");
     });
-
-  preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
-  requestAnimationFrame(animateMoonPhase);
 
   // Este é o novo botão de alternância
   var toggleButton = document.getElementById("start-animation");
@@ -296,44 +289,4 @@ document.addEventListener("DOMContentLoaded", function () {
       icon.style.color = "#ffffff";
     }
   });
-
-  var dynamicBar = document.getElementById("draggableModal");
-  var header = document.getElementById("header");
-
-  var initialY;
-  var dragging = false;
-
-  // Função genérica para iniciar o arrasto
-  function startDrag(e) {
-    initialY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
-    dragging = true;
-  }
-
-  // Função genérica para o movimento de arrasto
-  function onDrag(e) {
-    if (!dragging) return;
-    var currentY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
-    var deltaY = currentY - initialY;
-
-    if (deltaY < 0) {
-      header.classList.add("expanded");
-    } else {
-      header.classList.remove("expanded");
-    }
-  }
-
-  // Função para terminar o arrasto
-  function endDrag() {
-    dragging = false;
-  }
-
-  // Eventos de mouse
-  dynamicBar.addEventListener("mousedown", startDrag);
-  window.addEventListener("mousemove", onDrag);
-  window.addEventListener("mouseup", endDrag);
-
-  // Eventos de toque
-  dynamicBar.addEventListener("touchstart", startDrag);
-  window.addEventListener("touchmove", onDrag);
-  window.addEventListener("touchend", endDrag);
 });

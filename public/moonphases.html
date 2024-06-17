@@ -15,13 +15,10 @@
 
 <link rel="stylesheet" href="./css/style-AR.css" />
 
-
 <body style="margin: 0px; overflow: hidden;">
 
+
     <div id="draggableModal" class="tab-container">
-        <div id="dynamic-bar" class="dynamic-bar"><span></span></div>
-        <!-- Conteúdo do Sobre aqui -->
-        <p style="font-size: 20px;">Fases da Lua</p>
         <div class="header" id="header">
             <div id="Tempo" class="tab-content">
                 <div class="play-box">
@@ -29,18 +26,79 @@
                         <button disabled id="start-animation" class="start-animation">
                             <i class="fa-solid fa-play" style="color: #ffffff; "></i>
                         </button>
+                        <div id="current-day" class="current-day">
+                            <p style="font-size: 14px; margin: 0px;"> 0 / 27 dias</p>
+                        </div>
                     </div>
+
                     <div class="time-box">
                         <div class="day-shift">
                             <button id="decrement-day" class="round-button">
-                                <i class="fa-solid fa-chevron-right fa-flip-horizontal"
-                                    style="color: #9d4b6b; font-size: 20px;"></i>
+                                <i class="fa-solid fa-chevron-right fa-flip-horizontal"></i>
                             </button>
-                            <span id="current-day" style="padding-left: 13px; padding-right: 13px;">
-                                <p style="font-size: 16px;"> Dia 0</p>
-                            </span>
+                            <!-- 
+                           <div class="timeline">
+                                <div class="timeline-marker week1 selected">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 1</p>
+                                </div>
+                                <div class="timeline-marker week2">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 2</p>
+                                </div>
+                                <div class="timeline-marker week3">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 3</p>
+                                </div>
+                                <div class="timeline-marker week4">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 4</p>
+                                </div>
+
+                                <span class="filling-line"></span>
+                            </div>
+                             -->
+
+                            <div class="timeline week1">
+                                <div class="timeline-marker selected">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 1</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+
+                            <div class="timeline week2">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 2</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+                            <div class="timeline week3">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 3</p>
+                                </div>
+
+                                <span class="filling-line"></span>
+                            </div>
+                            <div class="timeline week4">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                    <p class="week-text">Semana 4</p>
+                                </div>
+                                <span class="filling-line"></span>
+                            </div>
+
+
+
+
+
+
+
+
                             <button id="increment-day" class="round-button">
-                                <i class="fa-solid fa-chevron-right" style="color: #9d4b6b; font-size: 20px;"></i>
+                                <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
@@ -82,11 +140,11 @@
             <a-entity light="type: ambient; color: #CCC; intensity: 0.2"></a-entity>
             <!-- Luz específica para a Terra e a Lua -->
             <a-entity position=" 0 0 0" rotation="0 0 -23.5">
-                <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 84; active: false; body: earth"
-                    position="0 0 0" id="earthModel" class="clickable" rotation="0 0 0"
+                <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 168; active: false; body: earth"
+                    position="0 0 0" id="earthModel" class="clickable" rotation="0 190 0"
                     shadow="cast: false; receive: true" class="interactive" gesture-handler="rotationFactor: 84">
                 </a-gltf-model>
-                <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 84; active: false"
+                <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 168; active: false"
                     gesture-handler="rotationFactor: 84">
                     <!-- <a-entity light="type: point; color: #FFF; distance: 1;decay: 10; intensity: 1;" position="1.3 1 0"
                         rotation="0 0 0"></a-entity> -->
@@ -100,9 +158,8 @@
                 </a-entity>
                 <a-cylinder position=" 0 0 0" radius="0.01" height="4" color="#00000"></a-cylinder>
             </a-entity>
-
             <!-- moon  -->
-            <a-entity rotate-continuously="speed: 3; active: false" id="moon-rotate" position="0 0 0" rotation="0 0 0"
+            <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0" rotation="0 0 0"
                 gesture-handler>
                 <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
                 <a-entity gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272" position="-2.5 0 0"

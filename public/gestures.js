@@ -44,7 +44,7 @@ AFRAME.registerComponent("gesture-handler", {
 
 AFRAME.registerComponent("orbit-around-sun-gesture", {
   schema: {
-    radius: { type: "number", default: 2 },
+    radius: { type: "number", default: 2.5 },
     duration: { type: "number", default: 10000 }, // Duração de uma órbita completa em milissegundos
     speed: { type: "number", default: 60 },
   },

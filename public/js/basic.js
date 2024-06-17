@@ -31,7 +31,7 @@ AFRAME.registerComponent("marker-handler", {
 
 AFRAME.registerComponent("orbit-around-sun", {
   schema: {
-    radius: { type: "number", default: 2 },
+    radius: { type: "number", default: 2.5 },
     duration: { type: "number", default: 10000 }, // Duração de uma órbita completa em milissegundos
     active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
   },
@@ -49,7 +49,7 @@ AFRAME.registerComponent("orbit-around-sun", {
 
       // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
       if (
-        Math.floor(angle / 29) !== Math.floor(this.lastMonthUpdateAngle / 29)
+        Math.floor(angle / 30) !== Math.floor(this.lastMonthUpdateAngle / 30)
       ) {
         updateMonthCounter(); // Chama a função para incrementar o mês
         this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
@@ -67,7 +67,7 @@ AFRAME.registerComponent("orbit-around-sun", {
 
 AFRAME.registerComponent("rotate-continuously", {
   schema: {
-    speed: { type: "number", default: 36 },
+    speed: { type: "number", default: 36 }, //  Velocidade de rotação em graus por segundo 360 em 10 segundos
     active: { type: "boolean", default: false }, // Adiciona um novo dado para controle de atividade
   },
   init: function () {
@@ -92,12 +92,12 @@ AFRAME.registerComponent("rotate-continuously", {
 let currentMonthIndex = 0; // Index of month in the months array
 let currentSeasonIndex = 0; // Index of season in the seasons array
 const months = [
-  "Dezembro",
-  "Janeiro",
-  "Fevereiro",
-  "Março",
-  "Abril",
-  "Maio",
+  "Dezembro", //0
+  "Janeiro", //1
+  "Fevereiro", //2
+  "Março", //3
+  "Abril", //4
+  "Maio", //5
   "Junho",
   "Julho",
   "Agosto",
@@ -141,8 +141,20 @@ function updateDateInfo() {
   const monthCounterElement = document.getElementById("current-month");
   const seasonCounterElement = document.getElementById("space");
 
-  monthCounterElement.innerText = months[currentMonthIndex];
   seasonCounterElement.textContent = seasons[currentSeasonIndex];
+
+  if (currentMonthIndex == 0) {
+    document.getElementById("december-note").style.visibility = "visible";
+  } else if (currentMonthIndex == 6) {
+    document.getElementById("december-note").style.visibility = "visible";
+    document.getElementById("december-note").innerText =
+      " - Dia mais longo do ano";
+  } else {
+    document.getElementById("december-note").style.visibility = "hidden";
+  }
+
+  monthCounterElement.innerText = months[currentMonthIndex];
+  updateProgressBar(); // Atualiza a barra de progresso
 }
 
 function updateEarthPosition(month) {
@@ -157,6 +169,7 @@ function updateEarthPosition(month) {
   document
     .getElementById("sun-direction")
     .setAttribute("rotation", { x: 0, y: angle, z: 0 });
+  updateEarthInclination(); // Atualiza a inclinação da Terra
 }
 
 function updateMonth(increment) {
@@ -164,6 +177,49 @@ function updateMonth(increment) {
     (currentMonthIndex + increment + months.length) % months.length;
   updateDateInfo(); // Atualiza informações de mês e estação
   updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
+}
+
+function updateProgressBar() {
+  const timelines = document.querySelectorAll(".timeline");
+
+  for (let i = 0; i < timelines.length; i++) {
+    const timeline = timelines[i];
+    const progressBar = timeline.querySelector(".filling-line");
+    const timelineMarker = timeline.querySelector(".timeline-marker");
+
+    // Defina o intervalo de dias para cada semana
+    const startIndexMonth = i * 3; // 0, 3, 6, 9
+    const endIndexMonth = (i + 1) * 3; // 3, 6, 9, 12
+
+    // Calcula o progresso dentro do intervalo da semana
+    let progress = 0;
+    if (
+      currentMonthIndex >= startIndexMonth &&
+      currentMonthIndex < endIndexMonth
+    ) {
+      progress = ((currentMonthIndex - startIndexMonth) / 3) * 100;
+    } else if (currentMonthIndex >= endIndexMonth) {
+      progress = 100;
+    }
+
+    // Ajusta a largura da filling-line com base no progresso calculado
+    progressBar.style.width = `${progress}%`;
+
+    // Atualiza as classes dos marcadores de timeline
+    if (
+      currentMonthIndex >= startIndexMonth &&
+      currentMonthIndex < endIndexMonth
+    ) {
+      timelineMarker.classList.add("selected");
+      timelineMarker.classList.remove("older-event");
+    } else if (currentMonthIndex >= endIndexMonth) {
+      timelineMarker.classList.add("older-event");
+      timelineMarker.classList.remove("selected");
+    } else {
+      timelineMarker.classList.remove("selected");
+      timelineMarker.classList.remove("older-event");
+    }
+  }
 }
 
 document
@@ -178,29 +234,10 @@ document
     updateMonth(-1);
   });
 
-AFRAME.registerComponent("click-listener", {
-  schema: {
-    month: { type: "number", default: 0 },
-  },
-  init: function () {
-    // Armazena uma referência ao componente dentro de uma variável para acesso correto dentro da função de callback do evento
-    const component = this;
-
-    // Detetar o click na área entre a terra e a componente
-
-    this.el.addEventListener("click", () => {
-      // Atualiza o índice do mês atual para o mês associado ao componente clicado.
-      currentMonthIndex = component.data.month;
-      console.log("Mês atualizado para", months[currentMonthIndex]);
-      // Chama updateDateInfo para atualizar a informação do mês e da estação na interface.
-      updateDateInfo();
-      // Aqui usamos 'component' em vez de 'this' para acessar a propriedade 'data' que contém o mês definido no schema
-      updateEarthPosition(component.data.month);
-    });
-  },
-});
-
 document.addEventListener("DOMContentLoaded", function () {
+  updateProgressBar(); // Atualiza a barra de progresso
+  updateEarthInclination(); // Atualiza a inclinação da Terra
+  updateDateInfo(); // Atualiza informações de mês e estação
   document.getElementById("Tempo").style.display = "block";
 
   // Este é o novo botão de alternância
@@ -236,44 +273,4 @@ document.addEventListener("DOMContentLoaded", function () {
       icon.style.color = "#ffffff";
     }
   });
-
-  var dynamicBar = document.getElementById("draggableModal");
-  var header = document.getElementById("header");
-
-  var initialY;
-  var dragging = false;
-
-  // Função genérica para iniciar o arrasto
-  function startDrag(e) {
-    initialY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
-    dragging = true;
-  }
-
-  // Função genérica para o movimento de arrasto
-  function onDrag(e) {
-    if (!dragging) return;
-    var currentY = e.type.includes("mouse") ? e.clientY : e.touches[0].clientY;
-    var deltaY = currentY - initialY;
-
-    if (deltaY < 0) {
-      header.classList.add("expanded");
-    } else {
-      header.classList.remove("expanded");
-    }
-  }
-
-  // Função para terminar o arrasto
-  function endDrag() {
-    dragging = false;
-  }
-
-  // Eventos de mouse
-  dynamicBar.addEventListener("mousedown", startDrag);
-  window.addEventListener("mousemove", onDrag);
-  window.addEventListener("mouseup", endDrag);
-
-  // Eventos de toque
-  dynamicBar.addEventListener("touchstart", startDrag);
-  window.addEventListener("touchmove", onDrag);
-  window.addEventListener("touchend", endDrag);
 });
