@@ -174,6 +174,7 @@ p{
     align-items: center;
     top: 20px; /* Definir a altura da div */
     z-index: 1000;
+    width: 190px;
     padding:10px;
     border-radius: 5px;
     justify-content: center; /* Alinhar itens verticalmente ao centro */
@@ -189,7 +190,7 @@ p{
 
   .seasons-panel {
     display: flex; /* Usar flexbox para alinhar o texto e o ícone */
-    justify-content: space-between; /* Espaçar elementos ao máximo */
+    justify-content: center; /* Espaçar elementos ao máximo */
     align-items: center; /* Alinhar itens verticalmente ao centro */
     width: 100%; /* Ocupa toda a largura do contêiner pai */
   }
@@ -204,7 +205,7 @@ p{
 
   #arrows-sundirection {
     width: 80px;
-    margin-right: -34px;
+    margin-right: -30px;
   }
   
   
@@ -212,14 +213,17 @@ p{
     width: 110px;
     /* animation: rotate 10s linear infinite; */
   }
-
-  #earth-mascote{
-    width: 50px;
+  .clickable-zone {
     position: absolute;
-    top: -10px;
-    left: 45%;
-  }
-  
+    top: 0%; /* Ajuste conforme necessário */
+    left: 30%; /* Ajuste conforme necessário */
+    width: 40px; /* Ajuste conforme necessário */
+    height: 40px; /* Ajuste conforme necessário */
+    cursor: pointer;
+    z-index: 20;
+}
+
+ 
   #shadow-earth {
     width: 55px;
     position: absolute;
@@ -336,4 +340,71 @@ p{
 .round-button i {
   font-size: 10px;
   color: white;
+}
+
+
+/*popup*/
+.cloudy-overlay {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 40% de opacidade */
+  z-index: 1000; /* Colocar a overlay acima de todo o conteúdo dentro da div-sunDirection */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  border-radius: 5px;
+}
+
+/* Estilos para a imagem centralizada */
+.garden-image {
+  width: 90%; /* Defina a largura desejada */
+  height: 70%; /* Defina a altura desejada */
+  background-image: url('../assets/seasons-display/inclination-garden.png'); /* Defina o caminho da imagem */
+  background-size: cover; /* Garante que a imagem cubra toda a div */
+  background-position: center; /* Centraliza a imagem na div */
+  position: absolute; 
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  overflow-y:hidden; 
+  overflow-x:hidden; 
+
+  bottom: 10px;
+}
+/* Estilos para o ícone de cruz */
+.close-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.down-arrow {
+  display: inline-block;
+  margin: -35px;
+  margin-bottom: 20px;
+  width: 15px;
+  height: 15px;
+  border-top: 2px solid #F7B719;
+  border-left: 2px solid #F7B719;
+  transform-origin: center;
+}
+.down-arrow {
+  transform: rotate(-68.3deg);  /* -45-23.3=-68.3 Inverno, até -135+23.3= -111.7 Verão */
+}
+.down-arrow::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 311px;
+  background-color: #F7B719;
+  transform: rotate(-45deg) translate(109px, 42px);
 }

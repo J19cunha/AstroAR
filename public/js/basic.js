@@ -109,12 +109,38 @@ const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
 
 function updateEarthInclination() {
   const earthImage = document.getElementById("earth-image");
+  const downArrows = document.querySelectorAll(".down-arrow");
 
   // Calcula a inclinação com base no ângulo atual da Terra na órbita
   const maxInclination = 23.5;
   const inclination =
     maxInclination * Math.cos(THREE.MathUtils.degToRad(angle));
   earthImage.style.transform = `rotate(${inclination}deg)`;
+
+  // Atualiza a rotação das setas com base no ângulo atual da Terra na órbita
+  // Define os valores de rotação
+  const winterRotation = -68.3;
+  const summerRotation = -111.7;
+
+  // Calcula o progresso ao longo do ano (0 a 1)
+  const yearProgress = angle / 360;
+
+  // Mapeia o progresso ao longo do ano para a rotação das setas
+  let arrowRotation;
+  if (yearProgress <= 0.5) {
+    // Inverno até verão
+    arrowRotation =
+      winterRotation + (summerRotation - winterRotation) * (yearProgress * 2);
+  } else {
+    // Verão até inverno
+    arrowRotation =
+      summerRotation +
+      (winterRotation - summerRotation) * ((yearProgress - 0.5) * 2);
+  }
+
+  downArrows.forEach((arrow) => {
+    arrow.style.transform = `rotate(${arrowRotation}deg)`;
+  });
 }
 
 function updateMonthCounter() {
@@ -272,5 +298,14 @@ document.addEventListener("DOMContentLoaded", function () {
       icon.className = "fa-solid fa-play";
       icon.style.color = "#ffffff";
     }
+  });
+  document
+    .querySelector(".clickable-zone")
+    .addEventListener("click", function () {
+      document.getElementById("cloudy-overlay").style.visibility = "visible";
+    });
+
+  document.querySelector(".close-icon").addEventListener("click", function () {
+    document.getElementById("cloudy-overlay").style.visibility = "hidden";
   });
 });
