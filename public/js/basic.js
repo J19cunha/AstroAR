@@ -143,6 +143,49 @@ function updateEarthInclination() {
   });
 }
 
+function updateProgressBar() {
+  const timelines = document.querySelectorAll(".timeline");
+
+  for (let i = 0; i < timelines.length; i++) {
+    const timeline = timelines[i];
+    const progressBar = timeline.querySelector(".filling-line");
+    const timelineMarker = timeline.querySelector(".timeline-marker");
+
+    // Defina o intervalo de dias para cada semana
+    const startIndexMonth = i * 3; // 0, 3, 6, 9
+    const endIndexMonth = (i + 1) * 3; // 3, 6, 9, 12
+
+    // Calcula o progresso dentro do intervalo da semana
+    let progress = 0;
+    if (
+      currentMonthIndex >= startIndexMonth &&
+      currentMonthIndex < endIndexMonth
+    ) {
+      progress = ((currentMonthIndex - startIndexMonth) / 3) * 100;
+    } else if (currentMonthIndex >= endIndexMonth) {
+      progress = 100;
+    }
+
+    // Ajusta a largura da filling-line com base no progresso calculado
+    progressBar.style.width = `${progress}%`;
+
+    // Atualiza as classes dos marcadores de timeline
+    if (
+      currentMonthIndex >= startIndexMonth &&
+      currentMonthIndex < endIndexMonth
+    ) {
+      timelineMarker.classList.add("selected");
+      timelineMarker.classList.remove("older-event");
+    } else if (currentMonthIndex >= endIndexMonth) {
+      timelineMarker.classList.add("older-event");
+      timelineMarker.classList.remove("selected");
+    } else {
+      timelineMarker.classList.remove("selected");
+      timelineMarker.classList.remove("older-event");
+    }
+  }
+}
+
 function updateMonthCounter() {
   currentMonthIndex = (currentMonthIndex + 1) % months.length;
   updateDateInfo(); // Atualiza informações de mês e estação
@@ -186,6 +229,10 @@ function updateDateInfo() {
 function updateEarthPosition(month) {
   const earthEntity = document.querySelector("[orbit-around-sun]");
   angle = (360 / months.length) * month;
+
+  document.querySelector("[orbit-around-sun]").components[
+    "orbit-around-sun"
+  ].lastMonthUpdateAngle = angle;
   const radians = -THREE.MathUtils.degToRad(angle);
   const radius = earthEntity.getAttribute("orbit-around-sun").radius;
   const x = Math.cos(radians) * radius;
@@ -203,49 +250,6 @@ function updateMonth(increment) {
     (currentMonthIndex + increment + months.length) % months.length;
   updateDateInfo(); // Atualiza informações de mês e estação
   updateEarthPosition(currentMonthIndex); // Atualiza a posição da Terra
-}
-
-function updateProgressBar() {
-  const timelines = document.querySelectorAll(".timeline");
-
-  for (let i = 0; i < timelines.length; i++) {
-    const timeline = timelines[i];
-    const progressBar = timeline.querySelector(".filling-line");
-    const timelineMarker = timeline.querySelector(".timeline-marker");
-
-    // Defina o intervalo de dias para cada semana
-    const startIndexMonth = i * 3; // 0, 3, 6, 9
-    const endIndexMonth = (i + 1) * 3; // 3, 6, 9, 12
-
-    // Calcula o progresso dentro do intervalo da semana
-    let progress = 0;
-    if (
-      currentMonthIndex >= startIndexMonth &&
-      currentMonthIndex < endIndexMonth
-    ) {
-      progress = ((currentMonthIndex - startIndexMonth) / 3) * 100;
-    } else if (currentMonthIndex >= endIndexMonth) {
-      progress = 100;
-    }
-
-    // Ajusta a largura da filling-line com base no progresso calculado
-    progressBar.style.width = `${progress}%`;
-
-    // Atualiza as classes dos marcadores de timeline
-    if (
-      currentMonthIndex >= startIndexMonth &&
-      currentMonthIndex < endIndexMonth
-    ) {
-      timelineMarker.classList.add("selected");
-      timelineMarker.classList.remove("older-event");
-    } else if (currentMonthIndex >= endIndexMonth) {
-      timelineMarker.classList.add("older-event");
-      timelineMarker.classList.remove("selected");
-    } else {
-      timelineMarker.classList.remove("selected");
-      timelineMarker.classList.remove("older-event");
-    }
-  }
 }
 
 document
