@@ -408,3 +408,31 @@ p{
   background-color: #F7B719;
   transform: rotate(-45deg) translate(109px, 42px);
 }
+
+
+
+
+/*btn info e onboarding*/
+.btns-info {
+  position: absolute;
+  bottom: 150px;
+  flex-direction: column;
+  right: 10px;
+  display: flex;
+  right:20px;
+}
+
+.btns-info .onBoarding-btn, .btns-info .info-btn {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.6); /* Background color for the circles */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff; /* Icon color */
+  cursor: pointer;
+  margin-bottom: 10px; /* Space between the buttons */
+
+  
+}

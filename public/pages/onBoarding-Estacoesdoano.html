@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="../css/style-onBoarding.css">
+    <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+
+<body>
+    <!-- Onboarding overlay -->
+    <div class="onboarding-overlay" id="overlay1">
+        <div class="icons-list">
+            <i class=" fa-solid fa-xmark fa-2x" style="color: #ffffff;" onclick="closeOnboarding()"></i>
+        </div>
+        <div class="onboarding-title">
+            Iluminação
+        </div>
+        <div class="onboarding-description">
+            <p>
+                Certifica-te que a luz não está nem muito intensa nem muito fraca!
+                <br>
+                <br>
+                Depois é só apontares a câmara para o seguinte marcador:
+            </p>
+        </div>
+        <div class="onboarding-marker">
+            <img src="../assets/onBoarding-seasons/marker.png" style="width: 100px;" alt="Hiro Marker">
+        </div>
+
+        <div class="progress-dots">
+            <div class="dot active" id="dot1"></div>
+            <div class="dot" id="dot2"></div>
+            <div class="dot" id="dot3"></div>
+            <div class="dot" id="dot4"></div>
+        </div>
+
+        <button class="onboarding-button" onclick="nextOnboarding()">
+            Proximo
+        </button>
+    </div>
+
+    <div class="onboarding-overlay" id="overlay2" style="visibility: hidden;">
+        <div class="icons-list">
+            <i class="fa-solid fa-chevron-left fa-2x" style="color: #ffffff;" onclick="previousOnboarding()"></i>
+            <i class=" fa-solid fa-xmark fa-2x" style="color: #ffffff;" onclick="closeOnboarding()"></i>
+        </div>
+        <div class="onboarding-title">
+            Animação
+        </div>
+        <div class="onboarding-description">
+            <p>
+                Utiliza a aba dos manipulos para iniciares a animação do modelo.
+                <br>
+                <br>
+                Podes avançar ou recuar nos meses, clicando nas setas!
+            </p>
+        </div>
+        <div class="onboarding-marker">
+            <img src="../assets/onBoarding-seasons/timeline.png" style="width:100%;" alt="Hiro Marker">
+        </div>
+
+        <div class="progress-dots">
+            <div class="dot active" id="dot1"></div>
+            <div class="dot active" id="dot2"></div>
+            <div class="dot" id="dot3"></div>
+            <div class="dot" id="dot4"></div>
+        </div>
+
+        <button class="onboarding-button" onclick="nextOnboarding()">
+            Proximo
+        </button>
+    </div>
+    <div class="onboarding-overlay" id="overlay3" style="visibility: hidden;">
+        <div class="icons-list">
+            <i class="fa-solid fa-chevron-left fa-2x" style="color: #ffffff;" onclick="previousOnboarding()"></i>
+            <i class=" fa-solid fa-xmark fa-2x" style="color: #ffffff;" onclick="closeOnboarding()"></i>
+        </div>
+        <div class="onboarding-title">
+            Visualização
+        </div>
+        <div class="onboarding-description">
+            <p>
+                Para veres a inclinação dos raios solares observa o ecrã. Clica na nossa mascote para descobires mais!
+            </p>
+        </div>
+        <div class="onboarding-marker">
+            <img src="../assets/onBoarding-seasons/ecraSeasons.png" style="width: 240px;" alt="Hiro Marker">
+        </div>
+
+        <div class="progress-dots">
+            <div class="dot active" id="dot1"></div>
+            <div class="dot active" id="dot2"></div>
+            <div class="dot active" id="dot3"></div>
+            <div class="dot" id="dot4"></div>
+        </div>
+
+        <button class="onboarding-button" onclick="nextOnboarding()">
+            Proximo
+        </button>
+    </div>
+    <div class="onboarding-overlay" id="overlay4" style="visibility: hidden;">
+        <div class="icons-list">
+            <i class="fa-solid fa-chevron-left fa-2x" style="color: #ffffff;" onclick="previousOnboarding()"></i>
+            <i class=" fa-solid fa-xmark fa-2x" style="color: #ffffff;" onclick="closeOnboarding()"></i>
+        </div>
+        <div class="onboarding-title">
+            Manipulação
+        </div>
+        <div class="onboarding-description">
+            <p>
+                Podes mover o modelo, ao moveres o dedo verticalmente.
+                <br>
+                <br>
+                Para a direita, avanças e para a esquerda, recuas.
+            </p>
+        </div>
+        <div class="onboarding-marker">
+            <img src="../assets/onBoarding-seasons/manipulation.png" style="width: 150px;" alt="Hiro Marker">
+        </div>
+
+        <div class="progress-dots">
+            <div class="dot active" id="dot1"></div>
+            <div class="dot active" id="dot2"></div>
+            <div class="dot active" id="dot3"></div>
+            <div class="dot active" id="dot4"></div>
+        </div>
+
+        <button class="onboarding-button-close" onclick="closeOnboarding()">
+            Vamos lá.
+        </button>
+    </div>
+
+
+    <script>
+
+
+    </script>
+</body>

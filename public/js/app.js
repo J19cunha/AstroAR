@@ -2,6 +2,60 @@
 var isAnimating = false;
 var markerLostTimeout;
 
+function loadOnboarding() {
+  fetch("../pages/onBoarding-Fasesdalua.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("onboarding-container").innerHTML = data;
+    });
+}
+
+function nextOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+  let currentIndex = 0;
+
+  overlays.forEach((overlay, index) => {
+    if (overlay.style.visibility === "visible") {
+      currentIndex = index;
+    }
+  });
+
+  if (currentIndex < overlays.length - 1) {
+    overlays[currentIndex].style.visibility = "hidden";
+    overlays[currentIndex + 1].style.visibility = "visible";
+  }
+}
+
+function resetOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+
+  // Set all overlays to hidden except the first one
+  overlays.forEach((overlay, index) => {
+    overlay.style.visibility = index === 0 ? "visible" : "hidden";
+  });
+}
+
+function closeOnboarding() {
+  document.getElementById("onboarding-container").style.display = "none";
+  resetOnboarding();
+}
+
+function previousOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+  let currentIndex = 0;
+
+  overlays.forEach((overlay, index) => {
+    if (overlay.style.visibility === "visible") {
+      currentIndex = index;
+    }
+  });
+
+  if (currentIndex > 0) {
+    overlays[currentIndex].style.visibility = "hidden";
+    overlays[currentIndex - 1].style.visibility = "visible";
+  }
+}
+
 AFRAME.registerComponent("marker-handler", {
   init: function () {
     const startButton = document.getElementById("start-animation"); // Obtenha o botão pelo ID
@@ -182,6 +236,14 @@ document.getElementById("decrement-day").addEventListener("click", function () {
   updateDay(-1);
 });
 
+document
+  .getElementById("onBoarding-btn")
+  .addEventListener("click", function () {
+    document.getElementById("onboarding-container").style.display = "block";
+  });
+
+  
+
 function updateDayBasedOnEarthRotation() {
   requestAnimationFrame(updateDayBasedOnEarthRotation);
   updateDayBasedOnMoonRotation();
@@ -253,6 +315,7 @@ function updateProgressBar() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  loadOnboarding();
   requestAnimationFrame(updateDayBasedOnEarthRotation);
   preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
   requestAnimationFrame(animateMoonPhase);

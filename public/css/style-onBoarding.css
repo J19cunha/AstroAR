@@ -1,0 +1,112 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+}
+
+/* Onboarding overlay */
+.onboarding-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 10000; /* Ensure it is above all other elements */
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+    visibility: hidden; /* Change from display: none to visibility: hidden */
+}
+
+.onboarding-overlay:first-of-type {
+    visibility: visible; /* Make the first overlay visible */
+}
+
+.icons-list{
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10000; /* Ensure it is above all other elements */
+    position:fixed;
+    padding: 20px;
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+}
+
+.onboarding-title {
+    font-size: 24px;
+    color: #ffffff;
+    text-align: center;
+   
+}
+
+
+.onboarding-description{
+    font-size: 16px;
+    color: #ffffff;
+    margin-top: 20px; /* Adjust for spacing from the top */
+    text-align: center;
+}
+
+.onboarding-marker {
+    align-self: center;
+    margin-top:40px;
+    margin-bottom: 35px;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px; /* Spacing from the button */
+
+}
+.progress-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #D9D9D9; /* Inactive color */
+    margin: 0 5px;
+    transition: background-color 0.3s;
+}
+.progress-dots .dot.active {
+    background-color: #9D4B6B; /* Active color */
+}
+
+
+
+.onboarding-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    width: 60%;
+            color: #ffffff;
+            background-color: #9D4B6B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 40px; /* Adjust for spacing from the bottom */
+
+
+}
+
+.onboarding-button-close {
+    font-size: 16px;
+    padding: 10px 20px;
+    width: 60%;
+            color: #ffffff;
+            background-color: #9D4B6B;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 40px; /* Adjust for spacing from the bottom */
+
+
+}

@@ -1,3 +1,57 @@
+function loadOnboarding() {
+  fetch("../pages/onBoarding-Estacoesdoano.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("onboarding-container").innerHTML = data;
+    });
+}
+
+function nextOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+  let currentIndex = 0;
+
+  overlays.forEach((overlay, index) => {
+    if (overlay.style.visibility === "visible") {
+      currentIndex = index;
+    }
+  });
+
+  if (currentIndex < overlays.length - 1) {
+    overlays[currentIndex].style.visibility = "hidden";
+    overlays[currentIndex + 1].style.visibility = "visible";
+  }
+}
+
+function resetOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+
+  // Set all overlays to hidden except the first one
+  overlays.forEach((overlay, index) => {
+    overlay.style.visibility = index === 0 ? "visible" : "hidden";
+  });
+}
+
+function closeOnboarding() {
+  document.getElementById("onboarding-container").style.display = "none";
+  resetOnboarding();
+}
+
+function previousOnboarding() {
+  const overlays = document.querySelectorAll(".onboarding-overlay");
+  let currentIndex = 0;
+
+  overlays.forEach((overlay, index) => {
+    if (overlay.style.visibility === "visible") {
+      currentIndex = index;
+    }
+  });
+
+  if (currentIndex > 0) {
+    overlays[currentIndex].style.visibility = "hidden";
+    overlays[currentIndex - 1].style.visibility = "visible";
+  }
+}
+
 // Defina isAnimating no topo do seu script para garantir que ele tenha um escopo global dentro deste arquivo
 var isAnimating = false;
 //call script config.js to get the let angle
@@ -264,7 +318,14 @@ document
     updateMonth(-1);
   });
 
+document
+  .getElementById("onBoarding-btn")
+  .addEventListener("click", function () {
+    document.getElementById("onboarding-container").style.display = "block";
+  });
+
 document.addEventListener("DOMContentLoaded", function () {
+  loadOnboarding();
   updateProgressBar(); // Atualiza a barra de progresso
   updateEarthInclination(); // Atualiza a inclinação da Terra
   updateDateInfo(); // Atualiza informações de mês e estação

@@ -82,12 +82,19 @@ html, body {
   background-size: cover; /* Cobrir toda a div */
   background-position: center; /* Centralizar o fundo */
   transition: width 0.3s ease; /* Transição suave para mudança de largura */
+  transition: height 0.3s ease; /* Transição suave para mudança de largura */
 }
 
 .div-com-fundo.reduced .moonphases-text{
   padding: 11px;
   align-self: center;
   
+}
+
+.div-com-fundo.reduced{
+  width: 40px; /* Largura reduzida */
+    padding: 5px; /* Menos padding */
+    height: auto; /* Mantém a altura automática */
 }
 
 .div-com-fundo.reduced .moonphases-title {
@@ -102,6 +109,12 @@ html, body {
 .div-com-fundo.reduced .moonphases-space,
 .div-com-fundo.reduced .image-container {
   display: none; /* Esconder conteúdo não necessário */
+}
+
+.div-com-fundo.reduced .image-mascote {
+  visibility: hidden; /* Esconder a imagem do mascote */
+  display: none; /* Esconder conteúdo não necessário */
+  width: 0;
 }
 
 .div-com-fundo.reduced .moonphases {
@@ -151,6 +164,33 @@ html, body {
   transform: translate(-50%, -50%); /* Ajuste de centralização */
   width: 40%; 
   height: auto; 
+}
+
+
+
+/*btn info e onboarding*/
+.btns-info {
+  position: absolute;
+  bottom: 150px;
+  flex-direction: column;
+  right: 10px;
+  display: flex;
+  right:20px;
+}
+
+.btns-info .onBoarding-btn, .btns-info .info-btn {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.6); /* Background color for the circles */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff; /* Icon color */
+  cursor: pointer;
+  margin-bottom: 10px; /* Space between the buttons */
+
+  
 }
 
 
