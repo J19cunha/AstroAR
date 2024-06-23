@@ -3,10 +3,18 @@ var isAnimating = false;
 var markerLostTimeout;
 
 function loadOnboarding() {
-  fetch("public/pages/onBoarding-Fasesdalua.html")
-    .then((response) => response.text())
+  fetch("./public/pages/onBoarding-Fasesdalua.html") // Ensure this path is correct
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.text();
+    })
     .then((data) => {
       document.getElementById("onboarding-container").innerHTML = data;
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
     });
 }
 
