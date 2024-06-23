@@ -3,7 +3,7 @@ var isAnimating = false;
 var markerLostTimeout;
 
 function loadOnboarding() {
-  fetch("../public/pages/onBoarding-Fasesdalua.html") // Ensure this path is correct
+  fetch("../pages/onBoarding-Fasesdalua.html") // Ensure this path is correct
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
