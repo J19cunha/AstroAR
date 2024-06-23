@@ -13,6 +13,23 @@
         localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
     </script> -->
 
+    <!-- Your custom script -->
+    <!-- Seu script personalizado -->
+    <script>
+        $(document).ready(function () {
+            console.log("jQuery is loaded");
+
+            // Carregar o conteúdo do arquivo HTML
+            $("#onboarding-container").load("./onBoarding-Fasesdalua.html", function (response, status, xhr) {
+                if (status == "error") {
+                    console.error("Error loading onboarding content: " + xhr.status + " " + xhr.statusText);
+                } else {
+                    console.log("Onboarding content loaded successfully");
+                }
+            });
+        });
+
+    </script>
 
 
 </head>
@@ -21,16 +38,11 @@
 <link rel="stylesheet" href="./css/style-onBoarding.css" />
 
 <body style="margin: 0px; overflow: hidden;">
-    <div id="onboarding-container"></div>
+    <div id="onboarding-container" style="display: none;"></div>
 
-    <!-- Your custom script -->
-    <script>
-        $(function () {
-            $("#onboarding-container").load("./onBoarding-Fasesdalua.html");
-        });
-    </script>
 
     <div class="btns-info">
+
         <button class="onBoarding-btn" id="onBoarding-btn">
             <i class="fa-solid fa-question"></i>
         </button>
@@ -214,6 +226,7 @@
             <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
         </a>
     </div>
+
 
 
 </body>

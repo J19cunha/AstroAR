@@ -231,6 +231,7 @@ document.getElementById("decrement-day").addEventListener("click", function () {
 document
   .getElementById("onBoarding-btn")
   .addEventListener("click", function () {
+    console.log("Onboarding button clicked");
     document.getElementById("onboarding-container").style.display = "block";
   });
 
