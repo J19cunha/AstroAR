@@ -2,22 +2,6 @@
 var isAnimating = false;
 var markerLostTimeout;
 
-function loadOnboarding() {
-  fetch("../pages/onBoarding-Fasesdalua.html") // Ensure this path is correct
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
-      return response.text();
-    })
-    .then((data) => {
-      document.getElementById("onboarding-container").innerHTML = data;
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-}
-
 function nextOnboarding() {
   const overlays = document.querySelectorAll(".onboarding-overlay");
   let currentIndex = 0;
@@ -321,7 +305,6 @@ function updateProgressBar() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadOnboarding();
   requestAnimationFrame(updateDayBasedOnEarthRotation);
   preloadImages(); // Chame preloadImages aqui para garantir que o DOM esteja pronto.
   requestAnimationFrame(animateMoonPhase);

@@ -6,11 +6,14 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"> </script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- <script src="./config.js"></script> -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <!-- <script>
         localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
     </script> -->
+
+
 
 </head>
 
@@ -19,6 +22,13 @@
 
 <body style="margin: 0px; overflow: hidden;">
     <div id="onboarding-container" style="display: none"></div>
+
+    <!-- Your custom script -->
+    <script>
+        $(function () {
+            $("#onboarding-container").load("./pages/onBoarding-Fasesdalua.html");
+        });
+    </script>
 
     <div class="btns-info">
         <button class="onBoarding-btn" id="onBoarding-btn">
@@ -204,43 +214,7 @@
             <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
         </a>
     </div>
-    <script>
 
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const cursor = document.querySelector('a-cursor');
-        //     cursor.addEventListener('click', function (evt) {
-        //         if (evt.detail.intersection) {
-        //             console.log('Clicked at:', evt.detail.intersection.point);
-        //         } else {
-        //             console.log('Clicked without intersection details');
-        //         }
-        //     });
-
-        //     // const scene = document.querySelector('a-scene');
-        //     // scene.addEventListener('click', function (evt) {
-        //     //     console.log('Touch started', evt.detail.intersection.point);
-        //     //     // Handle touch start
-        //     // });
-        // });
-
-
-        AFRAME.registerComponent('look-at', {
-            schema: { type: 'selector' },
-
-            tick: function () {
-                this.el.object3D.lookAt(this.data.object3D.position)
-            }
-        })
-
-
-
-
-
-
-
-
-
-    </script>
 
 </body>
 
