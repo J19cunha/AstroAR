@@ -3,7 +3,7 @@ var isAnimating = false;
 var markerLostTimeout;
 
 function loadOnboarding() {
-  fetch("../pages/onBoarding-Fasesdalua.html")
+  fetch("public/pages/onBoarding-Fasesdalua.html")
     .then((response) => response.text())
     .then((data) => {
       document.getElementById("onboarding-container").innerHTML = data;
@@ -241,8 +241,6 @@ document
   .addEventListener("click", function () {
     document.getElementById("onboarding-container").style.display = "block";
   });
-
-  
 
 function updateDayBasedOnEarthRotation() {
   requestAnimationFrame(updateDayBasedOnEarthRotation);
