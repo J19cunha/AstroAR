@@ -85,10 +85,13 @@ html, body {
   transition: height 0.3s ease; /* Transição suave para mudança de largura */
 }
 
+.moonphases-title-hidden{
+  display: none;
+}
+
 .div-com-fundo.reduced .moonphases-text{
   padding: 11px;
   align-self: center;
-  
 }
 
 .div-com-fundo.reduced{
@@ -97,16 +100,19 @@ html, body {
     height: auto; /* Mantém a altura automática */
 }
 
-.div-com-fundo.reduced .moonphases-title {
+.div-com-fundo.reduced .moonphases-title-hidden {
+  display: block; /* Mostrar o título */
+  color: #ffffff; /* Cor do texto */
   font-size: 16px;
 }
 
-.div-com-fundo.reduced .moonphases-title {
+.div-com-fundo.reduced .moonphases-title-hidden {
   writing-mode: vertical-rl; /* Define o texto para vertical da direita para a esquerda */
   text-orientation: mixed; /* Permite que o texto seja mostrado corretamente em navegadores compatíveis */
 }
 
 .div-com-fundo.reduced .moonphases-space,
+.div-com-fundo.reduced .moonphases-title,
 .div-com-fundo.reduced .image-container {
   display: none; /* Esconder conteúdo não necessário */
 }
@@ -181,6 +187,7 @@ html, body {
 .onBoarding-btn,.info-btn {
   width: 40px;
   height: 40px;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6); /* Background color for the circles */
   border-radius: 50%;
   display: flex;

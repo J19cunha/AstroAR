@@ -1,11 +1,3 @@
-function loadOnboarding() {
-  fetch("../pages/onBoarding-Estacoesdoano.html")
-    .then((response) => response.text())
-    .then((data) => {
-      document.getElementById("onboarding-container").innerHTML = data;
-    });
-}
-
 function nextOnboarding() {
   const overlays = document.querySelectorAll(".onboarding-overlay");
   let currentIndex = 0;
@@ -325,7 +317,6 @@ document
   });
 
 document.addEventListener("DOMContentLoaded", function () {
-  loadOnboarding();
   updateProgressBar(); // Atualiza a barra de progresso
   updateEarthInclination(); // Atualiza a inclinação da Terra
   updateDateInfo(); // Atualiza informações de mês e estação
