@@ -50,8 +50,8 @@ html, body {
   border-width: 1px;
   border-radius: 50%;
   border-style: solid; /* Adiciona esta linha para definir o estilo da borda */
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +61,7 @@ html, body {
 
 
 .round-button i {
-  font-size: 10px;
+  font-size: 15px;
   color: white;
 }
 
@@ -72,7 +72,7 @@ html, body {
   flex-direction: column; /* Organizar os itens em coluna */
   justify-content: center; /* Alinhar itens verticalmente ao centro */
   z-index: 1000;
-  right: 20px;
+  right: 3%;
   top: 20px; /* Definir a altura da div */
   width: 200px; /* Largura adequada para o conteúdo */
   height: auto; /* Altura automática para ajustar ao conteúdo */
@@ -95,7 +95,7 @@ html, body {
 }
 
 .div-com-fundo.reduced{
-  width: 40px; /* Largura reduzida */
+    width: 40px; /* Largura reduzida */
     padding: 5px; /* Menos padding */
     height: auto; /* Mantém a altura automática */
 }
@@ -214,7 +214,7 @@ html, body {
   background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
   border-radius: 5px;
   padding: 15px;
-  width: 80%; /* Faz a caixa preencher 80% da largura da tela */
+  width: 85%; /* Faz a caixa preencher 80% da largura da tela */
   color: white; /* Cor do texto branco para contraste */
  
   cursor: grab;
@@ -251,7 +251,7 @@ html, body {
 
 .start-animation {
   color: white;
-  font-size: 15px; /* Tamanho do ícone */
+  font-size: 25px; /* Tamanho do ícone */
   cursor: pointer;
   padding: 0px;
 }
@@ -287,7 +287,7 @@ html, body {
 }
 
 .week1{
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px 23px;
 }
 
 .week2{
@@ -297,7 +297,7 @@ html, body {
   margin: 0px 20px 0px -6px;
 }
 .week4{
-  margin: 0px 20px 0px -6px;
+  margin: 0px 10px 0px -6px;
 }
 
 

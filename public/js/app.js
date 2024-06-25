@@ -52,11 +52,16 @@ AFRAME.registerComponent("marker-handler", {
   init: function () {
     const startButton = document.getElementById("start-animation"); // Obtenha o botão pelo ID
     var icon = startButton.querySelector("i"); // Seleciona o ícone dentro do botão
+    const incrementDayButton = document.getElementById("increment-day");
+    const decrementDayButton = document.getElementById("decrement-day");
+
     const markerLostDelay = 1000;
 
     this.el.addEventListener("markerFound", () => {
       clearTimeout(markerLostTimeout); // Cancela o temporizador se o marcador for encontrado novamente
       startButton.disabled = false; // Reativa o botão
+      incrementDayButton.disabled = false;
+      decrementDayButton.disabled = false;
     });
 
     this.el.addEventListener("markerLost", () => {
@@ -68,6 +73,8 @@ AFRAME.registerComponent("marker-handler", {
           entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
         });
         startButton.disabled = true; // Desativa o botão
+        incrementDayButton.disabled = true;
+        decrementDayButton.disabled = true;
         icon.className = "fa-solid fa-play";
         isAnimating = false; // Atualize o estado aqui
       }, markerLostDelay);

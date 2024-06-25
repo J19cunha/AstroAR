@@ -53,24 +53,37 @@ AFRAME.registerComponent("marker-handler", {
   init: function () {
     const startButton = document.getElementById("start-animation"); // Obtenha o botão pelo ID
     var icon = startButton.querySelector("i"); // Seleciona o ícone dentro do botão
+    const incrementButton = document.getElementById("increment-month");
+    const decrementButton = document.getElementById("decrement-month");
+
+    const markerLostDelay = 1000;
 
     this.el.addEventListener("markerFound", () => {
+      clearTimeout(markerLostTimeout); // Cancela o temporizador se o marcador for encontrado novamente
       startButton.disabled = false; // Reativa o botão
+      incrementButton.disabled = false;
+      decrementButton.disabled = false;
     });
 
     this.el.addEventListener("markerLost", () => {
-      var animatedEntities = document.querySelectorAll("[rotate-continuously]");
-      var earthEntity = document.querySelectorAll("[orbit-around-sun]");
-      animatedEntities.forEach(function (entity) {
-        entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
-      });
-      earthEntity.forEach(function (entity) {
-        entity.setAttribute("orbit-around-sun", { active: false }); // Alterna o estado da animação
-      });
+      markerLostTimeout = setTimeout(() => {
+        var animatedEntities = document.querySelectorAll(
+          "[rotate-continuously]"
+        );
+        var earthEntity = document.querySelectorAll("[orbit-around-sun]");
+        animatedEntities.forEach(function (entity) {
+          entity.setAttribute("rotate-continuously", { active: false }); // Alterna o estado da animação
+        });
+        earthEntity.forEach(function (entity) {
+          entity.setAttribute("orbit-around-sun", { active: false }); // Alterna o estado da animação
+        });
 
-      startButton.disabled = true; // Desativa o botão
-      icon.className = "fa-solid fa-play";
-      isAnimating = false; // Atualize o estado aqui
+        startButton.disabled = true; // Desativa o botão
+        incrementButton.disabled = true;
+        decrementButton.disabled = true;
+        icon.className = "fa-solid fa-play";
+        isAnimating = false; // Atualize o estado aqui
+      }, markerLostDelay);
     });
   },
 });
@@ -155,6 +168,7 @@ const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
 
 function updateEarthInclination() {
   const earthImage = document.getElementById("earth-image");
+  const clickableZone = document.querySelector(".clickable-zone");
   const downArrows = document.querySelectorAll(".down-arrow");
 
   // Calcula a inclinação com base no ângulo atual da Terra na órbita
@@ -162,6 +176,12 @@ function updateEarthInclination() {
   const inclination =
     maxInclination * Math.cos(THREE.MathUtils.degToRad(angle));
   earthImage.style.transform = `rotate(${inclination}deg)`;
+  // translate y and x
+
+  // Atualiza a posição do ponto de clique
+  const clickableZoneRotation = -90 + inclination;
+  clickableZone.style.transform = `rotate(${clickableZoneRotation}deg)`;
+  clickableZone.style.left = `${10 + inclination}%`;
 
   // Atualiza a rotação das setas com base no ângulo atual da Terra na órbita
   // Define os valores de rotação

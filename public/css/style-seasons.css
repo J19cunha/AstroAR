@@ -41,7 +41,7 @@ p{
     background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
     border-radius: 5px;
     padding: 15px;
-    width: 80%; /* Faz a caixa preencher 80% da largura da tela */
+    width: 85%; /* Faz a caixa preencher 80% da largura da tela */
     color: white; /* Cor do texto branco para contraste */
    
     cursor: grab;
@@ -78,11 +78,28 @@ p{
   
   .start-animation {
     color: white;
-    font-size: 15px; /* Tamanho do ícone */
+    font-size: 25px; /* Tamanho do ícone */
     cursor: pointer;
     padding: 0px;
   }
+
+  .current-month{
+    font-size: 16px;
+  }
+
   
+  @media (max-width: 360px) {
+    .current-month{
+      font-size: 14px;
+    }
+  }
+    
+  @media (max-width: 310px) {
+    .current-month{
+      font-size: 12px;
+    }
+  }
+
 
   
   .time-box {
@@ -110,7 +127,7 @@ p{
   }
   
   .week1{
-    margin: 0px 0px 0px 20px;
+    margin: 0px 0px 0px 23px;
   }
   
   .week2{
@@ -120,7 +137,7 @@ p{
     margin: 0px 20px 0px -6px;
   }
   .week4{
-    margin: 0px 20px 0px -6px;
+    margin: 0px 10px 0px -6px;
   }
   
   
@@ -170,7 +187,7 @@ p{
   .div-sunDirection {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com 40% de opacidade */
-    right: 20px;
+    right: 3%;
     align-items: center;
     top: 20px; /* Definir a altura da div */
     z-index: 1000;
@@ -217,8 +234,8 @@ p{
     position: absolute;
     top: 0%; /* Ajuste conforme necessário */
     left: 30%; /* Ajuste conforme necessário */
-    width: 40px; /* Ajuste conforme necessário */
-    height: 40px; /* Ajuste conforme necessário */
+    width: 60px; /* Ajuste conforme necessário */
+    height: 50px; /* Ajuste conforme necessário */
     cursor: pointer;
     z-index: 20;
 }
@@ -327,8 +344,8 @@ p{
   border-width: 1px;
   border-radius: 50%;
   border-style: solid; /* Adiciona esta linha para definir o estilo da borda */
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -338,7 +355,7 @@ p{
 
 
 .round-button i {
-  font-size: 10px;
+  font-size: 15px;
   color: white;
 }
 
