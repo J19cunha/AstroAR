@@ -1,3 +1,7 @@
+$(document).dblclick(function (e) {
+  e.preventDefault();
+});
+
 function nextOnboarding() {
   const overlays = document.querySelectorAll(".onboarding-overlay");
   let currentIndex = 0;
