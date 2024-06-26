@@ -48,6 +48,7 @@ function previousOnboarding() {
 var isAnimating = false;
 //call script config.js to get the let angle
 let angle = 0;
+var markerLostTimeout;
 
 AFRAME.registerComponent("marker-handler", {
   init: function () {
@@ -59,6 +60,7 @@ AFRAME.registerComponent("marker-handler", {
     const markerLostDelay = 1000;
 
     this.el.addEventListener("markerFound", () => {
+      console.log("Marker Found!");
       clearTimeout(markerLostTimeout); // Cancela o temporizador se o marcador for encontrado novamente
       startButton.disabled = false; // Reativa o botão
       incrementButton.disabled = false;
