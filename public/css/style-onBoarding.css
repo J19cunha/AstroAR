@@ -20,23 +20,34 @@ body, html {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    overflow: auto;
     z-index: 10000; /* Ensure it is above all other elements */
     box-sizing: border-box; /* Ensure padding is included in width and height */
     visibility: hidden; /* Change from display: none to visibility: hidden */
+}
+
+.body-onboarding {
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+    height: 90%; /* Minimum height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .onboarding-overlay:first-of-type {
     visibility: visible; /* Make the first overlay visible */
 }
 
-.icons-list{
+.icons-list {
     justify-content: space-between;
     display: flex;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 10000; /* Ensure it is above all other elements */
-    position:fixed;
+    position: fixed;
     padding: 20px;
     box-sizing: border-box; /* Ensure padding is included in width and height */
 }
@@ -45,11 +56,9 @@ body, html {
     font-size: 24px;
     color: #ffffff;
     text-align: center;
-   
 }
 
-
-.onboarding-description{
+.onboarding-description {
     font-size: 16px;
     color: #ffffff;
     margin-top: 20px; /* Adjust for spacing from the top */
@@ -58,7 +67,7 @@ body, html {
 
 .onboarding-marker {
     align-self: center;
-    margin-top:40px;
+    margin-top: 25px;
     margin-bottom: 35px;
 }
 
@@ -67,8 +76,8 @@ body, html {
     justify-content: center;
     align-items: center;
     margin-bottom: 40px; /* Spacing from the button */
-
 }
+
 .progress-dots .dot {
     width: 10px;
     height: 10px;
@@ -77,36 +86,31 @@ body, html {
     margin: 0 5px;
     transition: background-color 0.3s;
 }
+
 .progress-dots .dot.active {
     background-color: #9D4B6B; /* Active color */
 }
-
-
 
 .onboarding-button {
     font-size: 16px;
     padding: 10px 20px;
     width: 60%;
-            color: #ffffff;
-            background-color: #9D4B6B;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 40px; /* Adjust for spacing from the bottom */
-
-
+    color: #ffffff;
+    background-color: #9D4B6B;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 40px; /* Adjust for spacing from the bottom */
 }
 
 .onboarding-button-close {
     font-size: 16px;
     padding: 10px 20px;
     width: 60%;
-            color: #ffffff;
-            background-color: #9D4B6B;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 40px; /* Adjust for spacing from the bottom */
-
-
+    color: #ffffff;
+    background-color: #9D4B6B;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 40px; /* Adjust for spacing from the bottom */
 }

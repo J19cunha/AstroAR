@@ -41,7 +41,6 @@ AFRAME.registerComponent("gesture-handler", {
     }
   },
 });
-
 AFRAME.registerComponent("orbit-around-sun-gesture", {
   schema: {
     radius: { type: "number", default: 2.5 },
@@ -57,31 +56,52 @@ AFRAME.registerComponent("orbit-around-sun-gesture", {
       "onefingermove",
       this.handleTouch.bind(this)
     );
+
+    this.isVisible = false;
+
+    this.el.sceneEl.addEventListener("markerFound", (e) => {
+      this.isVisible = true;
+    });
+
+    this.el.sceneEl.addEventListener("markerLost", (e) => {
+      this.isVisible = false;
+    });
+
     updateEarthInclination(); // Inicie a inclinação da Terra
   },
   handleTouch: function (event) {
-    // Calcula a rotação com base no movimento do toque
-    const dx = event.detail.positionChange.x;
-    const sensitivity = 1; // Sensibilidade do movimento do dedo
+    if (this.isVisible) {
+      // Calcula a rotação com base no movimento do toque
+      const dx = event.detail.positionChange.x;
+      const sensitivity = 1; // Sensibilidade do movimento do dedo
 
-    // Calcula a mudança de ângulo com base no movimento do dedo
-    const deltaAngle = dx * sensitivity;
+      // Calcula a mudança de ângulo com base no movimento do dedo
+      const deltaAngle = dx * sensitivity;
 
-    // Atualiza o ângulo de rotação
-    angle += deltaAngle * this.data.speed;
+      // Atualiza o ângulo de rotação
+      angle += deltaAngle * this.data.speed;
 
-    // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
-    if (Math.floor(angle / 29) !== Math.floor(this.lastMonthUpdateAngle / 29)) {
-      updateMonthCounter(); // Chama a função para incrementar o mês
-      this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
+      // Manter o ângulo dentro do intervalo de 0 a 360 graus p
+      angle = angle % 360;
+      if (angle < 0) {
+        angle += 360;
+      }
+
+      // Verifica se o ângulo passou de um múltiplo de 30 desde a última atualização
+      if (
+        Math.floor(angle / 30) !== Math.floor(this.lastMonthUpdateAngle / 30)
+      ) {
+        updateMonthCounter(); // Chama a função para incrementar o mês
+        this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
+      }
+
+      // Atualiza a posição na órbita com base no novo ângulo
+      var radians = -THREE.MathUtils.degToRad(angle);
+      var x = Math.cos(radians) * this.data.radius;
+      var z = Math.sin(radians) * this.data.radius;
+      this.el.setAttribute("position", { x: x, y: 0, z: z });
+      updateEarthInclination(); // Atualize a inclinação da Terra
     }
-
-    // Atualiza a posição na órbita com base no novo ângulo
-    var radians = -THREE.MathUtils.degToRad(angle);
-    var x = Math.cos(radians) * this.data.radius;
-    var z = Math.sin(radians) * this.data.radius;
-    this.el.setAttribute("position", { x: x, y: 0, z: z });
-    updateEarthInclination(); // Atualize a inclinação da Terra
   },
 });
 
@@ -97,18 +117,35 @@ AFRAME.registerComponent("rotate-continuously-gesture", {
       "onefingermove",
       this.handleTouch.bind(this)
     );
+
+    this.isVisible = false;
+
+    this.el.sceneEl.addEventListener("markerFound", (e) => {
+      this.isVisible = true;
+    });
+
+    this.el.sceneEl.addEventListener("markerLost", (e) => {
+      this.isVisible = false;
+    });
+
+    updateEarthInclination(); // Inicie a inclinação da Terra
   },
   handleTouch: function (event) {
-    // Calcula a rotação com base no movimento do toque
-    const dx = event.detail.positionChange.x;
-    const sensitivity = 1; // Sensibilidade do movimento do dedo
+    if (this.isVisible) {
+      // Calcula a rotação com base no movimento do toque
+      const dx = event.detail.positionChange.x;
+      const sensitivity = 1; // Sensibilidade do movimento do dedo
 
-    // Calcula a mudança de rotação com base no movimento do dedo
-    const rotationIncrement = dx * sensitivity;
+      // Calcula a mudança de rotação com base no movimento do dedo
+      const rotationIncrement = dx * sensitivity;
 
-    this.el.object3D.rotation.y += THREE.MathUtils.degToRad(
-      rotationIncrement * this.data.speed
-    );
+      this.el.object3D.rotation.y += THREE.MathUtils.degToRad(
+        rotationIncrement * this.data.speed
+      );
+
+      // Atualiza a inclinação da Terra
+      updateEarthInclination();
+    }
   },
 });
 
