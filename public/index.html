@@ -1,29 +1,16 @@
 <!DOCTYPE html>
 <html>
 <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+<link href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'>
 
 <head>
   <title>AstroAR</title>
   <style>
-    @font-face {
-      font-family: 'Tiempos Text';
-      src: url("./css/fonts/TestTiemposCollection/Test Tiempos Text/TestTiemposText-Regular.otf");
-    }
-
-    @font-face {
-      font-family: 'Montserrat';
-      src: url("./css/fonts/Montserrat/static/Montserrat-Regular.ttf");
-    }
-
-    @font-face {
-      font-family: 'Montserrat-Bold';
-      src: url("./css/fonts/Montserrat/static/Montserrat-Medium.ttf");
-    }
-
     html {}
 
     body {
       background: url('./assets/images/fundo-do-espaco.jpg') no-repeat center center fixed;
+      font-family: "Montserrat", sans-serif;
       background-size: cover;
       overflow: hidden;
       margin: 0;
@@ -35,15 +22,33 @@
       align-items: center;
     }
 
-    #container {
+    #container-all {
       display: flex;
       padding: 75px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
       height: 100vh;
+    }
+
+    #header-logo {
+      font-size: 3em;
+      color: white;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    #container {
+      display: flex;
+
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      height: 100vh;
       width: 100%;
     }
+
+
 
     #header {
       padding-bottom: 80px;
@@ -58,10 +63,11 @@
 
     #subtitle {
       margin-top: 50px;
-      font-family: 'Montserrat';
       font-size: 2.2em;
       color: white;
+      font-weight: 300;
       line-height: 1.5;
+
     }
 
     #card-container {
@@ -98,11 +104,11 @@
     }
 
     #title-card {
-      font-family: 'Montserrat-Bold';
       font-weight: 500;
       font-size: 2.4em;
       margin-right: 10px;
       align-content: center;
+      align-self: center;
     }
 
     #subtitle-card {
@@ -132,32 +138,39 @@
 </head>
 
 <body>
-  <div id="container">
-    <div id="header">
-      <div id="title">Explora o universo através da AstroAR.
-      </div>
-      <div id="subtitle">Bem-vindo ao AstroAR, uma ferramenta interativa onde poderás aprender os fenómenos das Fases da
-        Lua e das Estações do Ano através de Realidade Aumentada.</div>
+  <div id="container-all">
+    <div id="header-logo">
+      <p>AstroAR</p>
     </div>
+    <div id="container">
 
-    <div id="card-container">
-      <a class="card" href="./moonphases.html">
-        <div class="card-content">
-          <p id="title-card">Explora a Fases da Lua</p>
-          <p id="subtitle-card">
-            <i class="fa-solid fa-arrow-right"></i>
-          </p>
+      <div id="header">
+        <div id="title">Explora o universo através da AstroAR.
         </div>
-      </a>
+        <div id="subtitle">Bem-vindo ao AstroAR, uma ferramenta interativa onde poderás aprender os fenómenos das Fases
+          da
+          Lua e das Estações do Ano através de Realidade Aumentada.</div>
+      </div>
 
-      <a class="card" href="./seasons.html">
-        <div class="card-content">
-          <p id="title-card">Explora as Estações do Ano</p>
-          <p id="subtitle-card">
-            <i class="fa-solid fa-arrow-right"></i>
-          </p>
-        </div>
-      </a>
+      <div id="card-container">
+        <a class="card" href="./moonphases.html">
+          <div class="card-content">
+            <p id="title-card">Explora a Fases da Lua</p>
+            <p id="subtitle-card">
+              <i class="fa-solid fa-arrow-right"></i>
+            </p>
+          </div>
+        </a>
+
+        <a class="card" href="./seasons.html">
+          <div class="card-content">
+            <p id="title-card">Explora as Estações do Ano</p>
+            <p id="subtitle-card">
+              <i class="fa-solid fa-arrow-right"></i>
+            </p>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </body>

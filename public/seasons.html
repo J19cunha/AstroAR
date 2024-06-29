@@ -33,7 +33,7 @@
 
 <body style="margin: 0px; overflow: hidden;">
 
-    <div id="onboarding-container" style="display: block;"></div>
+    <div id="onboarding-container" style="display: none;"></div>
 
     <div class="btns-info">
         <button class="onBoarding-btn" id="onBoarding-btn">
@@ -137,39 +137,41 @@
 
         <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
             type="barcode" value="1">
-            <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
-            <a-entity id="sun" position="0 0 0">
-                <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
-                    class="clickable">
-                </a-gltf-model>
-                <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
-                    target="#directionaltarget"></a-light>
-            </a-entity>
-            <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
+            <a-entity gesture-scale>
+                <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
+                <a-entity id="sun" position="0 0 0">
+                    <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
+                        class="clickable">
+                    </a-gltf-model>
+                    <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
+                        target="#directionaltarget"></a-light>
+                </a-entity>
+                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
 
-                <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
-                <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
-                <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
-                <a-image scale="1.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
-                <a-image scale="1.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
-                <a-image scale="2.2 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
-            </a-entity>
-            <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
-                orbit-around-sun="radius: 2.5; duration: 20000" orbit-around-sun-gesture>
-                <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
+                    <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
+                    <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
+                    <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
+                    <a-image scale="1.9 0.1 1" position="1 0 0" src="#my-image"></a-image>
+                    <a-image scale="1.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
+                    <a-image scale="2.2 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
+                </a-entity>
+                <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
+                    orbit-around-sun="radius: 2.5; duration: 20000" orbit-around-sun-gesture>
+                    <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
                     rotate-continuously="speed: 84; active: false; body: earth" class="clickable" rotation="0 -170 0"
                     shadow="receive: true">
                 </a-gltf-model> -->
-                <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
-                    rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
-                </a-gltf-model>
-                <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
-                <!-- <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.5 0 0" rotation="90 180 -90"
+                    <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
+                        rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
+                    </a-gltf-model>
+                    <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
+                    <!-- <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.5 0 0" rotation="90 180 -90"
                     shadow="cast: false; receive: false;" id="mascote2">
                 </a-gltf-model> -->
-            </a-entity>
+                </a-entity>
 
-            <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+                <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+            </a-entity>
         </a-marker>
         <a-entity id="camera" camera>
         </a-entity>
@@ -208,7 +210,7 @@
         <div class="seasons-panel">
             <img id="arrows-sundirection" src="./assets/seasons-display/Group 8629.png">
             <div id="earth-display">
-                <img id="earth-image" src="./assets/seasons-display/Group 8674-2.png">
+                <img id="earth-image" src="./assets/seasons-display/Group 8674-3.png">
                 <div class="clickable-zone"></div>
                 <img id="shadow-earth" src="./assets/seasons-display/Ellipse 112.png">
             </div>

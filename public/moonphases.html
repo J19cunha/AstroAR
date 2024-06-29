@@ -7,7 +7,6 @@
     <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- <script src="./config.js"></script> -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <!-- <script>
         localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
     </script> -->
@@ -37,7 +36,7 @@
 <link rel="stylesheet" href="./css/style-onBoarding.css" />
 
 <body style="margin: 0px; overflow: hidden;">
-    <div id="onboarding-container" style="display: block;"></div>
+    <div id="onboarding-container" style="display: none;"></div>
 
 
     <div class="btns-info">
@@ -134,46 +133,49 @@
 
         <a-marker marker-handler markerhandler emitevents="true" cursor="rayOrigin: mouse; fuse: true"
             id="animated-marker" type="barcode" value="0">
-
-            <!-- Luz geral sem projeção de sombras -->
-            <a-entity
-                light="type: directional; color: #FFF; intensity: 3.5; castShadow: true; shadowCameraVisible: false"
-                position="-40 1 0"></a-entity>
-            <a-entity light="type: ambient; color: #CCC; intensity: 0.2"></a-entity>
-            <!-- Luz específica para a Terra e a Lua -->
-            <a-entity position=" 0 0 0" rotation="0 0 -23.5">
-                <a-gltf-model src="#earth" scale="1 1 1" rotate-continuously="speed: 168; active: false; body: earth"
-                    position="0 0 0" id="earthModel" class="clickable" rotation="0 190 0"
-                    shadow="cast: false; receive: true" class="interactive" gesture-handler="rotationFactor: 84">
-                </a-gltf-model>
-                <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 168; active: false"
-                    gesture-handler="rotationFactor: 84">
-                    <!-- <a-entity light="type: point; color: #FFF; distance: 1;decay: 10; intensity: 1;" position="1.3 1 0"
-                        rotation="0 0 0"></a-entity> -->
-                    <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.9 0.7 0" rotation="90 180 -90"
-                        shadow="cast: false; receive: false;" id="mascote2">
+            <a-entity gesture-scale>
+                <!-- Luz geral sem projeção de sombras -->
+                <a-entity
+                    light="type: directional; color: #FFF; intensity: 3.5; castShadow: true; shadowCameraVisible: false"
+                    position="-40 1 0"></a-entity>
+                <a-entity light="type: ambient; color: #CCC; intensity: 0.2"></a-entity>
+                <!-- Luz específica para a Terra e a Lua -->
+                <a-entity position=" 0 0 0" rotation="0 0 -23.5">
+                    <a-gltf-model src="#earth" scale="1 1 1"
+                        rotate-continuously="speed: 168; active: false; body: earth" position="0 0 0" id="earthModel"
+                        class="clickable" rotation="0 190 0" shadow="cast: false; receive: true" class="interactive"
+                        gesture-handler="rotationFactor: 84">
                     </a-gltf-model>
+                    <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 168; active: false"
+                        gesture-handler="rotationFactor: 84">
+                        <!-- <a-entity light="type: point; color: #FFF; distance: 1;decay: 10; intensity: 1;" position="1.3 1 0"
+                    rotation="0 0 0"></a-entity> -->
+                        <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.9 0.7 0" rotation="90 180 -90"
+                            shadow="cast: false; receive: false;" id="mascote2">
+                        </a-gltf-model>
 
-                    <!-- <a-entity id="planeMoon" geometry="primitive: plane; width: 1.6; height: 0.9;" position="-1.6 1.8 0"
-                        material="src: #my-texture; transparent: true;"     ="#camera"
-                        shadow="cast: false; receive: false;"></a-entity> -->
+                        <!-- <a-entity id="planeMoon" geometry="primitive: plane; width: 1.6; height: 0.9;" position="-1.6 1.8 0"
+                    material="src: #my-texture; transparent: true;"     ="#camera"
+                    shadow="cast: false; receive: false;"></a-entity> -->
+                    </a-entity>
+                    <a-cylinder position=" 0 0 0" radius="0.01" height="4" color="#00000"></a-cylinder>
                 </a-entity>
-                <a-cylinder position=" 0 0 0" radius="0.01" height="4" color="#00000"></a-cylinder>
-            </a-entity>
-            <!-- moon  -->
-            <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0" rotation="0 0 0"
-                gesture-handler>
-                <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
-                <a-entity gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272" position="-2.5 0 0"
-                    rotation="0 0 0" class="clickable" update-panel-position>
+                <!-- moon  -->
+                <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0"
+                    rotation="0 0 0" gesture-handler>
+                    <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+                    <a-entity gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272" position="-2.5 0 0"
+                        rotation="0 0 0" class="clickable" update-panel-position>
+                    </a-entity>
+                    <!-- <a-entity light="type: point; color: #FFF; distance: 1;decay: 9; intensity: 1;" position="-3.5 0 0"
+                    rotation="0 0 0"></a-entity> -->
+                    <a-gltf-model shadow="cast: false; receive: false;" src="#flag" scale="0.2 0.2 0.2"
+                        position="-2.7 0 0" rotation="0 0 90">
+                    </a-gltf-model>
                 </a-entity>
-                <!-- <a-entity light="type: point; color: #FFF; distance: 1;decay: 9; intensity: 1;" position="-3.5 0 0"
-                        rotation="0 0 0"></a-entity> -->
-                <a-gltf-model shadow="cast: false; receive: false;" src="#flag" scale="0.2 0.2 0.2" position="-2.7 0 0"
-                    rotation="0 0 90">
-                </a-gltf-model>
+                <a-image scale="1 1 1" position="0 0 2.5" src="#my-image" rotation="90 0 0"></a-image>
+
             </a-entity>
-            <a-image scale="1 1 1" position="0 0 2.5" src="#my-image" rotation="90 0 0"></a-image>
 
         </a-marker>
 
