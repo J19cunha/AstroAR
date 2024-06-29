@@ -13,3 +13,6 @@ node_modules/
 
 # Ignore npm debug file
 npm-debug.log*
+
+
+*.code-workspace
