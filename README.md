@@ -1,13 +1,37 @@
-# AstroAR - WebAR for Enhancing Astronomy Education in Elementary School
+## AstroAR - A WebAR for Enhancing Astronomy Education in Elementary School
 
-## Description
+### Description
 
 AstroAR is a WebAR (Web-based Augmented Reality) application aimed at enhancing the educational experience in elementary school astronomy. Leveraging technologies like AR.js and A-Frame, it provides an interactive web platform where students can explore and visualize astronomical concepts such as Moon Phases and Seasons through Augmented Reality.
 
-## Installation and Setup
 
-npm install
-cd ./AstroAR
-node server.js
+### Run Locally
 
-AstroAR is deployed on GitHub Pages. You can access it here.
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd AstroAR
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  node server.js
+```
+
+
+## GitHub Pages Deployment
+
+AstroAR is deployed and accessible on GitHub Pages. You can access it by clicking [here](https://j19cunha.github.io/AstroAR/).
