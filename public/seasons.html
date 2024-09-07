@@ -5,12 +5,10 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"> </script>
     <script src="https://kit.fontawesome.com/dc2bc3f275.js" crossorigin="anonymous"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- <script src="./config.js"></script> -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <!-- <script>
-        localStorage.setItem('ARjsMultiMarkerFile', hiro_0_marker);
-    </script> -->
+
     <script>
         $(document).ready(function () {
             console.log("jQuery is loaded");
@@ -24,7 +22,6 @@
                 }
             });
         });
-
     </script>
 </head>
 
@@ -111,34 +108,25 @@
 
 
 
-    <script src="./js/basic.js">
+    <script src="./js/seasons.js">
     </script>
-    <script src="./gestures.js"></script>
-
-    <!-- <a-scene embedded arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
-        vr-mode-ui="enabled: false" loading-screen="enabled:false" gesture-detector> -->
-
-    <!-- <a-scene id="scene" embedded arjs='sourceType:webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; '
-        vr-mode-ui="enabled: false;" loading-screen="enabled:false" gesture-detector click-detector> -->
+    <script src="./js/gestures.js"></script>
 
     <a-scene class="clickable" embedded id="scene" gesture-detector
-        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false"
-        xr-mode-ui="enabled: false" loading-screen="enabled:false">
+        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
+        vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
             <a-asset-item id="sun" src="./assets/models/sun-3/scene.gltf"></a-asset-item>
             <a-asset-item id="earth" src="./assets/models/earth-seasons/scene.gltf"></a-asset-item>
             <img id="my-image" src="./assets/Arrow2.png">
-            <a-asset-item id="mascote" src="./assets/models/joana_diss.glb"></a-asset-item>
-            <!-- <a-asset-item id="mascote" src="../assets/models/joana_diss.glb"></a-asset-item> -->
+            <a-asset-item id="mascote" src="./assets/models/mascote.glb"></a-asset-item>
         </a-assets>
-
-        <!-- <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
-                preset="area"> -->
 
         <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
             type="barcode" value="1">
             <a-entity gesture-scale>
                 <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
+
                 <a-entity id="sun" position="0 0 0">
                     <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
                         class="clickable">
@@ -146,8 +134,8 @@
                     <a-light type="directional" color="#fff" castShadow: true intensity="1.5" position="0 0 0"
                         target="#directionaltarget"></a-light>
                 </a-entity>
-                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
 
+                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
                     <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
                     <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
                     <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
@@ -155,28 +143,23 @@
                     <a-image scale="1.95 0.1 1" position="1 -0.2 0" src="#my-image"></a-image>
                     <a-image scale="2.2 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
                 </a-entity>
+
+
                 <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
                     orbit-around-sun="radius: 2.5; duration: 20000" orbit-around-sun-gesture>
-                    <!-- <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5"
-                    rotate-continuously="speed: 84; active: false; body: earth" class="clickable" rotation="0 -170 0"
-                    shadow="receive: true">
-                </a-gltf-model> -->
                     <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
                         rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
                     </a-gltf-model>
                     <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
-                    <!-- <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.5 0 0" rotation="90 180 -90"
-                    shadow="cast: false; receive: false;" id="mascote2">
-                </a-gltf-model> -->
                 </a-entity>
 
                 <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+
             </a-entity>
         </a-marker>
         <a-entity id="camera" camera>
         </a-entity>
     </a-scene>
-
 
     <div class="div-sunDirection">
         <div class="cloudy-overlay" id="cloudy-overlay">
@@ -217,55 +200,17 @@
         </div>
     </div>
 
-
-
-
-
     <div class="circle-back">
         <a href="./index.html">
             <i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>
         </a>
     </div>
-    <script>
-
-
-        AFRAME.registerComponent('click-detector', {
-            init: function () {
-                const sun = document.querySelector('#sun-object'); // Assuming the moon has an ID of 'moon'
-
-                const line4 = document.querySelector('#line2');
-
-                this.el.addEventListener('click', (event) => {
-                    // // A-Frame provides the point of click in the scene coordinates
-
-                    // // Get the position of the moon
-                    // const sunPosition = sun.object3D.position;
-                    // console.log("Sun position: ", sunPosition);
-
-                    // // Calculate the distance between the click and the moon
-                    // const distance = clickPosition.distanceTo(sunPosition);
-                    // console.log("Distance to sun: ", distance);
-
-                    // // If the distance is less than the radius of the moon, we clicked on the moon
-                    // if (distance < 0.5) {
-                    //     alert('Sun was clicked');
-
-                    // }
-                });
-            }
-        });
-
-
-
-        AFRAME.registerComponent('look-at', {
-            schema: { type: 'selector' },
-
-            tick: function () {
-                this.el.object3D.lookAt(this.data.object3D.position)
-            }
-        })
-    </script>
 
 </body>
+
+<script>
+
+</script>
+
 
 </html>

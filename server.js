@@ -7,7 +7,6 @@ const cors = require("cors"); // Require the CORS library
 const app = express();
 
 app.use(cors()); // Enable CORS for all requests
-// You can also configure CORS for more specific needs, see below for examples
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));

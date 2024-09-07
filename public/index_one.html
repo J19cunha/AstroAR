@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+    <a-scene embedded
+        arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3'>
+        <a-assets>
+            <a-asset-item id="moon" src="./assets/models/moon/scene.gltf"></a-asset-item>
+        </a-assets>
+        <a-marker markerhandler type='barcode' value='1'>
+
+            <a-entity three-arrow="direction: 1 0 0; length: 2.4; color: #ffff00" position="0 2 0"></a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+
+<script>
+    AFRAME.registerComponent('markerhandler', {
+        init: function () {
+            this.el.sceneEl.addEventListener('markerFound', () => {
+                // redirect to custom URL e.g. google.com
+
+                console.log('markerFound')
+            })
+            this.el.sceneEl.addEventListener('markerLost', () => {
+                // redirect to custom URL e.g. google.com
+
+                console.log('markerLost')
+            })
+
+        }
+    });
+    AFRAME.registerComponent('three-arrow', {
+        schema: {
+            direction: { type: 'vec3', default: { x: 1, y: 0, z: 0 } },
+            length: { type: 'number', default: 1 },
+            color: { type: 'color', default: '#ff0000' }
+        },
+        init: function () {
+            var data = this.data;
+            var el = this.el;
+
+            // Criar cena Three.js e adicionar ArrowHelper
+            var scene = el.object3D;
+            var dir = new AFRAME.THREE.Vector3(data.direction.x, data.direction.y, data.direction.z).normalize();
+            var origin = new AFRAME.THREE.Vector3(0, 0, 0);
+            var length = data.length;
+            var color = new AFRAME.THREE.Color(data.color);
+
+            var arrowHelper = new AFRAME.THREE.ArrowHelper(dir, origin, length, color);
+            scene.add(arrowHelper);
+
+            this.arrowHelper = arrowHelper;
+        },
+        update: function () {
+            var data = this.data;
+            var arrowHelper = this.arrowHelper;
+
+            var dir = new AFRAME.THREE.Vector3(data.direction.x, data.direction.y, data.direction.z).normalize();
+            arrowHelper.setDirection(dir);
+            arrowHelper.setLength(data.length);
+            arrowHelper.setColor(new AFRAME.THREE.Color(data.color));
+        }
+    });
+</script>
+
+</html>
