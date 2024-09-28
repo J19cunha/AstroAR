@@ -52,6 +52,9 @@ AFRAME.registerComponent("rotate-continuously", {
     }
   },
 });
+
+
+
 let currentDay = 0;
 
 const totalImages = 236; // 236 imagens das fases da lua
@@ -85,17 +88,18 @@ const fasesDaLua = [
 function animateMoonScreen() {
   // Chama a função novamente na próximo frame
   requestAnimationFrame(animateMoonScreen);
+
   // Obter a rotação da Lua
-  const rotation = getMoonRotation();
+  const moonRotation = getMoonRotation();
   // Normalizar a rotação para um intervalo de [0, 1], lidando com valores negativos
   const normalizedRotation =
-    (((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) /
+    (((moonRotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) /
     (2 * Math.PI);
   // Calcular o índice da imagem atual com base na rotação normalizada
   const currentImageIndex = Math.floor(normalizedRotation * totalImages);
+
   const moonImageElement = document.getElementById("moon-phase-image-bright");
   const moonPhaseTextElement = document.getElementById("moonphases-space");
-
   // Atualiza a imagem da fase da lua
   if (moonImageElement) {
     moonImageElement.src = images[currentImageIndex].src;
@@ -172,16 +176,14 @@ function updateDayBasedOnCurrentRotation() {
 
   // Obtém a rotação da Lua
   const moonRotation = getMoonRotation();
+
   // Uma Rotação completa (uma órbita completa da lua: 360º = 2π radianos)
   const totalRotation = 2 * Math.PI;
-
   // Normaliza a rotação para garantir que esteja entre 0 e 2π radianos
   let normalizedRotation =
     ((moonRotation % totalRotation) + totalRotation) % totalRotation;
-
   // Calcula o dia atual com base na rotação normalizada
   let day = Math.floor((normalizedRotation / totalRotation) * 28);
-
   // Verifica se o dia calculado é diferente do dia atualmente armazenado, ou seja, se houve uma mudança de dia
   if (day !== currentDay) {
     currentDay = day; // Atualiza a variável currentDay com o novo valor do dia.

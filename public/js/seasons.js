@@ -139,14 +139,12 @@ AFRAME.registerComponent("rotate-continuously", {
     if (this.data.active === false) {
       return; // Se a animação não estiver ativa, não faz nada
     } else {
-      // updateMoonBrightness();
       var rotationIncrement = this.data.speed * (timeDelta / 1000);
       this.el.object3D.rotation.y +=
         THREE.MathUtils.degToRad(rotationIncrement);
 
       // Atualiza a rotação acumulada
       this.accumulatedRotation += rotationIncrement;
-      // Verifica se a rotação acumulada excedeu 360 graus (uma volta completa)
     }
   },
 });
@@ -305,6 +303,7 @@ function updateMonth(increment) {
   document.querySelector("[orbit-around-sun]").components[
     "orbit-around-sun"
   ].lastMonthUpdateAngle = angle;
+
   const radians = -THREE.MathUtils.degToRad(angle);
   const radius = earthEntity.getAttribute("orbit-around-sun").radius;
   const x = Math.cos(radians) * radius;
@@ -336,9 +335,6 @@ document
   });
 
 document.addEventListener("DOMContentLoaded", function () {
-  updateProgressBar(); // Atualiza a barra de progresso
-  updateEarthInclination(); // Atualiza a inclinação da Terra
-  updateDateInfo(); // Atualiza informações de mês e estação
   document.getElementById("Tempo").style.display = "block";
 
   // Este é o novo botão de alternância
