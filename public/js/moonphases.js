@@ -13,7 +13,10 @@ AFRAME.registerComponent("marker-handler", {
     const markerLostDelay = 1000;
 
     this.el.addEventListener("markerFound", () => {
+      //
       clearTimeout(markerLostTimeout); // Cancela o temporizador se o marcador for encontrado novamente
+
+      //
       startButton.disabled = false; // Reativa o botão
       incrementDayButton.disabled = false;
       decrementDayButton.disabled = false;
@@ -53,8 +56,6 @@ AFRAME.registerComponent("rotate-continuously", {
   },
 });
 
-
-
 let currentDay = 0;
 
 const totalImages = 236; // 236 imagens das fases da lua
@@ -62,7 +63,7 @@ let imagesLoaded = 0;
 let images = [];
 
 function preloadImages() {
-// Carrega todas as imagens da pasta assets/images/moonphases
+  // Carrega todas as imagens da pasta assets/images/moonphases
   for (let i = 1; i <= totalImages; i++) {
     const img = new Image();
     img.onload = function () {

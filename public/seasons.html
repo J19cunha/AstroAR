@@ -36,9 +36,6 @@
         <button class="onBoarding-btn" id="onBoarding-btn">
             <i class="fa-solid fa-question"></i>
         </button>
-        <button class="info-btn" id="info-btn">
-            <i class="fa-solid fa-info"></i>
-        </button>
     </div>
 
     <div id="draggableModal" class="tab-container">
@@ -135,7 +132,7 @@
                         target="#directionaltarget"></a-light>
                 </a-entity>
 
-                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture>
+                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture="speed: 60">
                     <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
                     <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
                     <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
@@ -146,7 +143,7 @@
 
 
                 <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
-                    orbit-around-sun="radius: 2.5; duration: 20000" orbit-around-sun-gesture>
+                    orbit-around-sun="radius: 2.5; duration: 20000" gesture_handler_translation>
                     <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
                         rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
                     </a-gltf-model>
@@ -154,7 +151,6 @@
                 </a-entity>
 
                 <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
-
             </a-entity>
         </a-marker>
         <a-entity id="camera" camera>

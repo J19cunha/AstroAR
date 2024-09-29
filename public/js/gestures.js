@@ -53,48 +53,48 @@ AFRAME.registerComponent("gesture-scale", {
   },
 });
 
-AFRAME.registerComponent("gesture-handler", {
-  schema: {
-    enabled: { default: true },
-    rotationFactor: { default: 3 },
-  },
+// AFRAME.registerComponent("gesture_handler_rotation", {
+//   schema: {
+//     enabled: { default: true },
+//     rotationFactor: { default: 3 },
+//   },
 
-  init: function () {
-    this.handleRotation = this.handleRotation.bind(this);
+//   init: function () {
+//     this.handleRotation = this.handleRotation.bind(this);
 
-    this.isVisible = false;
+//     this.isVisible = false;
 
-    this.el.sceneEl.addEventListener("markerFound", (e) => {
-      this.isVisible = true;
-    });
+//     this.el.sceneEl.addEventListener("markerFound", (e) => {
+//       this.isVisible = true;
+//     });
 
-    this.el.sceneEl.addEventListener("markerLost", (e) => {
-      this.isVisible = false;
-    });
-  },
+//     this.el.sceneEl.addEventListener("markerLost", (e) => {
+//       this.isVisible = false;
+//     });
+//   },
 
-  update: function () {
-    if (this.data.enabled) {
-      this.el.sceneEl.addEventListener("onefingermove", this.handleRotation);
-    } else {
-      this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
-    }
-  },
+//   update: function () {
+//     if (this.data.enabled) {
+//       this.el.sceneEl.addEventListener("onefingermove", this.handleRotation);
+//     } else {
+//       this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
+//     }
+//   },
 
-  remove: function () {
-    this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
-  },
+//   remove: function () {
+//     this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
+//   },
 
-  handleRotation: function (event) {
-    const sensitivity = 0.4; // Sensibilidade do movimento do dedo
-    if (this.isVisible) {
-      // Incrementos positivos e negativos são considerados
-      this.el.object3D.rotation.y +=
-        event.detail.positionChange.x * this.data.rotationFactor * sensitivity;
-    }
-  },
-});
-AFRAME.registerComponent("orbit-around-sun-gesture", {
+//   handleRotation: function (event) {
+//     const sensitivity = 0.4; // Sensibilidade do movimento do dedo
+//     if (this.isVisible) {
+//       // Incrementos positivos e negativos são considerados
+//       this.el.object3D.rotation.y +=
+//         event.detail.positionChange.x * this.data.rotationFactor * sensitivity;
+//     }
+//   },
+// });
+AFRAME.registerComponent("gesture_handler_translation", {
   schema: {
     radius: { type: "number", default: 2.5 },
     duration: { type: "number", default: 10000 }, // Duração de uma órbita completa em milissegundos
@@ -144,7 +144,7 @@ AFRAME.registerComponent("orbit-around-sun-gesture", {
       if (
         Math.floor(angle / 30) !== Math.floor(this.lastMonthUpdateAngle / 30)
       ) {
-        updateMonthCounter(); // Chama a função para incrementar o mês
+        updateMonthCounterContinuously(); // Chama a função para incrementar o mês
         this.lastMonthUpdateAngle = angle; // Atualiza o último ângulo de atualização do mês
       }
 
@@ -160,7 +160,7 @@ AFRAME.registerComponent("orbit-around-sun-gesture", {
 
 AFRAME.registerComponent("rotate-continuously-gesture", {
   schema: {
-    speed: { type: "number", default: 60 },
+    speed: { type: "number", default: 16 },
   },
   init: function () {
     // Adiciona o gesto de toque para iniciar a rotação
@@ -178,8 +178,6 @@ AFRAME.registerComponent("rotate-continuously-gesture", {
     this.el.sceneEl.addEventListener("markerLost", (e) => {
       this.isVisible = false;
     });
-
-    updateEarthInclination(); // Inicie a inclinação da Terra
   },
   handleTouch: function (event) {
     if (this.isVisible) {
@@ -193,9 +191,6 @@ AFRAME.registerComponent("rotate-continuously-gesture", {
       this.el.object3D.rotation.y += THREE.MathUtils.degToRad(
         rotationIncrement * this.data.speed
       );
-
-      // Atualiza a inclinação da Terra
-      updateEarthInclination();
     }
   },
 });

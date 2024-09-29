@@ -42,9 +42,7 @@
         <button class="onBoarding-btn" id="onBoarding-btn">
             <i class="fa-solid fa-question"></i>
         </button>
-        <button class="info-btn" id="info-btn">
-            <i class="fa-solid fa-info"></i>
-        </button>
+
     </div>
 
     <div id="draggableModal" class="tab-container">
@@ -132,12 +130,12 @@
                 <!-- EARTH -->
                 <a-entity position=" 0 0 0" rotation="0 0 -23.5">
                     <a-gltf-model src="#earth" scale="1 1 1"
-                        rotate-continuously="speed: 168; active: false; body: earth" position="0 0 0" id="earthModel"
+                        rotate-continuously="speed: 448; active: false; body: earth" position="0 0 0" id="earthModel"
                         class="clickable" rotation="0 190 0" shadow="cast: false; receive: true" class="interactive"
-                        gesture-handler="rotationFactor: 84">
+                        rotate-continuously-gesture="speed: 84">
                     </a-gltf-model>
-                    <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 168; active: false"
-                        gesture-handler="rotationFactor: 84">
+                    <a-entity position=" 0 0 0" rotation="0 0 0" rotate-continuously="speed: 448; active: false"
+                        rotate-continuously-gesture="speed: 84">
                         <a-gltf-model src="#mascote" scale="0.4 0.4 0.4" position="-0.9 0.7 0" rotation="90 180 -90"
                             shadow="cast: false; receive: false;" id="mascote2">
                         </a-gltf-model>
@@ -147,7 +145,7 @@
 
                 <!-- MOON -->
                 <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0"
-                    rotation="0 0 5.15" gesture-handler>
+                    rotation="0 0 5.15" rotate-continuously-gesture>
                     <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
                     <a-entity gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272" position="-2.5 0 0"
                         rotation="0 0 0" class="clickable" update-panel-position>
