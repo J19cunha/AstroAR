@@ -191,7 +191,7 @@ p{
     align-items: center;
     top: 20px; /* Definir a altura da div */
     z-index: 1000;
-    width: 190px;
+    width: 220px;
     padding:10px;
     border-radius: 5px;
     justify-content: center; /* Alinhar itens verticalmente ao centro */
