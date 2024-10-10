@@ -63,13 +63,9 @@ let imagesLoaded = 0;
 let images = [];
 
 function preloadImages() {
-  // Carrega todas as imagens da pasta assets/images/moonphases
   for (let i = 1; i <= totalImages; i++) {
     const img = new Image();
-    img.onload = function () {
-      imagesLoaded++;
-    };
-
+    img.onload = () => imagesLoaded++;
     img.src = `./assets/images/moonphases/moon.${i}.png`;
     images.push(img);
   }
@@ -199,48 +195,28 @@ function updateDayBasedOnCurrentRotation() {
 
 function updateProgressBar() {
   const timelines = document.querySelectorAll(".timeline");
+  const totalDays = timelines.length * 7;
 
-  for (let i = 0; i < timelines.length; i++) {
-    const timeline = timelines[i];
+  timelines.forEach((timeline, i) => {
     const progressBar = timeline.querySelector(".filling-line");
     const timelineMarker = timeline.querySelector(".timeline-marker");
 
-    // Defina o intervalo de dias para cada semana
-    const startDay = i * 7; // 0, 7, 14, 21
-    const endDay = (i + 1) * 7; // 7, 14, 21, 28
+    const startDay = i * 7;
+    const endDay = (i + 1) * 7;
 
-    // Calcula o progresso dentro do intervalo da semana
     let progress = 0;
-    if (currentDay >= startDay && currentDay <= endDay) {
-      progress = ((currentDay - startDay) / 7) * 100;
-    } else if (currentDay > endDay) {
-      progress = 100;
+    if (currentDay >= startDay) {
+      progress =
+        currentDay < endDay ? ((currentDay - startDay) / 7) * 100 : 100;
     }
 
-    // Ajusta a largura da filling-line com base no progresso calculado
     progressBar.style.width = `${progress}%`;
-
-    // Atualiza as classes dos marcadores de timeline
-    if (currentDay >= startDay && currentDay < endDay) {
-      timelineMarker.classList.add("selected");
-      timelineMarker.classList.remove("older-event");
-    } else if (currentDay >= endDay) {
-      timelineMarker.classList.add("older-event");
-      timelineMarker.classList.remove("selected");
-    } else {
-      timelineMarker.classList.remove("selected");
-      timelineMarker.classList.remove("older-event");
-    }
-  }
-
-  // Adiciona a classe .older-event ao marcador anterior
-  const previousTimelineIndex = Math.floor((currentDay - 1) / 7);
-  const previousTimeline = timelines[previousTimelineIndex];
-  if (previousTimeline) {
-    const previousTimelineMarker =
-      previousTimeline.querySelector(".timeline-marker");
-    previousTimelineMarker.classList.add("older-event");
-  }
+    timelineMarker.classList.toggle(
+      "selected",
+      currentDay >= startDay && currentDay < endDay
+    );
+    timelineMarker.classList.toggle("older-event", currentDay >= endDay);
+  });
 }
 
 //onBoarding functions
@@ -317,24 +293,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Este é o novo botão de alternância
   var toggleButton = document.getElementById("start-animation");
-
   var icon = toggleButton.querySelector("i"); // Seleciona o ícone dentro do botão
 
   toggleButton.addEventListener("click", function () {
-    var animatedEntities = document.querySelectorAll("[rotate-continuously]");
+    const animatedEntities = document.querySelectorAll("[rotate-continuously]");
     isAnimating = !isAnimating; // Inverte o estado da animação
 
     animatedEntities.forEach(function (entity) {
       entity.setAttribute("rotate-continuously", { active: isAnimating }); // Alterna o estado da animação
     });
 
-    // Altera a classe do ícone conforme o estado da animação
-    if (isAnimating) {
-      icon.className = "fa-solid fa-pause";
-      icon.style.color = "#ffffff";
-    } else {
-      icon.className = "fa-solid fa-play";
-      icon.style.color = "#ffffff";
-    }
+    icon.className = isAnimating ? "fa-solid fa-pause" : "fa-solid fa-play";
+    icon.style.color = "#ffffff"; // Consider setting a class for consistent styling
   });
 });
