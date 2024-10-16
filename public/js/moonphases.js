@@ -283,8 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateProgressBar(); // Atualiza a barra de progresso inicialmente
 
-  document.getElementById("Tempo").style.display = "block";
-
   document
     .querySelector(".moonphases-button")
     .addEventListener("click", function () {
@@ -307,3 +305,4 @@ document.addEventListener("DOMContentLoaded", function () {
     icon.style.color = "#ffffff"; // Consider setting a class for consistent styling
   });
 });
+
