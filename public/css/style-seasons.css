@@ -1,12 +1,9 @@
-p{
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+p, span, i{
     font-family: 'Montserrat';
   }
-  span{
-    font-family: 'Montserrat';
-  }
-  i{
-    font-family: 'Montserrat';
-  }
+ 
   button{
     font-family: 'Montserrat';
     background-color: transparent;

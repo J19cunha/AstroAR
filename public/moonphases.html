@@ -21,12 +21,12 @@
             });
         });
     </script>
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/style-AR.css" />
+    <link rel="stylesheet" href="./css/style-onBoarding.css" />
 </head>
 
-<link rel="stylesheet" href="./css/style-AR.css" />
-<link rel="stylesheet" href="./css/style-onBoarding.css" />
+
 
 <body style="margin: 0px; overflow: hidden;">
     <div id="onboarding-container" style="display: block;"></div>
@@ -102,8 +102,8 @@
     <script src="./js/gestures.js"></script>
 
     <a-scene id="scene" class="clickable" embedded gesture-detector
-        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63" vr-mode-ui="enabled: false"
-        xr-mode-ui="enabled: false" loading-screen="enabled:false">
+        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63"
+        vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
             <a-asset-item id="earth" src="./assets/models/earth-3/scene.gltf"></a-asset-item>
             <a-asset-item id="moon" src="./assets/models/moon/scene.gltf"></a-asset-item>
