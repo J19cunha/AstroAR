@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 p, span, i {
   font-family: 'Montserrat', sans-serif;
 }
-
 
 button{
   font-family: 'Montserrat';
@@ -16,13 +21,11 @@ button{
   cursor: pointer;
 }
 html, body {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden; /* Evita barras de rolagem */
+  width: 100%; 
+  min-height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Montserrat';
-  overflow-x: hidden; /* Evita a rolagem horizontal */
 }
 
 
@@ -170,8 +173,6 @@ html, body {
   height: auto; 
 }
 
-
-
 /*btn info e onboarding*/
 .btns-info {
   position: absolute;
@@ -242,9 +243,6 @@ html, body {
   align-items: center;
   margin-bottom: 13px;
 }
-
-
-
 
 
 .start-animation {
