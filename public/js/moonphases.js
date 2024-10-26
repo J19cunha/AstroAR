@@ -124,10 +124,10 @@ function getMoonPhaseIndex(currentDay) {
   } else if (currentDay === 14) {
     document.getElementById("moonphases-title").hidden = false;
     return 4; // Lua Cheia
-  } else if (currentDay > 14 && currentDay < 21) {
+  } else if (currentDay > 14 && currentDay < 22) {
     document.getElementById("moonphases-title").hidden = true;
     return 5; // Lua Minguante...
-  } else if (currentDay === 21) {
+  } else if (currentDay === 22) {
     document.getElementById("moonphases-title").hidden = false;
     return 6; // Quarto Minguante
   } else {
@@ -143,20 +143,22 @@ function getMoonRotation() {
 }
 
 function updateEarthAndMoonRotation(increment) {
-  // Atualiza o valor de increment para ser a soma do dia atual e do incremento passado como argumento (1 ou -1)
-  increment = currentDay + increment;
+  // Obtém a rotação atual da lua
+  const currentMoonRotation = getMoonRotation();
 
-  // Calcula a rotação da Terra e da Lua com base no incremento
-  const earthRotation = increment * 360;
-  const moonRotation = increment * (360 / 28);
+  // Calcula a nova rotação
+  const newMoonRotation =
+    currentMoonRotation + increment * ((2 * Math.PI) / 29);
 
   const earth = document.getElementById("earthModel");
   const moon = document.getElementById("moon-rotate");
 
-  // Atualiza a rotação da Terra e da Lua
   if (earth && moon) {
-    earth.object3D.rotation.y = THREE.MathUtils.degToRad(earthRotation);
-    moon.object3D.rotation.y = THREE.MathUtils.degToRad(moonRotation);
+    // A terra gira 360 graus (2π radianos) para cada 1/29 de rotação da lua
+    const newEarthRotation = newMoonRotation * 29;
+
+    earth.object3D.rotation.y = newEarthRotation;
+    moon.object3D.rotation.y = newMoonRotation;
   }
 }
 
@@ -173,14 +175,16 @@ function updateDayBasedOnCurrentRotation() {
 
   // Obtém a rotação da Lua
   const moonRotation = getMoonRotation();
+  const totalRotation = 2 * Math.PI; // 29 dias para uma órbita completa
 
-  // Uma Rotação completa (uma órbita completa da lua: 360º = 2π radianos)
-  const totalRotation = 2 * Math.PI;
   // Normaliza a rotação para garantir que esteja entre 0 e 2π radianos
   let normalizedRotation =
     ((moonRotation % totalRotation) + totalRotation) % totalRotation;
-  // Calcula o dia atual com base na rotação normalizada
-  let day = Math.floor((normalizedRotation / totalRotation) * 28);
+
+  // Ajusta o cálculo do dia para ser mais preciso
+  // Multiplica por 29 e depois arredonda para evitar saltos
+  let day = Math.round((normalizedRotation / totalRotation) * 29);
+
   // Verifica se o dia calculado é diferente do dia atualmente armazenado, ou seja, se houve uma mudança de dia
   if (day !== currentDay) {
     currentDay = day; // Atualiza a variável currentDay com o novo valor do dia.
@@ -188,14 +192,13 @@ function updateDayBasedOnCurrentRotation() {
     // Atualiza o elemento html do dia atual
     document.getElementById(
       "current-day"
-    ).innerText = `${currentDay} / 27 dias`;
+    ).innerText = `${currentDay} / 28 dias`;
   }
   updateProgressBar(); // Atualiza a barra de progresso com base no dia atual
 }
 
 function updateProgressBar() {
   const timelines = document.querySelectorAll(".timeline");
-  const totalDays = timelines.length * 7;
 
   timelines.forEach((timeline, i) => {
     const progressBar = timeline.querySelector(".filling-line");
@@ -270,7 +273,6 @@ function previousOnboarding() {
 document
   .getElementById("onBoarding-btn")
   .addEventListener("click", function () {
-    console.log("Onboarding button clicked");
     document.getElementById("onboarding-container").style.display = "block";
   });
 
@@ -305,4 +307,3 @@ document.addEventListener("DOMContentLoaded", function () {
     icon.style.color = "#ffffff"; // Consider setting a class for consistent styling
   });
 });
-
