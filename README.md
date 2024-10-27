@@ -35,3 +35,13 @@ Start the server
 #### GitHub Pages Deployment
 
 AstroAR is deployed and accessible on GitHub Pages. You can access it by clicking [here](https://j19cunha.github.io/AstroAR/).
+
+#### Fiduciais para a deteção
+
+![image](https://github.com/user-attachments/assets/08a6d00b-56b2-4d15-baef-55bb28ccf66a)
+
+![image](https://github.com/user-attachments/assets/716a8a25-ba33-4726-bd91-8392b80c310d)
+
+
+
+
