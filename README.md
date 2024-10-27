@@ -36,7 +36,7 @@ Start the server
 
 AstroAR is deployed and accessible on GitHub Pages. You can access it by clicking [here](https://j19cunha.github.io/AstroAR/).
 
-#### Fiduciais para a deteção
+#### Markers 
 
 <img width="548" alt="Group 8720-3" src="https://github.com/user-attachments/assets/890cb9cc-954a-4a22-90d4-24f4cb1a4e63">
 
