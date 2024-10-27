@@ -38,10 +38,6 @@ AstroAR is deployed and accessible on GitHub Pages. You can access it by clickin
 
 #### Fiduciais para a deteção
 
-![image](https://github.com/user-attachments/assets/08a6d00b-56b2-4d15-baef-55bb28ccf66a)
-
-![image](https://github.com/user-attachments/assets/716a8a25-ba33-4726-bd91-8392b80c310d)
-
-
+<img width="548" alt="Group 8720-3" src="https://github.com/user-attachments/assets/890cb9cc-954a-4a22-90d4-24f4cb1a4e63">
 
 
