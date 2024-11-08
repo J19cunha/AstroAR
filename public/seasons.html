@@ -46,9 +46,9 @@
                         </button>
                         <span id="current-month" class="current-month"
                             style=" margin-left: 10px; margin-right: 3px;  font-weight: 700;">
-                            Dezembro
+                            21/22 Dez
                         </span>
-                        <span id="december-note" class="current-month" style="visibility: hidden;"> -
+                        <span id="december-note" class="current-month" style="visibility:visible;"> -
                             Dia
                             mais curto do
                             ano</span>
@@ -108,8 +108,8 @@
     <script src="./js/gestures.js"></script>
 
     <a-scene class="clickable" embedded id="scene" gesture-detector
-        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3_HAMMING63;"
-        vr-mode-ui="enabled: false" xr-mode-ui="enabled: false" loading-screen="enabled:false">
+        arjs="debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3" vr-mode-ui="enabled: false"
+        xr-mode-ui="enabled: false" loading-screen="enabled:false">
         <a-assets>
             <a-asset-item id="sun" src="./assets/models/sun-3/scene.gltf"></a-asset-item>
             <a-asset-item id="earth" src="./assets/models/earth-seasons/scene.gltf"></a-asset-item>
@@ -120,7 +120,7 @@
         <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
             type="barcode" value="1">
             <a-entity gesture-scale>
-                <a-entity light="type: ambient; color: #CCC; intensity: 0.02"></a-entity>
+                <a-entity light="type: ambient; color: #CCC; intensity: 0.2"></a-entity>
 
                 <a-entity id="sun" position="0 0 0">
                     <a-gltf-model id="sun-object" src="#sun" scale="0.03 0.03 0.03" position="0 0 0" rotation="0 0 0"
@@ -130,7 +130,7 @@
                         target="#directionaltarget"></a-light>
                 </a-entity>
 
-                <a-entity id="sun-direction" rotate-continuously="speed: 18" rotate-continuously-gesture="speed: 60">
+                <a-entity id="sun-direction" rotate-continuously="speed: 6" rotate-continuously-gesture="speed: 60">
                     <a-image scale="2.4 0.1 1" position="1 0.6 0" src="#my-image"></a-image>
                     <a-image scale="2.1 0.1 1" position="1 0.4 0" src="#my-image"></a-image>
                     <a-image scale="2 0.1 1" position="1 0.2 0" src="#my-image"></a-image>
@@ -141,14 +141,20 @@
 
 
                 <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
-                    orbit-around-sun="radius: 2.5; duration: 20000" gesture_handler_translation>
+                    orbit-around-sun="radius: 2.5; duration: 60000" gesture_handler_translation>
                     <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
-                        rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 6570;">
+                        rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 2190;">
+                        <!-- ver valor 6570 -->
                     </a-gltf-model>
                     <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
                 </a-entity>
 
-                <a-ring radius-inner="2.5" radius-outer="2.52" material="color: white;" rotation="-90 0 0"></a-ring>
+                <a-ring radius-inner="2.5" radius-outer="2.54" material="color: grey" rotation="-90 0 0"></a-ring>
+                <a-entity line="start: 0 0 2.2; end: 0 0 2.8; color: black"></a-entity> <!-- Norte -->
+                <a-entity line="start: 0 0 -2.2; end: 0 0 -2.8; color: black"></a-entity> <!-- Sul -->
+                <a-entity line="start: 2.2 0 0; end: 2.8 0 0; color: black"></a-entity> <!-- Leste -->
+                <a-entity line="start: -2.2 0 0; end: -2.8 0 0; color: black"></a-entity> <!-- Oeste -->
+            </a-entity>
             </a-entity>
         </a-marker>
         <a-entity id="camera" camera>

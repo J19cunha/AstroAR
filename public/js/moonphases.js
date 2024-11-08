@@ -192,7 +192,7 @@ function updateDayBasedOnCurrentRotation() {
     // Atualiza o elemento html do dia atual
     document.getElementById(
       "current-day"
-    ).innerText = `${currentDay} / 28 dias`;
+    ).innerText = `${currentDay} / 29 dias`;
   }
   updateProgressBar(); // Atualiza a barra de progresso com base no dia atual
 }
