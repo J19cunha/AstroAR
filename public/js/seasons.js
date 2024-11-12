@@ -152,19 +152,18 @@ AFRAME.registerComponent("rotate-continuously", {
 let currentMonthIndex = 0; // Index of month in the months array
 let currentSeasonIndex = 0; // Index of season in the seasons array
 const months = [
-  "21/22 Dez",
-  "21/22 Jan",
-  "21/22 Fev",
-  "20/21 Mar",
-  "21/22 Abr",
-  "21/22 Mai",
-  "20/21 Jun",
-  "21/22 Jul",
-  "21/22 Ago",
-  "22/23 Set",
-  "21/22 Out",
-  "21/22 Nov",
-  "21/22 Dez",
+  "Dezembro",
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
 ];
 const seasons = ["Inverno", "Primavera", "Verão", "Outono"];
 

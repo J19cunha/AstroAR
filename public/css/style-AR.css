@@ -284,6 +284,14 @@ html, body {
   align-content: center;
 }
 
+.timeline-final {
+  flex-grow: 0;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.3);
+  position: relative;
+  align-content: center;
+}
+
 .week1{
   margin: 0px 0px 0px 23px;
 }
@@ -296,6 +304,9 @@ html, body {
 }
 .week4{
   margin: 0px 10px 0px -6px;
+}
+.week5{
+  margin: 0px 10px 0px 4px;
 }
 
 

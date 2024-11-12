@@ -39,7 +39,7 @@ p{
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
     border-radius: 5px;
-    padding: 15px;
+    padding: 22px;
     width: 85%; /* Faz a caixa preencher 80% da largura da tela */
     color: white; /* Cor do texto branco para contraste */
    

@@ -46,7 +46,7 @@
                         </button>
                         <span id="current-month" class="current-month"
                             style=" margin-left: 10px; margin-right: 3px;  font-weight: 700;">
-                            21/22 Dez
+                            Dezembro
                         </span>
                         <span id="december-note" class="current-month" style="visibility:visible;"> -
                             Dia
@@ -63,7 +63,8 @@
                             <div class="timeline week1">
                                 <div class="timeline-marker selected">
                                     <div class="circle"></div>
-                                    <p class="week-text">21/22 Dez</p>
+                                    <p class="week-text">21/22</p>
+                                    <p class="week-text">Dez</p>
                                 </div>
                                 <span class="filling-line"></span>
                             </div>
@@ -71,14 +72,16 @@
                             <div class="timeline week2">
                                 <div class="timeline-marker">
                                     <div class="circle"></div>
-                                    <p class="week-text">20/21 Mar</p>
+                                    <p class="week-text">20/21</p>
+                                    <p class="week-text">Jan</p>
                                 </div>
                                 <span class="filling-line"></span>
                             </div>
                             <div class="timeline week3">
                                 <div class="timeline-marker">
                                     <div class="circle"></div>
-                                    <p class="week-text">20/21 Jun</p>
+                                    <p class="week-text">20/21</p>
+                                    <p class="week-text">Jun</p>
                                 </div>
 
                                 <span class="filling-line"></span>
@@ -86,7 +89,8 @@
                             <div class="timeline week4">
                                 <div class="timeline-marker">
                                     <div class="circle"></div>
-                                    <p class="week-text">22/23 Set</p>
+                                    <p class="week-text">22/23</p>
+                                    <p class="week-text">Set</p>
                                 </div>
                                 <span class="filling-line"></span>
                             </div>
@@ -115,6 +119,7 @@
             <a-asset-item id="earth" src="./assets/models/earth-seasons/scene.gltf"></a-asset-item>
             <img id="my-image" src="./assets/Arrow2.png">
             <a-asset-item id="mascote" src="./assets/models/mascote.glb"></a-asset-item>
+            <img id="orbit" src="./assets/orbit.png">
         </a-assets>
 
         <a-marker marker-handler emitevents="true" cursor="rayOrigin: mouse; fuse: true" id="animated-marker"
@@ -139,21 +144,16 @@
                     <a-image scale="2.2 0.1 1" position="1 -0.4 0" src="#my-image"></a-image>
                 </a-entity>
 
-
                 <a-entity id="entity" position="2.5 0 0" rotation="0 0 -23.5"
                     orbit-around-sun="radius: 2.5; duration: 60000" gesture_handler_translation>
                     <a-gltf-model id="directionaltarget" src="#earth" scale="0.5 0.5 0.5" class="clickable"
                         rotation="0 -170 0" shadow="receive: true" rotate-continuously="speed: 2190;">
                         <!-- ver valor 6570 -->
                     </a-gltf-model>
-                    <a-cylinder id="aixs" radius="0.01" height="4" color="#00000"></a-cylinder>
+                    <a-cylinder id="aixs" radius="0.01" height="2" color="#00000"></a-cylinder>
                 </a-entity>
 
-                <a-ring radius-inner="2.5" radius-outer="2.54" material="color: grey" rotation="-90 0 0"></a-ring>
-                <a-entity line="start: 0 0 2.2; end: 0 0 2.8; color: black"></a-entity> <!-- Norte -->
-                <a-entity line="start: 0 0 -2.2; end: 0 0 -2.8; color: black"></a-entity> <!-- Sul -->
-                <a-entity line="start: 2.2 0 0; end: 2.8 0 0; color: black"></a-entity> <!-- Leste -->
-                <a-entity line="start: -2.2 0 0; end: -2.8 0 0; color: black"></a-entity> <!-- Oeste -->
+                <a-image scale="5.6 5.6 5.6" position="0 -0.2 0" src="#orbit" rotation="-90 0 0"></a-image>
             </a-entity>
             </a-entity>
         </a-marker>

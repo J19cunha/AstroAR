@@ -82,10 +82,14 @@
                             <div class="timeline week4">
                                 <div class="timeline-marker">
                                     <div class="circle"></div>
-
                                 </div>
                                 <p class="week-text">Sem. 4</p>
                                 <span class="filling-line"></span>
+                            </div>
+                            <div class="timeline-final week5">
+                                <div class="timeline-marker">
+                                    <div class="circle"></div>
+                                </div>
                             </div>
                             <button disabled id="increment-day" class="round-button">
                                 <i class="fa-solid fa-chevron-right"></i>
@@ -110,6 +114,7 @@
             <a-asset-item id="flag" src="./assets/models/flag.glb"></a-asset-item>
             <a-asset-item id="mascote" src="./assets/models/mascote.glb"></a-asset-item>
             <img id="arrow-orbit" src="./assets/arrow-orbit.png">
+            <img id="orbit" src="./assets/orbit.png">
         </a-assets>
 
         <a-marker marker-handler markerhandler emitevents="true" cursor="rayOrigin: mouse; fuse: true"
@@ -140,7 +145,6 @@
                 <!-- MOON -->
                 <a-entity rotate-continuously="speed: 6; active: false" id="moon-rotate" position="0 0 0"
                     rotation="0 0 5.15" rotate-continuously-gesture>
-                    <a-ring radius-inner="2.5" radius-outer="2.54" material="color: grey;" rotation="-90 0 0"></a-ring>
                     <a-entity gltf-model="#moon" id="moonModel" scale="0.272 0.272 0.272" position="-2.5 0 0"
                         rotation="0 0 0" class="clickable" update-panel-position>
                     </a-entity>
@@ -148,13 +152,10 @@
                         position="-2.7 0 0" rotation="0 0 90">
                     </a-gltf-model>
                 </a-entity>
-                <a-entity line="start: 0 0 2.2; end: 0 0 2.8; color: black"></a-entity> <!-- Norte -->
-                <a-entity line="start: 0 0 -2.2; end: 0 0 -2.8; color: black"></a-entity> <!-- Sul -->
-                <a-entity line="start: 2.2 0 0; end: 2.8 0 0; color: black"></a-entity> <!-- Leste -->
-                <a-entity line="start: -2.2 0 0; end: -2.8 0 0; color: black"></a-entity> <!-- Oeste -->
 
-                <a-image scale="0.5 0.5 0.5" position="0 0 2.5" src="#arrow-orbit" rotation="-90 0 0"></a-image>
-
+                <!-- 
+                <a-image scale="0.5 0.5 0.5" position="2 0 1.5" src="#arrow-orbit" rotation="-90 0 65"></a-image> -->
+                <a-image scale="5.6 5.6 5.6" position="0 -0.2 0" src="#orbit" rotation="-90 0 0"></a-image>
             </a-entity>
         </a-marker>
 

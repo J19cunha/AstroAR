@@ -153,11 +153,8 @@ function updateEarthAndMoonRotation(increment) {
   const earth = document.getElementById("earthModel");
   const moon = document.getElementById("moon-rotate");
 
-  if (earth && moon) {
+  if (moon) {
     // A terra gira 360 graus (2π radianos) para cada 1/29 de rotação da lua
-    const newEarthRotation = newMoonRotation * 29;
-
-    earth.object3D.rotation.y = newEarthRotation;
     moon.object3D.rotation.y = newMoonRotation;
   }
 }
