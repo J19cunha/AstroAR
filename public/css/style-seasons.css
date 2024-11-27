@@ -197,6 +197,8 @@ p{
     transition: width 0.3s ease; /* Transição suave para mudança de largura */
   }
 
+  /* Ecrã estações */
+
   .seasons {
     display: flex; /* Usar flexbox para alinhar o texto e o ícone */
     justify-content: space-between; /* Espaçar elementos ao máximo */
@@ -211,6 +213,10 @@ p{
     width: 100%; /* Ocupa toda a largura do contêiner pai */
   }
 
+  #arrows-sundirection {
+    width: 80px;
+    margin-right: -30px;
+  }
 
 #earth-display {
     display: flex;
@@ -218,12 +224,6 @@ p{
     align-items: center;
     justify-content:end;
   }
-
-  #arrows-sundirection {
-    width: 80px;
-    margin-right: -30px;
-  }
-  
   
   #earth-image {
     width: 111px;
@@ -233,17 +233,18 @@ p{
     position: absolute;
     top: 0%; /* Ajuste conforme necessário */
     left: 30%; /* Ajuste conforme necessário */
-    width: 60px; /* Ajuste conforme necessário */
-    height: 50px; /* Ajuste conforme necessário */
+    width: 100%; /* Ajuste conforme necessário */
+    height: 100%; /* Ajuste conforme necessário */
     cursor: pointer;
     z-index: 20;
 }
 
- 
   #shadow-earth {
     width: 55px;
     position: absolute;
   }
+
+
 
   #person{
     position: absolute;
