@@ -11,23 +11,10 @@
       background: url('./assets/images/fundo-do-espaco.jpg') no-repeat center center fixed;
       font-family: "Montserrat", sans-serif;
       background-size: cover;
-      height: auto;
-      margin: 0;
-      padding: 0;
-      position: fixed;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 60px;
+      overflow: hidden;
     }
 
-    #container-all {
-      display: flex;
-      padding: 75px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      height: 100vh;
-    }
 
     #header-logo {
       font-size: 3em;
@@ -132,45 +119,83 @@
         width: 50%;
       }
     }
+
+    @media (min-height: 768px) {
+      #card-container {}
+
+      .card {}
+    }
+
+    @media (max-height: 1180px) {
+
+      body {
+        background: url('./assets/images/fundo-do-espaco.jpg') no-repeat center center fixed;
+        font-family: "Montserrat", sans-serif;
+        background-size: cover;
+        padding: 60px;
+        overflow: scroll;
+      }
+
+      #header-logo {
+        font-size: 2.5em;
+        color: white;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      #title {
+        font-family: 'Tiempos Text';
+        font-size: 2.5em;
+        color: white;
+      }
+
+      #subtitle {
+        margin-top: 50px;
+        font-size: 1.8em;
+        color: white;
+        font-weight: 300;
+        line-height: 1.5;
+
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div id="container-all">
+
+  <div id="container">
     <div id="header-logo">
       <p>AstroAR</p>
     </div>
-    <div id="container">
+    <div id="header">
+      <div id="title">Explora o universo através da AstroAR.
+      </div>
+      <div id="subtitle">Bem-vindo ao AstroAR, uma ferramenta interativa onde poderás aprender os fenómenos das Fases
+        da
+        Lua e das Estações do Ano através de Realidade Aumentada.</div>
+    </div>
 
-      <div id="header">
-        <div id="title">Explora o universo através da AstroAR.
+    <div id="card-container">
+      <a class="card" href="./moonphases.html">
+        <div class="card-content">
+          <p id="title-card">Explora a Fases da Lua</p>
+          <p id="subtitle-card">
+            <i class="fa-solid fa-arrow-right"></i>
+          </p>
         </div>
-        <div id="subtitle">Bem-vindo ao AstroAR, uma ferramenta interativa onde poderás aprender os fenómenos das Fases
-          da
-          Lua e das Estações do Ano através de Realidade Aumentada.</div>
-      </div>
+      </a>
 
-      <div id="card-container">
-        <a class="card" href="./moonphases.html">
-          <div class="card-content">
-            <p id="title-card">Explora a Fases da Lua</p>
-            <p id="subtitle-card">
-              <i class="fa-solid fa-arrow-right"></i>
-            </p>
-          </div>
-        </a>
-
-        <a class="card" href="./seasons.html">
-          <div class="card-content">
-            <p id="title-card">Explora as Estações do Ano</p>
-            <p id="subtitle-card">
-              <i class="fa-solid fa-arrow-right"></i>
-            </p>
-          </div>
-        </a>
-      </div>
+      <a class="card" href="./seasons.html">
+        <div class="card-content">
+          <p id="title-card">Explora as Estações do Ano</p>
+          <p id="subtitle-card">
+            <i class="fa-solid fa-arrow-right"></i>
+          </p>
+        </div>
+      </a>
     </div>
   </div>
+
 </body>
 
 </html>
