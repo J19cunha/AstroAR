@@ -21,6 +21,7 @@ function nextOnboarding() {
     event_category: "Onboarding",
     event_label: `Step ${currentIndex + 1} to ${currentIndex + 2}`,
   });
+  console.log("Evento enviado: Next_Onboarding_Step");
 }
 
 function resetOnboarding() {
