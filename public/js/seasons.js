@@ -16,6 +16,11 @@ function nextOnboarding() {
     overlays[currentIndex].style.visibility = "hidden";
     overlays[currentIndex + 1].style.visibility = "visible";
   }
+  // Google Analytics Event
+  gtag("event", "Next_Onboarding_Step", {
+    event_category: "Onboarding",
+    event_label: `Step ${currentIndex + 1} to ${currentIndex + 2}`,
+  });
 }
 
 function resetOnboarding() {
@@ -25,11 +30,21 @@ function resetOnboarding() {
   overlays.forEach((overlay, index) => {
     overlay.style.visibility = index === 0 ? "visible" : "hidden";
   });
+  // Google Analytics Event
+  gtag("event", "Reset_Onboarding", {
+    event_category: "Onboarding",
+    event_label: "Onboarding reset to step 1",
+  });
 }
 
 function closeOnboarding() {
   document.getElementById("onboarding-container").style.display = "none";
   resetOnboarding();
+  // Google Analytics Event
+  gtag("event", "Close_Onboarding", {
+    event_category: "Onboarding",
+    event_label: "Onboarding closed",
+  });
 }
 
 function previousOnboarding() {
