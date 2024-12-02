@@ -16,12 +16,11 @@ function nextOnboarding() {
     overlays[currentIndex].style.visibility = "hidden";
     overlays[currentIndex + 1].style.visibility = "visible";
   }
-  // Google Analytics Event
+  // Evento Google Analytics para "Interação com Onboarding"
   gtag("event", "Next_Onboarding_Step", {
     event_category: "Onboarding",
     event_label: `Step ${currentIndex + 1} to ${currentIndex + 2}`,
   });
-  console.log("Evento enviado: Next_Onboarding_Step");
 }
 
 function resetOnboarding() {
@@ -31,20 +30,15 @@ function resetOnboarding() {
   overlays.forEach((overlay, index) => {
     overlay.style.visibility = index === 0 ? "visible" : "hidden";
   });
-  // Google Analytics Event
-  gtag("event", "Reset_Onboarding", {
-    event_category: "Onboarding",
-    event_label: "Onboarding reset to step 1",
-  });
 }
 
 function closeOnboarding() {
   document.getElementById("onboarding-container").style.display = "none";
   resetOnboarding();
-  // Google Analytics Event
+
   gtag("event", "Close_Onboarding", {
     event_category: "Onboarding",
-    event_label: "Onboarding closed",
+    event_label: "Fechou sem interagir",
   });
 }
 
@@ -335,12 +329,20 @@ function updateMonth(increment) {
 document
   .getElementById("increment-month")
   .addEventListener("click", function () {
+    gtag("event", "Increment_Month_Clicked", {
+      event_category: "Interaction",
+      event_label: "Increment Month Button",
+    });
     updateMonth(1);
   });
 
 document
   .getElementById("decrement-month")
   .addEventListener("click", function () {
+    gtag("event", "Decrement_Month_Clicked", {
+      event_category: "Interaction",
+      event_label: "Decrement Month Button",
+    });
     updateMonth(-1);
   });
 
@@ -365,6 +367,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var icon = toggleButton.querySelector("i"); // Seleciona o ícone dentro do botão
 
   toggleButton.addEventListener("click", function () {
+    gtag("event", "Start_Animation_Clicked", {
+      event_category: "Interaction",
+      event_label: "Start Animation Button",
+    });
+
     var animatedEntities = document.querySelectorAll("[rotate-continuously]");
     var earthEntity = document.querySelectorAll("[orbit-around-sun]");
     isAnimating = !isAnimating; // Inverte o estado da animação
