@@ -241,7 +241,7 @@ p{
 
   #shadow-earth {
     width: 55px;
-    position: absolute;
+    position: fixed;
   }
 
 
