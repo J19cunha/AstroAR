@@ -326,33 +326,39 @@ function updateMonth(increment) {
   updateEarthInclination(); // Atualiza a inclinação da Terra
 }
 
-document
-  .getElementById("increment-month")
-  .addEventListener("click", function () {
-    gtag("event", "Increment_Month_Clicked", {
-      event_category: "Interaction",
-      event_label: "Increment Month Button",
-    });
-    updateMonth(1);
-  });
-
-document
-  .getElementById("decrement-month")
-  .addEventListener("click", function () {
-    gtag("event", "Decrement_Month_Clicked", {
-      event_category: "Interaction",
-      event_label: "Decrement Month Button",
-    });
-    updateMonth(-1);
-  });
-
-document
-  .getElementById("onBoarding-btn")
-  .addEventListener("click", function () {
-    document.getElementById("onboarding-container").style.display = "block";
-  });
-
 document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("increment-month")
+    .addEventListener("click", function () {
+      gtag("event", "Increment_Month_Clicked", {
+        event_category: "Interaction",
+        event_label: "Increment Month Button",
+      });
+      updateMonth(1);
+    });
+
+  document
+    .getElementById("decrement-month")
+    .addEventListener("click", function () {
+      gtag("event", "Decrement_Month_Clicked", {
+        event_category: "Interaction",
+        event_label: "Decrement Month Button",
+      });
+      updateMonth(-1);
+    });
+
+  document
+    .getElementById("onBoarding-btn")
+    .addEventListener("click", function () {
+      document.getElementById("onboarding-container").style.display = "block";
+    });
+
+  document
+    .querySelector(".clickable-zone")
+    .addEventListener("click", function () {
+      document.getElementById("cloudy-overlay").style.visibility = "visible";
+    });
+
   document.getElementById("Tempo").style.display = "block";
 
   // Este é o novo botão de alternância
@@ -393,11 +399,6 @@ document.addEventListener("DOMContentLoaded", function () {
       icon.style.color = "#ffffff";
     }
   });
-  document
-    .querySelector(".clickable-zone")
-    .addEventListener("click", function () {
-      document.getElementById("cloudy-overlay").style.visibility = "visible";
-    });
 
   document.querySelector(".close-icon").addEventListener("click", function () {
     document.getElementById("cloudy-overlay").style.visibility = "hidden";
