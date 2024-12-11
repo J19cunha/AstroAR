@@ -53,47 +53,6 @@ AFRAME.registerComponent("gesture-scale", {
   },
 });
 
-// AFRAME.registerComponent("gesture_handler_rotation", {
-//   schema: {
-//     enabled: { default: true },
-//     rotationFactor: { default: 3 },
-//   },
-
-//   init: function () {
-//     this.handleRotation = this.handleRotation.bind(this);
-
-//     this.isVisible = false;
-
-//     this.el.sceneEl.addEventListener("markerFound", (e) => {
-//       this.isVisible = true;
-//     });
-
-//     this.el.sceneEl.addEventListener("markerLost", (e) => {
-//       this.isVisible = false;
-//     });
-//   },
-
-//   update: function () {
-//     if (this.data.enabled) {
-//       this.el.sceneEl.addEventListener("onefingermove", this.handleRotation);
-//     } else {
-//       this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
-//     }
-//   },
-
-//   remove: function () {
-//     this.el.sceneEl.removeEventListener("onefingermove", this.handleRotation);
-//   },
-
-//   handleRotation: function (event) {
-//     const sensitivity = 0.4; // Sensibilidade do movimento do dedo
-//     if (this.isVisible) {
-//       // Incrementos positivos e negativos são considerados
-//       this.el.object3D.rotation.y +=
-//         event.detail.positionChange.x * this.data.rotationFactor * sensitivity;
-//     }
-//   },
-// });
 AFRAME.registerComponent("gesture_handler_translation", {
   schema: {
     radius: { type: "number", default: 2.5 },
@@ -101,7 +60,6 @@ AFRAME.registerComponent("gesture_handler_translation", {
     speed: { type: "number", default: 60 },
   },
   init: function () {
-    angle = 0; // Ângulo inicial da órbita
     this.lastMonthUpdateAngle = 0; // Guarda o último ângulo em que um mês foi incrementado
 
     // Adiciona o gesto de toque para iniciar a órbita
@@ -130,10 +88,8 @@ AFRAME.registerComponent("gesture_handler_translation", {
 
       // Calcula a mudança de ângulo com base no movimento do dedo
       const deltaAngle = dx * sensitivity;
-
       // Atualiza o ângulo de rotação
       angle += deltaAngle * this.data.speed;
-
       // Manter o ângulo dentro do intervalo de 0 a 360 graus p
       angle = angle % 360;
       if (angle < 0) {

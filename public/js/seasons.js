@@ -264,8 +264,11 @@ function updateProgressBar() {
 }
 
 function updateMonthCounterContinuously() {
-  currentMonthIndex = (currentMonthIndex + 1) % months.length;
-  updateDateInfo(); // Atualiza informações de mês e estação
+  const monthIndex = Math.floor(angle / 30); // Baseado em 360 graus divididos por 12 meses
+  if (monthIndex !== currentMonthIndex) {
+    currentMonthIndex = monthIndex;
+    updateDateInfo();
+  }
 }
 
 function updateDateInfo() {
@@ -328,6 +331,12 @@ function updateMonth(increment) {
 
 document.addEventListener("DOMContentLoaded", function () {
   document
+    .getElementById("onBoarding-btn")
+    .addEventListener("click", function () {
+      document.getElementById("onboarding-container").style.display = "block";
+    });
+
+  document
     .getElementById("increment-month")
     .addEventListener("click", function () {
       gtag("event", "Increment_Month_Clicked", {
@@ -346,13 +355,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       updateMonth(-1);
     });
-
-  document
-    .getElementById("onBoarding-btn")
-    .addEventListener("click", function () {
-      document.getElementById("onboarding-container").style.display = "block";
-    });
-
   document
     .querySelector(".clickable-zone")
     .addEventListener("click", function () {
