@@ -297,7 +297,7 @@ function updateDateInfo() {
   } else if (currentMonthIndex == 6) {
     document.getElementById("december-note").style.visibility = "visible";
     document.getElementById("december-note").innerText =
-      " - Dia mais curto do ano";
+      " - Dia mais longo do ano";
   } else {
     document.getElementById("december-note").style.visibility = "hidden";
   }
